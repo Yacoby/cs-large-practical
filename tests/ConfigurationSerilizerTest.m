@@ -14,8 +14,6 @@ int main()
     START_SET("ConfigurationTxtSerilizer")
         testDeserilize_WhenHasTime_ParsesTimeCorrectly();
 
-    
-
     END_SET("ConfigurationTxtSerilizer")
 
     return 0;

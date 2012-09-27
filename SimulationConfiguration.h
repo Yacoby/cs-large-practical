@@ -1,6 +1,6 @@
 #include <Foundation/Foundation.h>
 
-@interface SimulationConfiguration{
+@interface SimulationConfiguration : NSObject{
 }
-
+- (int) time;
 @end

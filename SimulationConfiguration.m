@@ -2,7 +2,10 @@
 
 @implementation SimulationConfiguration
 - (int)time {
-    return 10;
+    return mTime;
+}
+- (void)setTime:(int)time{
+    mTime = time;
 }
 
 @end

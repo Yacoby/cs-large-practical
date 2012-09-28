@@ -1,9 +1,13 @@
 #import <Foundation/Foundation.h>
 #import "SimulationState.h"
+#import "SimulationConfiguration.h"
 #import "OutputStream.h"
 
+/**
+ * This is a generic writer that allows writing of the simulation to a file
+ */
 @protocol OutputWriter
-- (void)writeToStream:(id <OutputStream>)stream stateHistory:(NSArray*)stateHistory;
++ (void)writeToStream:(id <OutputStream>)stream simulationConfiguration:(SimulationConfiguration*)cfg stateHistory:(NSArray*)stateHistory;
 @end
 
 /**
@@ -11,6 +15,6 @@
  */
 @interface SimpleOutputWriter : NSObject <OutputWriter>{
 }
-- (void)writeToStream:(id <OutputStream>)stream stateHistory:(NSArray*)stateHistory;
++ (void)writeToStream:(id <OutputStream>)stream simulationConfiguration:(SimulationConfiguration*)cfg stateHistory:(NSArray*)stateHistory;
 
 @end

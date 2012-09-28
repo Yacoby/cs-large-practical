@@ -1,12 +1,14 @@
 #import "Testing.h"
 #import "OutputWriter.h"
+#import "SimulationConfiguration.h"
 
 void writeToStream_WhenHasNoData_WritesOnlyHeaders(){
-
     SimulationConfiguration* cfg = [[[SimulationConfiguration alloc] init] autorelease];
     [cfg addMoleculeCount:@"A" count:1];
     [cfg addMoleculeCount:@"B" count:0];
     [cfg addMoleculeCount:@"C" count:5];
+
+    NSArray* history = [[[NSArray alloc] init] autorelease];
 
     MemoryOutputStream* stream = [[[MemoryOutputStream alloc] init] autorelease];
 
@@ -20,7 +22,7 @@ void writeToStream_WhenHasNoData_WritesOnlyHeaders(){
 int main()
 {
     START_SET("OutputWriter")
-        addReaction_WhenAddsReaction_HasReactionForKey();
+        writeToStream_WhenHasNoData_WritesOnlyHeaders;
     END_SET("OutputWriter")
 
     return 0;

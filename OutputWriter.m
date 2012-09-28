@@ -2,8 +2,7 @@
 #import "OutputWriter.h"
 
 @implementation SimpleOutputWriter
-- (void)writeToStream:(id <OutputStream>)stream stateHistory:(NSArray*)stateHistory{
-
++ (void)writeToStream:(id <OutputStream>)stream simulationConfiguration:(SimulationConfiguration*)cfg stateHistory:(NSArray*)stateHistory{
     SimulationState* firstState = [stateHistory objectAtIndex:0];
 
     NSArray* orderedMolecules = [[firstState moleculeCounts] allKeys];

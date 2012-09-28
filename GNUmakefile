@@ -1,10 +1,13 @@
 include $(GNUSTEP_MAKEFILES)/common.make
 
-Cslp_OBJC_FILES = $(wildcard *.m)
+files = $(wildcard *.m)
+
+Cslp_OBJC_FILES = $(files)
 ADDITIONAL_FLAGS += -std=gnu99
 
 APP_NAME = Cslp
 include $(GNUSTEP_MAKEFILES)/application.make
 
-LIBRARY_NAME = Cslp
+LIBRARY_NAME = libCslp
+libCslp_OBJC_FILES = $(files)
 include $(GNUSTEP_MAKEFILES)/library.make

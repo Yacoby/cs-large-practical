@@ -3,7 +3,16 @@
 
 void addReaction_WhenAddsReaction_HasReactionForKey(){
     SimulationConfiguration* underTest = [[[SimulationConfiguration alloc] init] autorelease];
+
     ReactionComponents* components = [[[ReactionComponents alloc] init] autorelease];
+
+    NSCountedSet* required = [[[NSCountedSet alloc] init] autorelease];
+    [components setRequirements:required];
+
+    NSCountedSet* result = [[[NSCountedSet alloc] init] autorelease];
+    [components setResult:result];
+
+
     KineticConstant* kConst = [[[KineticConstant alloc] initWithDouble:0] autorelease];
 
     [underTest addReaction:@"key" kineticConstant:kConst reactionComponents:components];
@@ -11,7 +20,8 @@ void addReaction_WhenAddsReaction_HasReactionForKey(){
     ReactionDefinition* reaction = [underTest reaction:@"key"];
 
     PASS_EQUAL([reaction kineticConstant], kConst, "");
-
+    PASS_EQUAL([reaction requirements], required, "");
+    PASS_EQUAL([reaction result], result, "");
 }
 
 int main()
@@ -22,4 +32,3 @@ int main()
 
     return 0;
 }
-

@@ -17,10 +17,10 @@
     [mMoleculeCounts release];
 }
 
-- (int)time {
+- (TimeSpan*)time {
     return mTime;
 }
-- (void)setTime:(int)time{
+- (void)setTime:(TimeSpan*)time{
     mTime = time;
 }
 

@@ -1,6 +1,7 @@
 #import <Foundation/Foundation.h>
 #import "KineticConstant.h"
 #import "ReactionDefinition.h"
+#import "TimeSpan.h"
 
 /**
  * Object holds a valid copy of the configuration.
@@ -8,12 +9,12 @@
  * TODO there should be no way to load an invalid configuration
  */
 @interface SimulationConfiguration : NSObject{
-    int mTime;
+    TimeSpan* mTime;
     NSMutableDictionary* mReactions;
     NSMutableDictionary* mMoleculeCounts;
 }
-- (int) time;
-- (void)setTime:(int)time;
+- (TimeSpan*) time;
+- (void)setTime:(TimeSpan*)time;
 
 - (ReactionDefinition*)reaction:(NSString*)key;
 

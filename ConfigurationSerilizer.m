@@ -1,4 +1,5 @@
 #import "ConfigurationSerilizer.h"
+#import "TimeSpan.h"
 
 @implementation ConfigurationTextSerilizer
 
@@ -64,9 +65,9 @@
             NSString* key = [keyValue objectAtIndex:0];
             NSString* value = [keyValue objectAtIndex:1];
             if ( [key isEqualToString:@"t"] ){
-                [cfg setTime:[value intValue]];
+                TimeSpan* ts = [[[TimeSpan alloc] initFromSeconds:[value doubleValue]] autorelease];
+                [cfg setTime:ts];
             }else if ( [key characterAtIndex:0] == [[key uppercaseString] characterAtIndex:0]){
-           NSLog(@"KEY: <%@>", key);
                 [cfg addMoleculeCount:key count:[value intValue]];
             } else{
                 KineticConstant* constant = [[[KineticConstant alloc] initWithDouble:[value doubleValue] ] autorelease];

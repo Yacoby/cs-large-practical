@@ -23,11 +23,12 @@
 }
 
 - (void)setKineticConstant:(NSString*)key value:(int)value{
-    [mKineticConstants setObject:[NSNumber numberWithInt:value] forKey:key];
+    KineticConstant* kineticConstant = [[[KineticConstant alloc] initWithDouble:value] autorelease];
+    [mKineticConstants setObject:kineticConstant forKey:key];
 }
 
-- (int)kineticConstant:(NSString*)key{
-    return [[mKineticConstants objectForKey:key] intValue];
+- (KineticConstant*)kineticConstant:(NSString*)key{
+    return [mKineticConstants objectForKey:key];
 }
 
 @end

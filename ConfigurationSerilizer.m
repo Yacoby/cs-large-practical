@@ -14,7 +14,7 @@
 
         if ([line rangeOfString:@"="].location != NSNotFound ){
             NSLog(line);
-            NSArray* keyValue = [line componentsSeparatedByString: @"="];
+            NSMutableArray* keyValue = [[line componentsSeparatedByString: @"="] mutableCopy];
             for ( int i = 0; i < [keyValue count]; ++i ){
                 NSString* string = [keyValue objectAtIndex:i];
                 [keyValue replaceObjectAtIndex:i withObject:[string stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceCharacterSet]]];
@@ -27,6 +27,7 @@
             }else{
                 [cfg setKineticConstant:key value:[value intValue]];
             }
+            [keyValue release];
 
         }
 

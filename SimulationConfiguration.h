@@ -1,4 +1,5 @@
 #include <Foundation/Foundation.h>
+#include "KineticConstant.h"
 
 @interface SimulationConfiguration : NSObject{
     int mTime;
@@ -7,5 +8,5 @@
 - (int) time;
 - (void)setTime:(int)time;
 - (void)setKineticConstant:(NSString*)key value:(int)value;
-- (int)kineticConstant:(NSString*)key;
+- (KineticConstant*)kineticConstant:(NSString*)key;
 @end

@@ -19,7 +19,7 @@ void testDeserilize_WhenHasComment_DoesNotAffectParsing(){
 
 void testDeserilize_WhenHasTimeAndKineticConstant_ParsesConstantCorrectly(){
     NSString* configurationStr = @"t = 10\nd = 5";
-    PASS_INT_EQUAL([[ConfigurationTextSerilizer deserilize:configurationStr] kineticConstant:@"d"], 5, "");
+    PASS_INT_EQUAL([[[ConfigurationTextSerilizer deserilize:configurationStr] kineticConstant:@"d"] doubleValue], 5, "");
 }
 
 int main()

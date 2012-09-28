@@ -16,14 +16,14 @@
 - (id)init;
 - (void)dealloc;
 
-- (TimeSpan*)time;
 - (void)setTime:(TimeSpan*)time;
-
-- (ReactionDefinition*)reaction:(NSString*)key;
+- (TimeSpan*)time;
 
 - (void)addReaction:(NSString*)key kineticConstant:(KineticConstant*)kineticConstant reactionComponents:(ReactionComponents*)components;
+- (ReactionDefinition*)reaction:(NSString*)key;
 
 - (void)addMoleculeCount:(NSString*)key count:(uint)count;
 - (uint)moleculeCount:(NSString*)key;
+- (NSSet*)molecules;
 
 @end

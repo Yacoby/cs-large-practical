@@ -3,19 +3,24 @@
 
 @implementation SimpleOutputWriter
 + (void)writeToStream:(id <OutputStream>)stream simulationConfiguration:(SimulationConfiguration*)cfg stateHistory:(NSArray*)stateHistory{
-    SimulationState* firstState = [stateHistory objectAtIndex:0];
+    NSArray* orderedMolecules = [[[cfg molecules] allObjects] sortedArrayUsingSelector:@selector(compare:)];
 
-    NSArray* orderedMolecules = [[firstState moleculeCounts] allKeys];
+    [stream write:@"t"];
+    for ( NSString* molecule in orderedMolecules ){
+        [stream write:[NSString stringWithFormat:@", %@", molecule]];
+    }
+    [stream write:@"\n"];
 
     for ( SimulationState* state in stateHistory ){
         TimeSpan* time = [state timeSinceSimulationStart];
         [stream write:[NSString stringWithFormat:@"%f", [time totalSeconds]]];
 
-        //TODO
-        //NSDictionary* moleculeCounts = [state moleculeCounts];
+        NSDictionary* moleculeCounts = [state moleculeCounts];
         for ( NSString* molecule in orderedMolecules ){
-            //write string and comma
+            uint count = [[moleculeCounts objectForKey:molecule] intValue];
+            [stream write:[NSString stringWithFormat:@", %i", count]];
         }
+        [stream write:@"\n"];
     }
 }
 @end

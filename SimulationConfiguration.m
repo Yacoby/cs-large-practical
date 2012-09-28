@@ -44,5 +44,8 @@
     NSNumber* number = [mMoleculeCounts objectForKey:key];
     return [number unsignedIntValue];
 }
+- (NSSet*)molecules{
+    return [[[NSSet alloc] initWithArray:[mMoleculeCounts allKeys]] autorelease];
+}
 
 @end

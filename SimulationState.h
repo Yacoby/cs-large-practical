@@ -3,8 +3,8 @@
 
 @interface SimulationState : NSObject{
     TimeSpan* mTimeSinceSimulationStart;
-    NSCountedSet* mMoleculeCount;
+    NSDictionary* mMoleculeCount;
 }
-- (NSCountedSet*)moleculeCounts;
+- (NSDictionary*)moleculeCounts;
 - (TimeSpan*)timeSinceSimulationStart;
 @end

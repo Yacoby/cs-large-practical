@@ -1,8 +1,9 @@
 #import <Foundation/Foundation.h>
 #import "SimulationState.h"
+#import "OutputStream.h"
 
 @protocol OutputWriter
-- (void)writeToStream:(NSOutputStream*)stream stateHistory:(NSArray*)stateHistory;
+- (void)writeToStream:(id <OutputStream>)stream stateHistory:(NSArray*)stateHistory;
 @end
 
 /**
@@ -10,6 +11,6 @@
  */
 @interface SimpleOutputWriter : NSObject <OutputWriter>{
 }
-- (void)writeToFile:(NSOutputStream*)stream stateHistory:(NSArray*)stateHistory;
+- (void)writeToStream:(id <OutputStream>)stream stateHistory:(NSArray*)stateHistory;
 
 @end

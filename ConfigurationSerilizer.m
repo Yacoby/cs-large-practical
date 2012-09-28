@@ -20,8 +20,12 @@
                 [keyValue replaceObjectAtIndex:i withObject:[string stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceCharacterSet]]];
             }
 
-            if ( [[keyValue objectAtIndex:0] isEqualToString:@"t"] ){
-                 [cfg setTime:[[keyValue objectAtIndex:1] intValue]];
+            NSString* key = [keyValue objectAtIndex:0];
+            NSString* value = [keyValue objectAtIndex:1];
+            if ( [key isEqualToString:@"t"] ){
+                [cfg setTime:[value intValue]];
+            }else{
+                [cfg setKineticConstant:key value:[value intValue]];
             }
 
         }

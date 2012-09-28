@@ -12,11 +12,22 @@ void testDeserilize_WhenHasTime_ParsesTimeCorrectly(){
     PASS_INT_EQUAL([[ConfigurationTextSerilizer deserilize:configurationStr2] time], 20, "");
 }
 
+void testDeserilize_WhenHasComment_DoesNotAffectParsing(){
+    NSString* configurationStr = @"#comment\nt = 10\n#comment";
+    PASS_INT_EQUAL([[ConfigurationTextSerilizer deserilize:configurationStr] time], 10, "");
+}
+
+void testDeserilize_WhenHasTimeAndKineticConstant_ParsesConstantCorrectly(){
+    NSString* configurationStr = @"t = 10\nd = 5";
+    PASS_INT_EQUAL([[ConfigurationTextSerilizer deserilize:configurationStr] kineticConstant:@"d"], 5, "");
+}
+
 int main()
 {
     START_SET("ConfigurationTxtSerilizer")
         testDeserilize_WhenHasTime_ParsesTimeCorrectly();
-
+        testDeserilize_WhenHasComment_DoesNotAffectParsing();
+        testDeserilize_WhenHasTimeAndKineticConstant_ParsesConstantCorrectly();
     END_SET("ConfigurationTxtSerilizer")
 
     return 0;

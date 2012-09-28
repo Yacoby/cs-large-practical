@@ -16,7 +16,7 @@
       pass(_cond, "%s:%d ... " testFormat__, __FILE__, __LINE__, ## __VA_ARGS__); \
       if (!_cond) \
 	{ \
-              fprintf(stderr, "Expected '%d' and got '%d'\n",  _exp, _obj); \
+              fprintf(stderr, "%s: Expected '%d' and got '%d'\n", __FUNCTION__,  _exp, _obj); \
 	} \
     } \
   NS_HANDLER \

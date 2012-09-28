@@ -1,0 +1,10 @@
+obj/*
+*/obj/*
+Cslp.app/*
+
+oldtests.*
+tests.*
+tests/GNUmakefile
+
+.*.un~
+.*.swp

@@ -80,7 +80,7 @@
             NSArray* reactionNameAndDef = [line componentsSeparatedByString: @":"];
             NSString* reactionName = [reactionNameAndDef objectAtIndex:0];
             reactionName = [reactionName stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceCharacterSet]];
-           
+
             NSString* reactionComponentStr = [reactionNameAndDef objectAtIndex:1];
             ReactionComponents* reactionComonents = [self parseReactionComponents:reactionComponentStr];
 
@@ -89,7 +89,6 @@
 
     }
 
-    
     for (NSString* reactionName in  kineticConstants) {
         KineticConstant* constant = [kineticConstants objectForKey:reactionName];
         ReactionComponents* reactionComponents = [reactions objectForKey:reactionName];

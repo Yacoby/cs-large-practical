@@ -5,4 +5,6 @@
     TimeSpan* mTimeSinceSimulationStart;
     NSCountedSet* mMoleculeCount;
 }
+- (NSCountedSet*)moleculeCounts;
+- (TimeSpan*)timeSinceSimulationStart;
 @end

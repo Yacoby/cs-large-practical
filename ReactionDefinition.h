@@ -5,6 +5,7 @@
     NSCountedSet* mRequirements;
     NSCountedSet* mResult;
 }
+- (void)dealloc;
 - (void)setRequirements:(NSCountedSet*)requirements;
 - (void)setResult:(NSCountedSet*)result;
 
@@ -17,6 +18,7 @@
     ReactionComponents* mComponents;
 }
 - (id) initFromKineticConstant:(KineticConstant*)k reactionComponents:(ReactionComponents*)components;
+- (void) dealloc;
 
 - (KineticConstant*) kineticConstant;
 - (NSCountedSet*)requirements;

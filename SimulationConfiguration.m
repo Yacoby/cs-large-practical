@@ -12,9 +12,12 @@
 }
 
 - (void) dealloc {
-    [super dealloc];
+    for ( NSString* key in mReactions ){
+        [key release];
+    }
     [mReactions release];
     [mMoleculeCounts release];
+    [super dealloc];
 }
 
 - (TimeSpan*)time {
@@ -25,6 +28,10 @@
 }
 
 - (void)addReaction:(NSString*)key kineticConstant:(KineticConstant*)kineticConstant reactionComponents:(ReactionComponents*)components{
+    if ( [mReactions objectForKey:key] ){
+        //TODO this is bad. We leak if we do this
+    }
+    [key retain];
     ReactionDefinition* def = [[[ReactionDefinition alloc] initFromKineticConstant:kineticConstant reactionComponents:components] autorelease];
     [mReactions setObject:def forKey:key];
 }

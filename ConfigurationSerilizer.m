@@ -65,7 +65,10 @@
             NSString* value = [keyValue objectAtIndex:1];
             if ( [key isEqualToString:@"t"] ){
                 [cfg setTime:[value intValue]];
-            }else{
+            }else if ( [key characterAtIndex:0] == [[key uppercaseString] characterAtIndex:0]){
+           NSLog(@"KEY: <%@>", key);
+                [cfg addMoleculeCount:key count:[value intValue]];
+            } else{
                 KineticConstant* constant = [[[KineticConstant alloc] initWithDouble:[value doubleValue] ] autorelease];
                 [kineticConstants setObject:constant forKey:key];
             }

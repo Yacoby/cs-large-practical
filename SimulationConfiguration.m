@@ -6,6 +6,7 @@
     self = [super init];
     if (self != nil) {
         mReactions = [[NSMutableDictionary init] alloc];
+        mMoleculeCounts = [[NSMutableDictionary init] alloc];
     }
     return self;
 }
@@ -13,6 +14,7 @@
 - (void) dealloc {
     [super dealloc];
     [mReactions release];
+    [mMoleculeCounts release];
 }
 
 - (int)time {
@@ -29,6 +31,14 @@
 
 - (ReactionDefinition*)reaction:(NSString*)key{
     return [mReactions objectForKey:key];
+}
+- (void)addMoleculeCount:(NSString*)key count:(uint)count{
+    NSNumber* number = [[[NSNumber alloc] initWithUnsignedInt: count] autorelease];
+    [mMoleculeCounts setObject:number forKey:key];
+}
+- (uint)moleculeCount:(NSString*)key{
+    NSNumber* number = [mMoleculeCounts objectForKey:key];
+    return [number unsignedIntValue];
 }
 
 @end

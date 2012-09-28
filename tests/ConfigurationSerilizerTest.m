@@ -48,6 +48,13 @@ void testDeserilize_WhenHasDestructiveReaction_ParsesReactionCorrectly(){
     PASS_INT_EQUAL([[reaction result] count], 0, "There should be no results of the reaction");
 }
 
+void testDeserilize_WhenHasMoleculeCount_ParsesCorrectly(){
+    NSString* configurationStr = @"E = 10\n";
+    SimulationConfiguration* cfg = [ConfigurationTextSerilizer deserilize:configurationStr];
+
+    PASS_INT_EQUAL([cfg moleculeCount:@"E"], 10, "Molecule count should be 10");
+}
+
 void testParseReactionComponents_WhenHasBasicReaction_ParsesCorrectly(){
     NSString* reactionString = @" A -> B";
     ReactionComponents* components = [ConfigurationTextSerilizer parseReactionComponents:reactionString];
@@ -100,6 +107,8 @@ int main()
 
         testDeserilize_WhenHasBasicReaction_ParsesReactionCorrectly();
         testDeserilize_WhenHasDestructiveReaction_ParsesReactionCorrectly();
+
+        testDeserilize_WhenHasMoleculeCount_ParsesCorrectly();
 
         testParseReactionComponents_WhenHasBasicReaction_ParsesCorrectly();
 

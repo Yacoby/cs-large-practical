@@ -4,14 +4,17 @@
 #import "OutputStream.h"
 
 /**
- * This is a generic writer that allows writing of the simulation to a file
+ * @brief This is a generic writer that allows writing of the simulation to a stream
  */
 @protocol OutputWriter
 + (void)writeToStream:(id <OutputStream>)stream simulationConfiguration:(SimulationConfiguration*)cfg stateHistory:(NSArray*)stateHistory;
 @end
 
 /**
- * Outputs the entire state in the required format
+ * @brief Outputs the entire state in the required format
+ *
+ * This is the basic formatter which will output the entire state without attempting
+ * to aggregate any of the data
  */
 @interface SimpleOutputWriter : NSObject <OutputWriter>{
 }

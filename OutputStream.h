@@ -1,15 +1,17 @@
 #import <Foundation/Foundation.h>
 
 /**
- * This represents some form of string output to some location
+ * @brief This represents some form of string output to some location.
  */
 @protocol OutputStream
 - (void)write:(NSString*)str;
 @end
 
 /** 
- * Used for testing, this allows the capture of the output so that it can be
- * inspected rather than (say) written to a file
+ * @brief Stores written data in memory where it can be retrieved.
+ *
+ * This is used for testing so that we are able to inspect the output of the
+ * OutputWriter without having to touch the filesystem.
  */
 @interface MemoryOutputStream : NSObject <OutputStream>{
     NSMutableString* mMemory;

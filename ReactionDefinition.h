@@ -1,6 +1,12 @@
 #import <Foundation/Foundation.h>
 #import "KineticConstant.h"
 
+/**
+ * @brief Represents the components that make up the reaction
+ *
+ * This class holds which components (and their count) make up both the input and
+ * output of a reaction
+ */
 @interface ReactionComponents : NSObject{
     NSCountedSet* mRequirements;
     NSCountedSet* mResult;
@@ -13,6 +19,10 @@
 - (NSCountedSet*)result;
 @end
 
+/** 
+ * @brief Immutable description of a reaction containing the Kinetic Constant and Forumula
+ *
+ */
 @interface ReactionDefinition : NSObject{
     KineticConstant* mKineticConstant;
     ReactionComponents* mComponents;

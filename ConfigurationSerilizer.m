@@ -3,9 +3,6 @@
 
 @implementation ConfigurationTextSerilizer
 
-/**
- * Parses the reaction components. E.g: A + B -> C
- */
 + (ReactionComponents*)parseReactionComponents:(NSString*)reaction{
     NSArray* components = [reaction componentsSeparatedByString: @"->"];
 

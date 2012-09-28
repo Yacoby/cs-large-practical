@@ -4,7 +4,8 @@
 #import "TimeSpan.h"
 
 /**
- * Object holds a valid copy of the configuration.
+ * Object holds a valid copy of the configuration and is designed in such a way
+ * that it is fairly hard to add invalid data
  *
  * TODO there should be no way to load an invalid configuration
  */

@@ -1,7 +1,8 @@
 #import <Foundation/Foundation.h>
+#import "TimeSpan.h"
 
 @interface SimulationState : NSObject{
-    TimeSpan mTimeSinceSimulationStart;
+    TimeSpan* mTimeSinceSimulationStart;
     NSCountedSet* mMoleculeCount;
 }
 @end

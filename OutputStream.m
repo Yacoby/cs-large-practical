@@ -1,7 +1,7 @@
 #import "OutputStream.h"
 
 @implementation MemoryOutputStream
--(id) init{
+-(id)init{
     self = [super init];
     if ( self != nil ){
         mMemory = [[NSMutableString alloc] init];
@@ -15,7 +15,7 @@
 -(void)write:(NSString*)str{
     [mMemory appendString:str];
 }
--(NSString*) memory{
+-(NSString*)memory{
     return mMemory;
 }
 

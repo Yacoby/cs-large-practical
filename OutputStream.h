@@ -4,7 +4,7 @@
  * This represents some form of string output to some location
  */
 @protocol OutputStream
--(void)write:(NSString*)str;
+- (void)write:(NSString*)str;
 @end
 
 /** 
@@ -14,9 +14,9 @@
 @interface MemoryOutputStream : NSObject <OutputStream>{
     NSMutableString* mMemory;
 }
--(id)init ;
--(void)dealloc;
+- (id)init ;
+- (void)dealloc;
 
--(void)write:(NSString*)str;
--(NSString*)memory;
+- (void)write:(NSString*)str;
+- (NSString*)memory;
 @end

@@ -8,6 +8,6 @@
     double mTimeSpanSeconds;
 }
 
-- (id) initFromSeconds:(double)seconds;
+- (id)initFromSeconds:(double)seconds;
 - (double)totalSeconds;
 @end

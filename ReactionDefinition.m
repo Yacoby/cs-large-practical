@@ -25,7 +25,7 @@
 @end
 
 @implementation ReactionDefinition
-- (id) initFromKineticConstant:(KineticConstant*)k reactionComponents:(ReactionComponents*)components{
+- (id)initFromKineticConstant:(KineticConstant*)k reactionComponents:(ReactionComponents*)components{
     self = [super init];
     if ( self != nil ){
         mKineticConstant = k;
@@ -43,7 +43,7 @@
     [super dealloc];
 }
 
-- (KineticConstant*) kineticConstant{
+- (KineticConstant*)kineticConstant{
     return mKineticConstant;
 }
 - (NSCountedSet*)requirements{

@@ -7,6 +7,6 @@
     double mValue;
 }
 
-- (id) initWithDouble:(double)value;
-- (double) doubleValue;
+- (id)initWithDouble:(double)value;
+- (double)doubleValue;
 @end

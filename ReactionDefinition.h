@@ -17,10 +17,10 @@
     KineticConstant* mKineticConstant;
     ReactionComponents* mComponents;
 }
-- (id) initFromKineticConstant:(KineticConstant*)k reactionComponents:(ReactionComponents*)components;
-- (void) dealloc;
+- (id)initFromKineticConstant:(KineticConstant*)k reactionComponents:(ReactionComponents*)components;
+- (void)dealloc;
 
-- (KineticConstant*) kineticConstant;
+- (KineticConstant*)kineticConstant;
 - (NSCountedSet*)requirements;
 - (NSCountedSet*)result;
 @end

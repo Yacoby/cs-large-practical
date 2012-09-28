@@ -13,10 +13,10 @@
     NSMutableDictionary* mReactions;
     NSMutableDictionary* mMoleculeCounts;
 }
-- (id) init;
+- (id)init;
 - (void)dealloc;
 
-- (TimeSpan*) time;
+- (TimeSpan*)time;
 - (void)setTime:(TimeSpan*)time;
 
 - (ReactionDefinition*)reaction:(NSString*)key;

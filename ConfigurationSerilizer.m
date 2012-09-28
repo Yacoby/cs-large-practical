@@ -6,7 +6,7 @@
 /**
  * Parses the reaction components. E.g: A + B -> C
  */
-+ (ReactionComponents*) parseReactionComponents: (NSString*) reaction{
++ (ReactionComponents*)parseReactionComponents:(NSString*)reaction{
     NSArray* components = [reaction componentsSeparatedByString: @"->"];
 
     ReactionComponents* result = [[[ReactionComponents alloc] init] autorelease];
@@ -20,7 +20,7 @@
     return result;
 }
 
-+ (NSCountedSet*) parsePartOfReactionComponents:(NSString*) part{
++ (NSCountedSet*)parsePartOfReactionComponents:(NSString*)part{
     NSCountedSet* result = [[[NSCountedSet alloc] init] autorelease];
     part = [part stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceCharacterSet]];
 

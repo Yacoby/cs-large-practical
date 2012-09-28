@@ -16,6 +16,6 @@
 }
 + (SimulationConfiguration*)deserilize:(NSString*)input;
 
-+ (ReactionComponents*) parseReactionComponents: (NSString*) reaction;
-+ (NSCountedSet*) parsePartOfReactionComponents:(NSString*) part;
++ (ReactionComponents*)parseReactionComponents: (NSString*) reaction;
++ (NSCountedSet*)parsePartOfReactionComponents:(NSString*) part;
 @end

@@ -1,7 +1,7 @@
 #import "SimulationConfiguration.h"
 
 @implementation SimulationConfiguration
-- (id) init {
+- (id)init {
     self = [super init];
     if (self != nil) {
         mReactions = [[NSMutableDictionary init] alloc];
@@ -10,7 +10,7 @@
     return self;
 }
 
-- (void) dealloc {
+- (void)dealloc {
     [mReactions release];
     [mMoleculeCounts release];
     [mTime release];

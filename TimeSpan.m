@@ -1,7 +1,7 @@
 #import "TimeSpan.h"
 
 @implementation TimeSpan
-- (id) initFromSeconds:(double)seconds{
+- (id)initFromSeconds:(double)seconds{
     self = [super init];
     if ( self != nil ){
         mTimeSpanSeconds = seconds;

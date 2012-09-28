@@ -2,7 +2,7 @@
 
 @implementation SimulationState
 
-- (NSCountedSet*)moleculeCounts{
+- (NSDictionary*)moleculeCounts{
     return mMoleculeCount;
 }
 - (TimeSpan*)timeSinceSimulationStart{

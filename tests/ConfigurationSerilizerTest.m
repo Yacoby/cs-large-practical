@@ -3,6 +3,7 @@
 #import <Foundation/Foundation.h>
 
 #import "ConfigurationSerilizer.h"
+#import "ReactionDefinition.h"
 
 void testDeserilize_WhenHasTime_ParsesTimeCorrectly(){
     NSString* configurationStr1 = @"t = 10\n";
@@ -19,7 +20,9 @@ void testDeserilize_WhenHasComment_DoesNotAffectParsing(){
 
 void testDeserilize_WhenHasTimeAndKineticConstant_ParsesConstantCorrectly(){
     NSString* configurationStr = @"t = 10\nd = 5";
-    PASS_INT_EQUAL([[[ConfigurationTextSerilizer deserilize:configurationStr] kineticConstant:@"d"] doubleValue], 5, "");
+    SimulationConfiguration* cfg = [ConfigurationTextSerilizer deserilize:configurationStr];
+    ReactionDefinition* reaction = [cfg reaction:@"d"];
+    PASS_INT_EQUAL([[reaction kineticConstant] doubleValue], 5, "");
 }
 
 void testDeserilize_WhenHasBasicReaction_ParsesReactionCorrectly(){
@@ -37,13 +40,56 @@ void testDeserilize_WhenHasBasicReaction_ParsesReactionCorrectly(){
 void testDeserilize_WhenHasDestructiveReaction_ParsesReactionCorrectly(){
     NSString* configurationStr = @"p = 1\np : F ->";
     SimulationConfiguration* cfg = [ConfigurationTextSerilizer deserilize:configurationStr];
-    ReactionDef* reaction = [cfg reaction:@"p"];
+    ReactionDefinition* reaction = [cfg reaction:@"p"];
+
     PASS_INT_EQUAL([[reaction requirements] countForObject:@"F"], 1, "");
     PASS_INT_EQUAL([[reaction requirements] count], 1, "");
 
     PASS_INT_EQUAL([[reaction result] count], 0, "There should be no results of the reaction");
 }
 
+void testParseReactionComponents_WhenHasBasicReaction_ParsesCorrectly(){
+    NSString* reactionString = @" A -> B";
+    ReactionComponents* components = [ConfigurationTextSerilizer parseReactionComponents:reactionString];
+
+    PASS_INT_EQUAL([[components requirements] countForObject:@"A"], 1, "");
+    PASS_INT_EQUAL([[components requirements] count], 1, "");
+
+    PASS_INT_EQUAL([[components result] countForObject:@"B"], 1, "");
+    PASS_INT_EQUAL([[components result] count], 1, "");
+}
+
+void testParseReactionComponents_WhenHasDesctuctiveReaction_ParsesCorrectly(){
+    NSString* reactionString = @" A -> ";
+    ReactionComponents* components = [ConfigurationTextSerilizer parseReactionComponents:reactionString];
+
+    PASS_INT_EQUAL([[components requirements] countForObject:@"A"], 1, "");
+    PASS_INT_EQUAL([[components requirements] count], 1, "");
+
+    PASS_INT_EQUAL([[components result] count], 0, "");
+}
+
+void testParseReactionComponents_WhenHasCreativeReaction_ParsesCorrectly(){
+    NSString* reactionString = @" -> A";
+    ReactionComponents* components = [ConfigurationTextSerilizer parseReactionComponents:reactionString];
+
+    PASS_INT_EQUAL([[components requirements] count], 0, "");
+
+    PASS_INT_EQUAL([[components result] countForObject:@"A"], 1, "");
+    PASS_INT_EQUAL([[components result] count], 1, "");
+}
+
+void testParseReactionComponents_WhenHasTwoRequirements_ParsesCorrectly(){
+    NSString* reactionString = @"A + B -> C";
+    ReactionComponents* components = [ConfigurationTextSerilizer parseReactionComponents:reactionString];
+
+    PASS_INT_EQUAL([[components requirements] countForObject:@"A"], 1, "");
+    PASS_INT_EQUAL([[components requirements] countForObject:@"B"], 1, "");
+    PASS_INT_EQUAL([[components requirements] count], 2, "");
+
+    PASS_INT_EQUAL([[components result] countForObject:@"C"], 1, "");
+    PASS_INT_EQUAL([[components result] count], 1, "");
+}
 
 int main()
 {
@@ -51,6 +97,15 @@ int main()
         testDeserilize_WhenHasTime_ParsesTimeCorrectly();
         testDeserilize_WhenHasComment_DoesNotAffectParsing();
         testDeserilize_WhenHasTimeAndKineticConstant_ParsesConstantCorrectly();
+
+        testDeserilize_WhenHasBasicReaction_ParsesReactionCorrectly();
+        testDeserilize_WhenHasDestructiveReaction_ParsesReactionCorrectly();
+
+        testParseReactionComponents_WhenHasBasicReaction_ParsesCorrectly();
+
+        testParseReactionComponents_WhenHasDesctuctiveReaction_ParsesCorrectly();
+        testParseReactionComponents_WhenHasCreativeReaction_ParsesCorrectly();
+        testParseReactionComponents_WhenHasTwoRequirements_ParsesCorrectly();
     END_SET("ConfigurationTxtSerilizer")
 
     return 0;

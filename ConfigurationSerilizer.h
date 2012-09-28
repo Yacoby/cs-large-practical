@@ -1,5 +1,6 @@
 #import <Foundation/Foundation.h>
 #import "SimulationConfiguration.h"
+#import "ReactionDefinition.h"
 
 /**
  * Protocol defines the deserilization of anything into a SimulationConfiguration*
@@ -16,4 +17,7 @@
 @interface ConfigurationTextSerilizer : NSObject<ConfigurationSerilizer>{
 }
 + (SimulationConfiguration*)deserilize:(NSString*)input;
+
++ (ReactionComponents*) parseReactionComponents: (NSString*) reaction;
++ (NSCountedSet*) parsePartOfReactionComponents:(NSString*) part;
 @end

@@ -5,14 +5,14 @@
 - (id) init {
     self = [super init];
     if (self != nil) {
-        mKineticConstants = [[NSMutableDictionary init] alloc];
+        mReactions = [[NSMutableDictionary init] alloc];
     }
     return self;
 }
 
 - (void) dealloc {
     [super dealloc];
-    [mKineticConstants release];
+    [mReactions release];
 }
 
 - (int)time {
@@ -22,13 +22,13 @@
     mTime = time;
 }
 
-- (void)setKineticConstant:(NSString*)key value:(int)value{
-    KineticConstant* kineticConstant = [[[KineticConstant alloc] initWithDouble:value] autorelease];
-    [mKineticConstants setObject:kineticConstant forKey:key];
+- (void)addReaction:(NSString*)key kineticConstant:(KineticConstant*)kineticConstant reactionComponents:(ReactionComponents*)components{
+    ReactionDefinition* def = [[[ReactionDefinition alloc] initFromKineticConstant:kineticConstant reactionComponents:components] autorelease];
+    [mReactions setObject:def forKey:key];
 }
 
-- (KineticConstant*)kineticConstant:(NSString*)key{
-    return [mKineticConstants objectForKey:key];
+- (ReactionDefinition*)reaction:(NSString*)key{
+    return [mReactions objectForKey:key];
 }
 
 @end

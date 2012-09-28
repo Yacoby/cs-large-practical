@@ -1,5 +1,6 @@
-#include <Foundation/Foundation.h>
-#include "KineticConstant.h"
+#import <Foundation/Foundation.h>
+#import "KineticConstant.h"
+#import "ReactionDefinition.h"
 
 /**
  * Object holds a valid copy of the configuration.
@@ -8,10 +9,12 @@
  */
 @interface SimulationConfiguration : NSObject{
     int mTime;
-    NSMutableDictionary* mKineticConstants;
+    NSMutableDictionary* mReactions;
 }
 - (int) time;
 - (void)setTime:(int)time;
-- (void)setKineticConstant:(NSString*)key value:(int)value;
-- (KineticConstant*)kineticConstant:(NSString*)key;
+
+- (ReactionDefinition*)reaction:(NSString*)key;
+
+- (void)addReaction:(NSString*)key kineticConstant:(KineticConstant*)kineticConstant reactionComponents:(ReactionComponents*)components;
 @end

@@ -24,7 +24,6 @@
 }
 @end
 
-
 @implementation ReactionDefinition
 - (id) initFromKineticConstant:(KineticConstant*)k reactionComponents:(ReactionComponents*)components{
     self = [super init];

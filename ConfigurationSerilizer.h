@@ -4,8 +4,6 @@
 
 /**
  * Protocol defines the deserilization of anything into a SimulationConfiguration*
- *
- * TODO convert NSString to id
  */
 @protocol ConfigurationSerilizer
 + (SimulationConfiguration*)deserilize:(NSString*)input;

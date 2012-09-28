@@ -1,7 +1,6 @@
 #import "SimulationConfiguration.h"
 
 @implementation SimulationConfiguration
-
 - (id) init {
     self = [super init];
     if (self != nil) {

@@ -103,7 +103,7 @@ void testParseReactionComponents_WhenHasTwoRequirements_ParsesCorrectly(){
 
 int main()
 {
-    START_SET("ConfigurationTxtSerilizer")
+    START_SET("ConfigurationTextSerilizer")
         testDeserilize_WhenHasTime_ParsesTimeCorrectly();
         testDeserilize_WhenHasComment_DoesNotAffectParsing();
         testDeserilize_WhenHasTimeAndKineticConstant_ParsesConstantCorrectly();

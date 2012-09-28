@@ -12,11 +12,9 @@
 }
 
 - (void) dealloc {
-    for ( NSString* key in mReactions ){
-        [key release];
-    }
     [mReactions release];
     [mMoleculeCounts release];
+    [mTime release];
     [super dealloc];
 }
 
@@ -24,24 +22,24 @@
     return mTime;
 }
 - (void)setTime:(TimeSpan*)time{
+    [time retain];
+    [mTime release];
     mTime = time;
 }
 
 - (void)addReaction:(NSString*)key kineticConstant:(KineticConstant*)kineticConstant reactionComponents:(ReactionComponents*)components{
-    if ( [mReactions objectForKey:key] ){
-        //TODO this is bad. We leak if we do this
-    }
-    [key retain];
-    ReactionDefinition* def = [[[ReactionDefinition alloc] initFromKineticConstant:kineticConstant reactionComponents:components] autorelease];
+    ReactionDefinition* def = [[ReactionDefinition alloc] initFromKineticConstant:kineticConstant reactionComponents:components];
     [mReactions setObject:def forKey:key];
+    [def release];
 }
 
 - (ReactionDefinition*)reaction:(NSString*)key{
     return [mReactions objectForKey:key];
 }
 - (void)addMoleculeCount:(NSString*)key count:(uint)count{
-    NSNumber* number = [[[NSNumber alloc] initWithUnsignedInt: count] autorelease];
+    NSNumber* number = [[NSNumber alloc] initWithUnsignedInt: count];
     [mMoleculeCounts setObject:number forKey:key];
+    [number release];
 }
 - (uint)moleculeCount:(NSString*)key{
     NSNumber* number = [mMoleculeCounts objectForKey:key];

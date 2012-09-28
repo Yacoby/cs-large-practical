@@ -65,13 +65,15 @@
             NSString* key = [keyValue objectAtIndex:0];
             NSString* value = [keyValue objectAtIndex:1];
             if ( [key isEqualToString:@"t"] ){
-                TimeSpan* ts = [[[TimeSpan alloc] initFromSeconds:[value doubleValue]] autorelease];
+                TimeSpan* ts = [[TimeSpan alloc] initFromSeconds:[value doubleValue]];
                 [cfg setTime:ts];
+                [ts release];
             }else if ( [key characterAtIndex:0] == [[key uppercaseString] characterAtIndex:0]){
                 [cfg addMoleculeCount:key count:[value intValue]];
             } else{
-                KineticConstant* constant = [[[KineticConstant alloc] initWithDouble:[value doubleValue] ] autorelease];
+                KineticConstant* constant = [[KineticConstant alloc] initWithDouble:[value doubleValue] ];
                 [kineticConstants setObject:constant forKey:key];
+                [constant release];
             }
             [keyValue release];
         } else if ([line rangeOfString:@":"].location != NSNotFound ){

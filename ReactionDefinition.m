@@ -6,19 +6,23 @@
     [mResult release];
     [super dealloc];
 }
+
 - (void)setRequirements:(NSCountedSet*)requirements{
     [requirements retain];
     [mRequirements release];
     mRequirements = requirements;
 }
+
 - (void)setResult:(NSCountedSet*)result{
     [result retain];
     [mResult release];
     mResult = result;
 }
+
 - (NSCountedSet*)requirements{
     return mRequirements;
 }
+
 - (NSCountedSet*)result{
     return mResult;
 }
@@ -46,9 +50,11 @@
 - (KineticConstant*)kineticConstant{
     return mKineticConstant;
 }
+
 - (NSCountedSet*)requirements{
     return [mComponents requirements];
 }
+
 - (NSCountedSet*)result{
     return [mComponents result];
 }

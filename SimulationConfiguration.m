@@ -35,15 +35,18 @@
 - (ReactionDefinition*)reaction:(NSString*)key{
     return [mReactions objectForKey:key];
 }
+
 - (void)addMoleculeCount:(NSString*)key count:(uint)count{
     NSNumber* number = [[NSNumber alloc] initWithUnsignedInt: count];
     [mMoleculeCounts setObject:number forKey:key];
     [number release];
 }
+
 - (uint)moleculeCount:(NSString*)key{
     NSNumber* number = [mMoleculeCounts objectForKey:key];
     return [number unsignedIntValue];
 }
+
 - (NSSet*)molecules{
     return [[[NSSet alloc] initWithArray:[mMoleculeCounts allKeys]] autorelease];
 }

@@ -8,15 +8,17 @@
     }
     return self;
 }
+
 -(void) dealloc{
     [mMemory release];
     [super dealloc];
 }
+
 -(void)write:(NSString*)str{
     [mMemory appendString:str];
 }
+
 -(NSString*)memory{
     return mMemory;
 }
-
 @end

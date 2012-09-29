@@ -12,5 +12,4 @@
 - (double)doubleValue{
     return mValue;
 }
-
 @end

@@ -8,17 +8,17 @@
 void testDeserilize_WhenHasTime_ParsesTimeCorrectly(){
     NSString* configurationStr1 = @"t = 10\n";
     SimulationConfiguration* cfg1 = [ConfigurationTextSerilizer deserilize:configurationStr1];
-    PASS_INT_EQUAL([[cfg1 time] totalSeconds], 10, "");
+    PASS_INT_EQUAL([[cfg1 time] totalSeconds], 10, "Time should be 10");
 
     NSString* configurationStr2 = @"t = 20\n";
     SimulationConfiguration* cfg2 = [ConfigurationTextSerilizer deserilize:configurationStr2];
-    PASS_INT_EQUAL([[cfg2 time] totalSeconds], 20, "");
+    PASS_INT_EQUAL([[cfg2 time] totalSeconds], 20, "Time should be 20");
 }
 
 void testDeserilize_WhenHasComment_DoesNotAffectParsing(){
     NSString* configurationStr = @"#comment\nt = 10\n#comment";
     SimulationConfiguration* cfg = [ConfigurationTextSerilizer deserilize:configurationStr];
-    PASS_INT_EQUAL([[cfg time] totalSeconds], 10, "");
+    PASS_INT_EQUAL([[cfg time] totalSeconds], 10, "Time should be 10 and comments should be ignored");
 }
 
 void testDeserilize_WhenHasTimeAndKineticConstant_ParsesConstantCorrectly(){

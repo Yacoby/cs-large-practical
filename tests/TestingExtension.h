@@ -13,7 +13,7 @@
       _exp = testExpect__;\
       [[NSGarbageCollector defaultCollector] collectExhaustively]; \
       _cond = _obj == _exp; \
-      pass(_cond, "%s:%d ... " testFormat__, __FILE__, __LINE__, ## __VA_ARGS__); \
+      pass(_cond, "%s:%d ... " testFormat__, __FUNCTION__,  __LINE__, ## __VA_ARGS__); \
       if (!_cond) \
 	{ \
               fprintf(stderr, "%s: Expected '%d' and got '%d'\n", __FUNCTION__,  _exp, _obj); \

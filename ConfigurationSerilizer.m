@@ -2,7 +2,6 @@
 #import "TimeSpan.h"
 
 @implementation ConfigurationTextSerilizer
-
 + (ReactionComponents*)parseReactionComponents:(NSString*)reaction{
     NSArray* components = [reaction componentsSeparatedByString: @"->"];
 

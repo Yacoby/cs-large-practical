@@ -4,7 +4,7 @@
 
 void get_WhenHasNoRules_ReturnsAllArgsAsPositionalArgs(){
     CommandLineOptionParser* underTest = [[[CommandLineOptionParser alloc] init] autorelease];
-    NSArray* input = [NSArray arrayWithObjects: @"foo", @"bar"];
+    NSArray* input = [NSArray arrayWithObjects: @"foo", @"bar", nil];
 
     CommandLineOptions* options = [underTest parse:input];
     NSArray* remainingArgs = [options getRemainingArguments];
@@ -16,7 +16,7 @@ void addParse_WhenHasOneArgumentAndOption_ParsesCorrectly(){
     CommandLineOptionParser* underTest = [[[CommandLineOptionParser alloc] init] autorelease];
     [underTest addArgumentWithName: @"seed"];
 
-    NSArray* input = [NSArray arrayWithObjects: @"--seed", @"10"];
+    NSArray* input = [NSArray arrayWithObjects: @"--seed", @"10", nil];
 
     CommandLineOptions* options = [underTest parse:input];
 
@@ -30,7 +30,7 @@ void addParse_WhenHasShortArgumentAndOption_ParsesCorrectly(){
     CommandLineOptionParser* underTest = [[[CommandLineOptionParser alloc] init] autorelease];
     [underTest addArgumentWithName: @"seed"];
 
-    NSArray* input = [NSArray arrayWithObjects: @"-s", @"10"];
+    NSArray* input = [NSArray arrayWithObjects: @"--seed", @"10", nil];
 
     CommandLineOptions* options = [underTest parse:input];
 
@@ -44,7 +44,7 @@ void addParse_WhenHasZeroArguments_ParsesAsBoolean(){
     CommandLineOptionParser* underTest = [[[CommandLineOptionParser alloc] init] autorelease];
     [underTest addArgumentWithName: @"foo" andShortName: @"f" isBoolean:YES];
 
-    NSArray* input = [NSArray arrayWithObjects: @"--foo"];
+    NSArray* input = [NSArray arrayWithObjects: @"--foo", nil];
 
     CommandLineOptions* options = [underTest parse:input];
 
@@ -55,7 +55,7 @@ void addParse_WhenHasZeroArguments_ParsesAsBoolean(){
 
 void addParse_WhenHasUnknownOptionName_ReturnsError(){
     CommandLineOptionParser* underTest = [[[CommandLineOptionParser alloc] init] autorelease];
-    NSArray* input = [NSArray arrayWithObjects: @"--foo"];
+    NSArray* input = [NSArray arrayWithObjects: @"--foo", nil];
 
     NSError* err;
     CommandLineOptions* options = [underTest parse:input error:&err];
@@ -72,7 +72,7 @@ void addForKey_WhenAddingForKey_ResultIsStoredInThatKey(){
     CommandLineOptionParser* underTest = [[[CommandLineOptionParser alloc] init] autorelease];
     [underTest addArgumentForKey: @"foo" withName:@"bar"];
 
-    NSArray* input = [NSArray arrayWithObjects: @"--bar", @"baz"];
+    NSArray* input = [NSArray arrayWithObjects: @"--bar", @"baz", nil];
 
     CommandLineOptions* options = [underTest parse:input];
 

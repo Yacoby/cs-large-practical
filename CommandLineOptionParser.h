@@ -38,4 +38,5 @@
 - (CommandLineOptions*)parse:(NSArray*)arguments error:(NSError**)err;
 
 - (BOOL)isArgumentBool:(NSString*)name;
+- (id)parseSingleArgument:(NSMutableArray*)arguments argumentName:(NSString*)argName;
 @end

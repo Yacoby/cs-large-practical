@@ -1,5 +1,6 @@
 #import <Foundation/Foundation.h>
 #import "ConfigurationSerilizer.h"
+#import "CommandLineOptionParser.h"
 
 void countAllocationsForAllClasses(){
     int numClasses;
@@ -21,6 +22,14 @@ void printAllocatedClasses(){
 
 int main(void){
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+
+    CommandLineOptionParser* underTest = [[[CommandLineOptionParser alloc] init] autorelease];
+    [underTest addArgumentWithName: @"seed"];
+
+    NSArray* input = [NSArray arrayWithObjects: @"-s", @"10", nil];
+
+    CommandLineOptions* options = [underTest parse:input];
+    NSString* seedResult = [options getOptionWithName: @"seed"];
 
     countAllocationsForAllClasses();
 

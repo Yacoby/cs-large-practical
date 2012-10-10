@@ -1,4 +1,5 @@
 #import "CommandLineOptionParser.h"
+#import "ErrorConstants.h";
 
 @implementation CommandLineOptions
 
@@ -76,33 +77,78 @@
 }
 
 - (CommandLineOptions*)parse:(NSArray*)arguments error:(NSError**)err{
-    NSString* argument = [arguments objectAtIndex:0];
-    if ([argument hasPrefix:@"--"] ){
-        NSString* argName = [argument substringFromIndex:2];
+    NSMutableArray* mutableArguments = [arguments mutableCopy];
+    NSMutableArray* remainingArgs = [[NSMutableArray alloc] init];
+    NSMutableDictionary* args = [[NSMutableDictionary alloc] init];
 
-    }else if ([argument hasPrefix:@"-"] ){
-        NSString* argName = [argument substringFromIndex:1];
+    while ( [mutableArguments count] ){
+        NSString* argument = [mutableArguments objectAtIndex:0];
+        [mutableArguments removeObjectAtIndex: 0];
 
-    }else{
-        for ( NSString* arg in arguments ){
-            if ([argument hasPrefix:@"-"] ){
-                //problem, there are still options when there shouldn't be
+        if ([argument hasPrefix:@"-"] ){
+        NSString* argName = nil;
+        NSMutableDictionary* lookupDict = nil;
+
+            if ([argument hasPrefix:@"--"] ){
+                argName = [argument substringFromIndex:2];
+                lookupDict = mLongNames;
+            }else{
+                argName = [argument substringFromIndex:1];
+                lookupDict = mShortNames;
             }
+
+            NSString* key = [lookupDict objectForKey: argName];
+            if ( key == nil ){
+                NSString* description = NSLocalizedString(@"Unknown argument ", @"");
+
+                NSDictionary* errorDictionary = nil;// { NSLocalizedDescriptionKey : description };
+                *err = [NSError errorWithDomain:ERROR_DOMAIN code:1 userInfo:errorDictionary];
+
+                //TODO LEAK
+                return nil;
+            }
+
+            [args setObject:[self parseSingleArgument:mutableArguments argumentName:argName]
+                     forKey: [lookupDict objectForKey: argName]];
+        }else{
+            [remainingArgs addObject:argument];
+            for ( NSString* arg in mutableArguments){
+                if ([arg hasPrefix:@"-"] ){
+                    //problem, there are still options when there shouldn't be
+                }else{
+                    [remainingArgs addObject:arg];
+                }
+            }
+
+            break;
         }
     }
+
+    CommandLineOptions* toReturn = [[[CommandLineOptions alloc] initWithOptions:args andArgs: remainingArgs] autorelease];
+    
+    [remainingArgs release];
+    [args release];
+    [mutableArguments release];
+
+    return toReturn;
 }
 
-- (void)parseSingleArgument:(NSMutableArray*)arguments argumentName:(NSString*){
+- (id)parseSingleArgument:(NSMutableArray*)arguments argumentName:(NSString*) argName{
     if ( [self isArgumentBool:argName] ){
-        //set arg 1
+        return @"1";
     }else{
-        NSString* arg = [arguments objectAtIndex:1];
-        //set arg to the value
-
+        NSString* arg = [arguments objectAtIndex:0];
+        [arguments removeObjectAtIndex: 0];
+        return arg;
     }
 }
 
 - (BOOL)isArgumentBool:(NSString*)name{
+    NSNumber* result = [mIsBoolean objectForKey:name];
+    if ( result == nil ){
+        return false;
+    }
+    return [result boolValue];
 }
 
 @end

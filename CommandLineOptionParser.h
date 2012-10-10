@@ -29,10 +29,12 @@
 - (void)addArgumentWithName:(NSString*)name;
 - (void)addArgumentWithName:(NSString*)name andShortName:(NSString*)shortName;
 - (void)addArgumentWithName:(NSString*)name andShortName:(NSString*)shortName isBoolean:(BOOL)isBool;
+- (void)addArgumentWithName:(NSString*)name isBoolean:(BOOL)isBool;
 
 - (void)addArgumentForKey:(NSString*)key withName:(NSString*)name;
 - (void)addArgumentForKey:(NSString*)key withName:(NSString*)name andShortName:(NSString*)shortName;
 - (void)addArgumentForKey:(NSString*)key withName:(NSString*)name andShortName:(NSString*)shortName isBoolean:(BOOL)isBool;
+- (void)addArgumentForKey:(NSString*)key withName:(NSString*)name isBoolean:(BOOL)isBool;
 
 - (CommandLineOptions*)parse:(NSArray*)arguments;
 - (CommandLineOptions*)parse:(NSArray*)arguments error:(NSError**)err;

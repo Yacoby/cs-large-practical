@@ -48,8 +48,8 @@ void addParse_WhenHasZeroArguments_ParsesAsBoolean(){
 
     CommandLineOptions* options = [underTest parse:input];
 
-    NSString* result = [options getOptionWithName: @"foo"];
-    NSString* expected = @"1";
+    NSNumber* result = [options getOptionWithName: @"foo"];
+    NSString* expected = [NSNumber numberWithBool:YES];
     PASS_EQUAL(result, expected, "");
 }
 
@@ -66,6 +66,19 @@ void addParse_WhenHasUnknownOptionName_ReturnsError(){
     NSString* expectedReason = @"Unknown argument --foo";
     NSRange search = [reason rangeOfString:expectedReason options:NSCaseInsensitiveSearch];
     PASS(search.location != NSNotFound, "");
+}
+
+void parse_WhenBooleanArgNotSet_IsFalse(){
+    CommandLineOptionParser* underTest = [[[CommandLineOptionParser alloc] init] autorelease];
+    [underTest addArgumentWithName: @"foo" isBoolean:YES];
+
+    NSArray* input = [NSArray arrayWithObjects: nil];
+
+    CommandLineOptions* options = [underTest parse:input];
+
+    NSNumber* result = [options getOptionWithName: @"foo"];
+    NSString* expected = [NSNumber numberWithBool:NO];
+    PASS_EQUAL(result, expected, "");
 }
 
 void addForKey_WhenAddingForKey_ResultIsStoredInThatKey(){
@@ -106,6 +119,7 @@ int main()
         addParse_WhenHasUnknownOptionName_ReturnsError();
         addForKey_WhenAddingForKey_ResultIsStoredInThatKey();
         get_WhenHasArgInRemainingArgs_GivesError();
+        parse_WhenBooleanArgNotSet_IsFalse();
     END_SET("CommandLineOptionParser")
 
     return 0;

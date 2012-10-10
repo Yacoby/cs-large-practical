@@ -21,20 +21,33 @@ void printAllocatedClasses(){
 }
 
 int main(void){
+
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
-    CommandLineOptionParser* underTest = [[[CommandLineOptionParser alloc] init] autorelease];
-    NSArray* input = [NSArray arrayWithObjects: @"--foo", nil];
+    CommandLineOptionParser* cmdLineParser = [[CommandLineOptionParser alloc] init];
+    [cmdLineParser addArgumentWithName:@"trackalloc" isBoolean:YES];
+
+    NSArray* processArguments = [[NSProcessInfo processInfo] arguments];
+    NSArray* cmdLineArgs = [processArguments subarrayWithRange:NSMakeRange(1, [processArguments count] - 1)];
 
     NSError* err;
-    CommandLineOptions* options = [underTest parse:input error:&err];
-    NSLog([err localizedDescription]);
+    CommandLineOptions* options = [cmdLineParser parse:cmdLineArgs error:&err];
+    [cmdLineParser release];
 
-    countAllocationsForAllClasses();
+    if ( options == nil ){
+        NSString* errDescription = [err localizedDescription];
+        fprintf(stderr, "%s\n", [errDescription cStringUsingEncoding:NSASCIIStringEncoding]);
+        return 1;
+    }
 
-    NSString* configurationStr = @"t = 10\n";
-    NSLog(@"%f",[[[ConfigurationTextSerilizer deserilize:configurationStr] time] totalSeconds]);
+    BOOL trackObjectAllocations = [[options getOptionWithName:@"trackalloc"] boolValue];
+    GSDebugAllocationActive(trackObjectAllocations);
+
     [pool drain];
+
+    if ( trackObjectAllocations ){
+        printAllocatedClasses();
+    }
 
     return 0;
 }

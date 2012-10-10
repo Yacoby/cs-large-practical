@@ -57,6 +57,10 @@
     [self addArgumentForKey:name withName:name andShortName:shortName isBoolean:isBool];
 }
 
+- (void)addArgumentWithName:(NSString*)name isBoolean:(BOOL)isBool{
+    [self addArgumentForKey:name withName:name isBoolean:isBool];
+}
+
 - (void)addArgumentForKey:(NSString*)key withName:(NSString*)name{
     [mLongNames setObject:key forKey:name];
 }
@@ -69,6 +73,11 @@
 - (void)addArgumentForKey:(NSString*)key withName:(NSString*)name andShortName:(NSString*)shortName isBoolean:(BOOL)isBool{
     [mIsBoolean setObject:[NSNumber numberWithBool:isBool] forKey:name];
     [self addArgumentForKey:key withName:name andShortName:shortName];
+}
+
+- (void)addArgumentForKey:(NSString*)key withName:(NSString*)name isBoolean:(BOOL)isBool{
+    [mIsBoolean setObject:[NSNumber numberWithBool:isBool] forKey:name];
+    [self addArgumentForKey:key withName:name];
 }
 
 - (CommandLineOptions*)parse:(NSArray*)arguments{
@@ -137,6 +146,14 @@
         }
     }
 
+    for ( NSString* name in mLongNames ){
+        if ( [self isArgumentBool:name] ){
+            if ( [args objectForKey:name] == nil ){
+                [args setObject:[NSNumber numberWithBool:NO] forKey:name];
+            }
+        }
+    }
+
     CommandLineOptions* toReturn = [[[CommandLineOptions alloc] initWithOptions:args andArgs: remainingArgs] autorelease];
     
     [remainingArgs release];
@@ -148,7 +165,7 @@
 
 - (id)parseSingleArgument:(NSMutableArray*)arguments argumentName:(NSString*) argName{
     if ( [self isArgumentBool:argName] ){
-        return @"1";
+        return [NSNumber numberWithBool:YES];
     }else{
         NSString* arg = [arguments objectAtIndex:0];
         [arguments removeObjectAtIndex: 0];
@@ -165,4 +182,3 @@
 }
 
 @end
-

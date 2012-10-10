@@ -1,5 +1,5 @@
 #import "CommandLineOptionParser.h"
-#import "ErrorConstants.h";
+#import "ErrorConstants.h"
 
 @implementation CommandLineOptions
 
@@ -77,6 +77,7 @@
 }
 
 - (CommandLineOptions*)parse:(NSArray*)arguments error:(NSError**)err{
+
     NSMutableArray* mutableArguments = [arguments mutableCopy];
     NSMutableArray* remainingArgs = [[NSMutableArray alloc] init];
     NSMutableDictionary* args = [[NSMutableDictionary alloc] init];
@@ -86,8 +87,8 @@
         [mutableArguments removeObjectAtIndex: 0];
 
         if ([argument hasPrefix:@"-"] ){
-        NSString* argName = nil;
-        NSMutableDictionary* lookupDict = nil;
+            NSString* argName = nil;
+            NSMutableDictionary* lookupDict = nil;
 
             if ([argument hasPrefix:@"--"] ){
                 argName = [argument substringFromIndex:2];
@@ -99,12 +100,16 @@
 
             NSString* key = [lookupDict objectForKey: argName];
             if ( key == nil ){
-                NSString* description = NSLocalizedString(@"Unknown argument ", @"");
+                NSString* description = [NSString stringWithFormat:@"Unknown argument %@", argument];
 
-                NSDictionary* errorDictionary = nil;// { NSLocalizedDescriptionKey : description };
-                *err = [NSError errorWithDomain:ERROR_DOMAIN code:1 userInfo:errorDictionary];
+                NSDictionary* errorDictionary = [[[NSDictionary alloc]
+                                                                initWithObjectsAndKeys: description, NSLocalizedDescriptionKey, nil]
+                                                                autorelease];
+                *err = [NSError errorWithDomain:ERROR_DOMAIN code:CONFIG_ERROR userInfo:errorDictionary];
 
-                //TODO LEAK
+                [remainingArgs release];
+                [args release];
+                [mutableArguments release];
                 return nil;
             }
 
@@ -114,7 +119,15 @@
             [remainingArgs addObject:argument];
             for ( NSString* arg in mutableArguments){
                 if ([arg hasPrefix:@"-"] ){
-                    //problem, there are still options when there shouldn't be
+                    NSString* description = [NSString stringWithFormat:@"Unexpected argument when parsing remaining options: %@", arg];
+
+                    NSDictionary* errorDictionary = [[[NSDictionary alloc]
+                                                                    initWithObjectsAndKeys: description, NSLocalizedDescriptionKey, nil]
+                                                                    autorelease];
+                    *err = [NSError errorWithDomain:ERROR_DOMAIN code:CONFIG_ERROR userInfo:errorDictionary];
+
+                    //LEAK
+                    return nil;
                 }else{
                     [remainingArgs addObject:arg];
                 }

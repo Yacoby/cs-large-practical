@@ -24,12 +24,11 @@ int main(void){
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
     CommandLineOptionParser* underTest = [[[CommandLineOptionParser alloc] init] autorelease];
-    [underTest addArgumentWithName: @"seed"];
+    NSArray* input = [NSArray arrayWithObjects: @"--foo", nil];
 
-    NSArray* input = [NSArray arrayWithObjects: @"-s", @"10", nil];
-
-    CommandLineOptions* options = [underTest parse:input];
-    NSString* seedResult = [options getOptionWithName: @"seed"];
+    NSError* err;
+    CommandLineOptions* options = [underTest parse:input error:&err];
+    NSLog([err localizedDescription]);
 
     countAllocationsForAllClasses();
 

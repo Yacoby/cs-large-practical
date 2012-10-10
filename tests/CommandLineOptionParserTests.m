@@ -61,7 +61,7 @@ void addParse_WhenHasUnknownOptionName_ReturnsError(){
     CommandLineOptions* options = [underTest parse:input error:&err];
     PASS(options == nil, "There is no valid options to return");
 
-    NSString* reason = [err localizedFailureReason];
+    NSString* reason = [err localizedDescription];
 
     NSString* expectedReason = @"Unknown argument --foo";
     NSRange search = [reason rangeOfString:expectedReason options:NSCaseInsensitiveSearch];
@@ -81,6 +81,21 @@ void addForKey_WhenAddingForKey_ResultIsStoredInThatKey(){
     PASS_EQUAL(result, expected, "");
 }
 
+
+void get_WhenHasArgInRemainingArgs_GivesError(){
+    CommandLineOptionParser* underTest = [[[CommandLineOptionParser alloc] init] autorelease];
+    NSArray* input = [NSArray arrayWithObjects: @"foo", @"bar", @"--arg", @"baz", nil];
+
+    NSError* err;
+    CommandLineOptions* options = [underTest parse:input error:&err];
+    PASS(options == nil, "There is no valid options to return");
+
+    NSString* reason = [err localizedDescription];
+    NSString* expectedReason = @"Unexpected argument when parsing remaining options: --arg";
+    NSRange search = [reason rangeOfString:expectedReason options:NSCaseInsensitiveSearch];
+    PASS(search.location != NSNotFound, "");
+}
+
 int main()
 {
     START_SET("CommandLineOptionParser")
@@ -90,6 +105,7 @@ int main()
         addParse_WhenHasZeroArguments_ParsesAsBoolean();
         addParse_WhenHasUnknownOptionName_ReturnsError();
         addForKey_WhenAddingForKey_ResultIsStoredInThatKey();
+        get_WhenHasArgInRemainingArgs_GivesError();
     END_SET("CommandLineOptionParser")
 
     return 0;

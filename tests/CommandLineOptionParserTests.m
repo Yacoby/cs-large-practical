@@ -68,6 +68,19 @@ void addParse_WhenHasUnknownOptionName_ReturnsError(){
     PASS(search.location != NSNotFound, "");
 }
 
+void addForKey_WhenAddingForKey_ResultIsStoredInThatKey(){
+    CommandLineOptionParser* underTest = [[[CommandLineOptionParser alloc] init] autorelease];
+    [underTest addArgumentForKey: @"foo" withName:@"bar"];
+
+    NSArray* input = [NSArray arrayWithObjects: @"--bar", @"baz"];
+
+    CommandLineOptions* options = [underTest parse:input];
+
+    NSString* result = [options getOptionWithName: @"foo"];
+    NSString* expected = @"baz";
+    PASS_EQUAL(result, expected, "");
+}
+
 int main()
 {
     START_SET("CommandLineOptionParser")
@@ -76,6 +89,7 @@ int main()
         addParse_WhenHasOneArgumentAndOption_ParsesCorrectly();
         addParse_WhenHasZeroArguments_ParsesAsBoolean();
         addParse_WhenHasUnknownOptionName_ReturnsError();
+        addForKey_WhenAddingForKey_ResultIsStoredInThatKey();
     END_SET("CommandLineOptionParser")
 
     return 0;

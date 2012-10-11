@@ -135,7 +135,9 @@
                                                                     autorelease];
                     *err = [NSError errorWithDomain:ERROR_DOMAIN code:CONFIG_ERROR userInfo:errorDictionary];
 
-                    //LEAK
+                    [remainingArgs release];
+                    [args release];
+                    [mutableArguments release];
                     return nil;
                 }else{
                     [remainingArgs addObject:arg];

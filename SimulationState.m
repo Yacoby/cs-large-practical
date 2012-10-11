@@ -22,6 +22,10 @@
 - (NSDictionary*)moleculeCounts{
     return mMoleculeCount;
 }
+- (uint)moleculeCount:(NSString*)moleculeName{
+    NSNumber* number = [mMoleculeCount objectForKey:moleculeName];
+    return [number unsignedIntValue];
+}
 - (TimeSpan*)timeSinceSimulationStart{
     return mTimeSinceSimulationStart;
 }

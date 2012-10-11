@@ -1,5 +1,6 @@
 #import <Foundation/Foundation.h>
 #import "KineticConstant.h"
+#import "SimulationState.h"
 
 /**
  * @brief Represents the components that make up the reaction
@@ -33,4 +34,6 @@
 - (KineticConstant*)kineticConstant;
 - (NSCountedSet*)requirements;
 - (NSCountedSet*)result;
+- (double)reactionRate:(SimulationState*)state;
+- (NSDictionary*)applyReactionToCounts:(NSDictionary*)state;
 @end

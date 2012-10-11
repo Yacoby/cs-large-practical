@@ -58,4 +58,41 @@
 - (NSCountedSet*)result{
     return [mComponents result];
 }
+
+- (double)reactionRate:(SimulationState*)state{
+    NSCountedSet* req = [self requirements];
+    if ( [req count] == 1 ){
+        NSString* key = [req anyObject];
+
+        if ( [req countForObject:key] == 2 ){
+            //TODO do things
+        }
+    }
+
+    double rate = [mKineticConstant doubleValue];
+
+    for ( NSString* moleculeName in req ){
+        rate *= [state moleculeCount:moleculeName];
+    }
+    return rate;
+
+}
+
+- (NSDictionary*)applyReactionToCounts:(NSDictionary*)state{
+    NSMutableDictionary* newState = [[state mutableCopy] autorelease];
+    for ( NSString* moleculeName in [self requirements] ){
+        NSNumber* count = [state objectForKey:moleculeName];
+        NSNumber* newCount = [NSNumber numberWithInt:[count intValue]-1];
+        [newState setObject:newCount forKey:moleculeName];
+    }
+
+    for ( NSString* moleculeName in [self result] ){
+        NSNumber* count = [state objectForKey:moleculeName];
+        NSNumber* newCount = [NSNumber numberWithInt:[count intValue]+1];
+        [newState setObject:newCount forKey:moleculeName];
+    }
+
+    return newState;
+}
+
 @end

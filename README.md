@@ -25,3 +25,7 @@ If you want to run the tests, ensure that you have first built the application a
 Running the Application
 -----------------------
 Run `./Cslp.app/Cslp'
+
+Command Line Arguments
+-----------------------
+Run `./Cslp.app/Cslp -h` to see command line options

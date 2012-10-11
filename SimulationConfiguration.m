@@ -36,6 +36,10 @@
     return [mReactions objectForKey:key];
 }
 
+- (NSDictionary*)reactions{
+    return mReactions;
+}
+
 - (void)addMoleculeCount:(NSString*)key count:(uint)count{
     NSNumber* number = [[NSNumber alloc] initWithUnsignedInt: count];
     [mMoleculeCounts setObject:number forKey:key];
@@ -45,6 +49,10 @@
 - (uint)moleculeCount:(NSString*)key{
     NSNumber* number = [mMoleculeCounts objectForKey:key];
     return [number unsignedIntValue];
+}
+
+- (NSDictionary*)moleculeCounts{
+    return mMoleculeCounts;
 }
 
 - (NSSet*)molecules{

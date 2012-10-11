@@ -12,4 +12,5 @@
 
 - (id)initFromSeconds:(double)seconds;
 - (double)totalSeconds;
+- (void)addSeconds:(double)seconds;
 @end

@@ -12,4 +12,8 @@
 - (double)totalSeconds{
     return mTimeSpanSeconds;
 }
+
+- (void)addSeconds:(double)seconds{
+    mTimeSpanSeconds += seconds;
+}
 @end

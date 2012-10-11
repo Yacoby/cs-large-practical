@@ -12,5 +12,6 @@
 - (void)dealloc;
 
 - (NSDictionary*)moleculeCounts;
+- (uint)moleculeCount:(NSString*)moleculeName;
 - (TimeSpan*)timeSinceSimulationStart;
 @end

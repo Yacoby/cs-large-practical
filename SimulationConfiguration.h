@@ -19,13 +19,17 @@
 - (void)dealloc;
 
 - (void)setTime:(TimeSpan*)time;
+//TODO fix name
 - (TimeSpan*)time;
 
 - (void)addReaction:(NSString*)key kineticConstant:(KineticConstant*)kineticConstant reactionComponents:(ReactionComponents*)components;
 - (ReactionDefinition*)reaction:(NSString*)key;
+- (NSDictionary*)reactions;
+
 
 - (void)addMoleculeCount:(NSString*)key count:(uint)count;
 - (uint)moleculeCount:(NSString*)key;
+- (NSDictionary*)moleculeCounts;
 - (NSSet*)molecules;
 
 @end

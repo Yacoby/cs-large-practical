@@ -1,6 +1,10 @@
 #import <Foundation/Foundation.h>
 #import "ConfigurationSerilizer.h"
 #import "CommandLineOptionParser.h"
+#import "Simulator.h"
+
+#import "OutputStream.h"
+#import "OutputWriter.h"
 
 void countAllocationsForAllClasses(){
     int numClasses;
@@ -21,11 +25,11 @@ void printAllocatedClasses(){
 }
 
 int main(void){
-
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
     CommandLineOptionParser* cmdLineParser = [[CommandLineOptionParser alloc] init];
     [cmdLineParser addArgumentWithName:@"trackalloc" isBoolean:YES];
+    [cmdLineParser addArgumentWithName:@"seed" andShortName:@"s"];
 
     NSArray* processArguments = [[NSProcessInfo processInfo] arguments];
     NSArray* cmdLineArgs = [processArguments subarrayWithRange:NSMakeRange(1, [processArguments count] - 1)];
@@ -42,6 +46,21 @@ int main(void){
 
     BOOL trackObjectAllocations = [[options getOptionWithName:@"trackalloc"] boolValue];
     GSDebugAllocationActive(trackObjectAllocations);
+
+    NSArray* remainingArguments = [options getRemainingArguments];
+    NSString* inputFile = [remainingArguments objectAtIndex:0];
+
+    NSString *fileString = [NSString stringWithContentsOfFile:inputFile];
+    SimulationConfiguration* cfg = [ConfigurationTextSerilizer deserilize:fileString];
+    Simulator* simulator = [[Simulator alloc] initWithCfg:cfg];
+    NSArray* simulationStates = [simulator runSimulation];
+
+    MemoryOutputStream* os = [[MemoryOutputStream alloc] init];
+    [SimpleOutputWriter writeToStream:os simulationConfiguration:cfg stateHistory:simulationStates];
+    fprintf(stdout, "%s\n", [[os memory] cStringUsingEncoding:NSASCIIStringEncoding]);
+
+    [simulator release];
+    [os release];
 
     [pool drain];
 

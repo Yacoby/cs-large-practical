@@ -22,3 +22,16 @@
 - (void)write:(NSString*)str;
 - (NSString*)memory;
 @end
+
+@interface FileHandleOutputStream : NSObject <OutputStream>{
+    NSFileHandle* mFileHandle;
+}
+- (id)initWithFileHandle:(NSFileHandle*)file;
+- (void)dealloc;
+- (void)write:(NSString*)str;
+@end
+
+@interface FileOutputStream : FileHandleOutputStream {
+}
+- (id)initWithFileName:(NSString*)fileName;
+@end

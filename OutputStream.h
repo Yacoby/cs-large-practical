@@ -3,7 +3,7 @@
 /**
  * @brief This represents some form of string output to some location.
  */
-@protocol OutputStream
+@protocol OutputStream <NSObject>
 - (void)write:(NSString*)str;
 @end
 

@@ -6,8 +6,8 @@
 /**
  * @brief This is a generic writer that allows writing of the simulation to a stream
  */
-@protocol OutputWriter
-+ (void)writeToStream:(id <OutputStream>)stream simulationConfiguration:(SimulationConfiguration*)cfg stateHistory:(NSArray*)stateHistory;
+@protocol OutputWriter <NSObject>
+- (void)writeToStream:(SimulationState*)state;
 @end
 
 /**
@@ -17,7 +17,10 @@
  * to aggregate any of the data
  */
 @interface SimpleOutputWriter : NSObject <OutputWriter>{
+    id <OutputStream> mOutputStream;
+    NSArray* mOrderedMolecules;
 }
-+ (void)writeToStream:(id <OutputStream>)stream simulationConfiguration:(SimulationConfiguration*)cfg stateHistory:(NSArray*)stateHistory;
-
+- (id)initWithStream:(id <OutputStream>)stream simulationConfiguration:(SimulationConfiguration*)cfg;
+- (void)dealloc;
+- (void)writeToStream:(SimulationState*)state;
 @end

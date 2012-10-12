@@ -78,21 +78,18 @@
 
 }
 
-- (NSDictionary*)applyReactionToCounts:(NSDictionary*)state{
-    NSMutableDictionary* newState = [[state mutableCopy] autorelease];
+- (void)applyReactionToCounts:(NSMutableDictionary*)state{
     for ( NSString* moleculeName in [self requirements] ){
         NSNumber* count = [state objectForKey:moleculeName];
         NSNumber* newCount = [NSNumber numberWithInt:[count intValue]-1];
-        [newState setObject:newCount forKey:moleculeName];
+        [state setObject:newCount forKey:moleculeName];
     }
 
     for ( NSString* moleculeName in [self result] ){
         NSNumber* count = [state objectForKey:moleculeName];
         NSNumber* newCount = [NSNumber numberWithInt:[count intValue]+1];
-        [newState setObject:newCount forKey:moleculeName];
+        [state setObject:newCount forKey:moleculeName];
     }
-
-    return newState;
 }
 
 @end

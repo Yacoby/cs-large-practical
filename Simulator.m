@@ -3,11 +3,14 @@
 #import <math.h>
 
 @implementation Simulator
-- (id)initWithCfg:(SimulationConfiguration*)cfg{
+- (id)initWithCfg:(SimulationConfiguration*)cfg outputWriter:(id <OutputWriter>)writer{
     self = [super init];
     if ( self != nil ){
         [cfg retain];
         mCfg = cfg;
+
+        [writer retain];
+        mWriter = writer;
 
         mReactions = [[NSMutableArray alloc] init];
 
@@ -21,48 +24,45 @@
 }
 
 - (void)dealloc{
+    [mWriter release];
     [mCfg release];
     [mReactions release];
     [super dealloc];
 }
 
-- (NSArray*)runSimulation{
+- (void)runSimulation{
     TimeSpan* startTime = [[TimeSpan alloc] initFromSeconds:0];
-    NSDictionary* initialCounts = [mCfg moleculeCounts];
+    NSMutableDictionary* initialCounts = [[[mCfg moleculeCounts] mutableCopy] autorelease];
     SimulationState* initialState = [[SimulationState alloc] initWithTime:startTime moleculeCount:initialCounts];
 
     TimeSpan* stopTime = [mCfg time];
 
-    NSMutableArray* result = [[[NSMutableArray alloc] init] autorelease];
-    [result addObject:initialState];
     SimulationState* state = initialState;
+    [mWriter writeToStream:state];
 
     while ( true ){
-        state = [self runSimulationStep:state];
-        if ( state == nil ||
+        BOOL hasHadReaction = [self runSimulationStep:state];
+        if ( !hasHadReaction ||
             [[state timeSinceSimulationStart] totalSeconds] >= [stopTime totalSeconds] ){
             break;
         }
 
-        [result addObject:state];
+        [mWriter writeToStream:state];
     }
 
     [startTime release];
     [initialState release];
-
-    return result;
 }
 
-- (SimulationState*)runSimulationStep:(SimulationState*)state{
+- (BOOL)runSimulationStep:(SimulationState*)state{
     double a0 = 0;
     for ( ReactionDefinition* reaction in mReactions ){
         a0 += [reaction reactionRate:state];
     }
     double r1 = ((double)rand())/RAND_MAX;
     double tau = (1/a0) * log(1/r1);
-    TimeSpan* oldTime = [state timeSinceSimulationStart];
-    TimeSpan* newTime = [[[TimeSpan alloc] initFromSeconds:[oldTime totalSeconds]]autorelease];
-    [newTime addSeconds:tau];
+    TimeSpan* time = [state timeSinceSimulationStart];
+    [time addSeconds:tau];
 
     double r2 = ((double)rand())/RAND_MAX;
 
@@ -76,13 +76,13 @@
         }
     }
     if ( reaction == -1 ){
-        return nil;
+        return NO;
     }
 
-    NSDictionary* oldCounts = [state moleculeCounts];
-    NSDictionary* newCounts = [[mReactions objectAtIndex:reaction] applyReactionToCounts:oldCounts];
+    NSMutableDictionary* counts = [state moleculeCounts];
+    [[mReactions objectAtIndex:reaction] applyReactionToCounts:counts];
 
-    return [[[SimulationState alloc] initWithTime:newTime moleculeCount:newCounts] autorelease];
+    return YES;
 }
 
 @end

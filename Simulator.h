@@ -1,14 +1,16 @@
 #import <Foundation/Foundation.h>
 #import "SimulationConfiguration.h"
 #import "SimulationState.h"
+#import "OutputWriter.h"
 
 @interface Simulator : NSObject {
     SimulationConfiguration* mCfg;
     NSMutableArray* mReactions;
+    id <OutputWriter> mWriter;
 }
-- (id)initWithCfg:(SimulationConfiguration*)cfg;
+- (id)initWithCfg:(SimulationConfiguration*)cfg outputWriter:(id <OutputWriter>)writer;
 - (void)dealloc;
-- (NSArray*)runSimulation;
-- (SimulationState*)runSimulationStep:(SimulationState*)state;
+- (void)runSimulation;
+- (BOOL)runSimulationStep:(SimulationState*)state;
 @end
 

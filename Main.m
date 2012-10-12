@@ -52,15 +52,15 @@ int main(void){
 
     NSString *fileString = [NSString stringWithContentsOfFile:inputFile];
     SimulationConfiguration* cfg = [ConfigurationTextSerilizer deserilize:fileString];
-    Simulator* simulator = [[Simulator alloc] initWithCfg:cfg];
-    NSArray* simulationStates = [simulator runSimulation];
+    Simulator* simulator = [[Simulator alloc] initWithCfg:cfg outputWriter:nil];
+    [simulator runSimulation];
 
-    MemoryOutputStream* os = [[MemoryOutputStream alloc] init];
-    [SimpleOutputWriter writeToStream:os simulationConfiguration:cfg stateHistory:simulationStates];
-    fprintf(stdout, "%s\n", [[os memory] cStringUsingEncoding:NSASCIIStringEncoding]);
+    //MemoryOutputStream* os = [[MemoryOutputStream alloc] init];
+    //[SimpleOutputWriter writeToStream:os simulationConfiguration:cfg stateHistory:simulationStates];
+    //fprintf(stdout, "%s\n", [[os memory] cStringUsingEncoding:NSASCIIStringEncoding]);
 
     [simulator release];
-    [os release];
+    //[os release];
 
     [pool drain];
 

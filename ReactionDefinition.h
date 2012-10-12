@@ -35,5 +35,5 @@
 - (NSCountedSet*)requirements;
 - (NSCountedSet*)result;
 - (double)reactionRate:(SimulationState*)state;
-- (NSDictionary*)applyReactionToCounts:(NSDictionary*)state;
+- (void)applyReactionToCounts:(NSMutableDictionary*)state;
 @end

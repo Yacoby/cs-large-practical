@@ -6,12 +6,12 @@
  */
 @interface SimulationState : NSObject{
     TimeSpan* mTimeSinceSimulationStart;
-    NSDictionary* mMoleculeCount;
+    NSMutableDictionary* mMoleculeCount;
 }
-- (id)initWithTime:(TimeSpan*)time moleculeCount:(NSDictionary*)counts;
+- (id)initWithTime:(TimeSpan*)time moleculeCount:(NSMutableDictionary*)counts;
 - (void)dealloc;
 
-- (NSDictionary*)moleculeCounts;
+- (NSMutableDictionary*)moleculeCounts;
 - (uint)moleculeCount:(NSString*)moleculeName;
 - (TimeSpan*)timeSinceSimulationStart;
 @end

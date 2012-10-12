@@ -1,7 +1,7 @@
 #import "SimulationState.h"
 
 @implementation SimulationState
-- (id)initWithTime:(TimeSpan*)time moleculeCount:(NSDictionary*)counts{
+- (id)initWithTime:(TimeSpan*)time moleculeCount:(NSMutableDictionary*)counts{
     self = [super init];
     if ( self != nil ){
         [time retain];

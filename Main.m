@@ -55,11 +55,11 @@ int main(void){
     NSString *fileString = [NSString stringWithContentsOfFile:inputFile];
     SimulationConfiguration* cfg = [ConfigurationTextSerilizer deserilize:fileString];
 
+    [[NSFileManager defaultManager] createFileAtPath:@"output" contents:nil attributes:nil];
     FileOutputStream* os = [[FileOutputStream alloc] initWithFileName:@"output"];
     SimpleOutputWriter* writer = [[SimpleOutputWriter alloc] initWithStream:os simulationConfiguration:cfg];
-    //fprintf(stdout, "%s\n", [[os memory] cStringUsingEncoding:NSASCIIStringEncoding]);
-    //
-    Simulator* simulator = [[Simulator alloc] initWithCfg:cfg randomGen:random outputWriter:nil];
+
+    Simulator* simulator = [[Simulator alloc] initWithCfg:cfg randomGen:random outputWriter:writer];
     [simulator runSimulation];
 
     [simulator release];

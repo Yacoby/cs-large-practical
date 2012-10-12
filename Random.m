@@ -22,7 +22,7 @@
     return self;
 }
 - (double)next{
-    return rand_r(&mSeed)/RAND_MAX;
+    return ((double)rand_r(&mSeed))/RAND_MAX;
 }
 @end
 

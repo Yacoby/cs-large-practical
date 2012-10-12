@@ -61,15 +61,16 @@
 
 - (double)reactionRate:(SimulationState*)state{
     NSCountedSet* req = [self requirements];
+    double rate = [mKineticConstant doubleValue];
     if ( [req count] == 1 ){
-        NSString* key = [req anyObject];
+        NSString* moleculeName = [req anyObject];
 
-        if ( [req countForObject:key] == 2 ){
-            //TODO do things
+        if ( [req countForObject:moleculeName] == 2 ){
+            uint count = [state moleculeCount:moleculeName];
+            return rate*0.5*( count * (count - 1));
         }
     }
 
-    double rate = [mKineticConstant doubleValue];
 
     for ( NSString* moleculeName in req ){
         rate *= [state moleculeCount:moleculeName];

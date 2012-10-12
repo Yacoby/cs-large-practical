@@ -50,9 +50,11 @@ int main(void){
     NSArray* remainingArguments = [options getRemainingArguments];
     NSString* inputFile = [remainingArguments objectAtIndex:0];
 
+    UniformRandom* random = [[UniformRandom alloc] initWithSeed:time(NULL)];
+
     NSString *fileString = [NSString stringWithContentsOfFile:inputFile];
     SimulationConfiguration* cfg = [ConfigurationTextSerilizer deserilize:fileString];
-    Simulator* simulator = [[Simulator alloc] initWithCfg:cfg outputWriter:nil];
+    Simulator* simulator = [[Simulator alloc] initWithCfg:cfg randomGen:random outputWriter:nil];
     [simulator runSimulation];
 
     //MemoryOutputStream* os = [[MemoryOutputStream alloc] init];
@@ -60,6 +62,7 @@ int main(void){
     //fprintf(stdout, "%s\n", [[os memory] cStringUsingEncoding:NSASCIIStringEncoding]);
 
     [simulator release];
+    [random release];
     //[os release];
 
     [pool drain];

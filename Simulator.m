@@ -3,7 +3,7 @@
 #import <math.h>
 
 @implementation Simulator
-- (id)initWithCfg:(SimulationConfiguration*)cfg outputWriter:(id <OutputWriter>)writer{
+- (id)initWithCfg:(SimulationConfiguration*)cfg randomGen:(id <Random>)random outputWriter:(id <OutputWriter>)writer{
     self = [super init];
     if ( self != nil ){
         [cfg retain];
@@ -11,6 +11,9 @@
 
         [writer retain];
         mWriter = writer;
+
+        [random retain];
+        mRandom = random;
 
         mReactions = [[NSMutableArray alloc] init];
 
@@ -26,6 +29,7 @@
 - (void)dealloc{
     [mWriter release];
     [mCfg release];
+    [mRandom release];
     [mReactions release];
     [super dealloc];
 }
@@ -59,12 +63,12 @@
     for ( ReactionDefinition* reaction in mReactions ){
         a0 += [reaction reactionRate:state];
     }
-    double r1 = ((double)rand())/RAND_MAX;
+    double r1 = [mRandom next];
     double tau = (1/a0) * log(1/r1);
     TimeSpan* time = [state timeSinceSimulationStart];
     [time addSeconds:tau];
 
-    double r2 = ((double)rand())/RAND_MAX;
+    double r2 = [mRandom next];
 
     int reaction = -1;
     double rateSum = 0;

@@ -50,7 +50,11 @@ int main(void){
     NSArray* remainingArguments = [options getRemainingArguments];
     NSString* inputFile = [remainingArguments objectAtIndex:0];
 
-    UniformRandom* random = [[UniformRandom alloc] initWithSeed:time(NULL)];
+    uint seed = time(NULL);
+    if ( [options getOptionWithName:@"seed"] != nil ){
+        seed = [[options getOptionWithName:@"seed"] intValue];
+    }
+    UniformRandom* random = [[UniformRandom alloc] initWithSeed:seed];
 
     NSString *fileString = [NSString stringWithContentsOfFile:inputFile];
     SimulationConfiguration* cfg = [ConfigurationTextSerilizer deserilize:fileString];

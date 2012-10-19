@@ -19,7 +19,7 @@
     [super dealloc];
 }
 
-- (NSDictionary*)moleculeCounts{
+- (NSMutableDictionary*)moleculeCounts{
     return mMoleculeCount;
 }
 - (uint)moleculeCount:(NSString*)moleculeName{

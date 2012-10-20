@@ -45,6 +45,8 @@ extern NSString* const COMMAND_LINE_SHORT_PREFIX;
  * returning of the correct type of object. If the type is primative, then it will
  * be wrapped by an object such as NSNumber.
  *
+ * There is one option that is always set, and that is --help. If this is encounted
+ * in the arguments then the result of the argument parser is the help text
  */
 @interface CommandLineOptionParser : NSObject{
     NSMutableDictionary* mShortArgumentNameToKey;

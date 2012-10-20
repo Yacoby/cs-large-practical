@@ -6,10 +6,9 @@ void get_WhenHasNoRulesAndGivenArgument_ReturnsNil(){
     CommandLineOptionParser* underTest = [[[CommandLineOptionParser alloc] init] autorelease];
     NSArray* input = [NSArray arrayWithObjects: @"foo", @"bar", nil];
 
-    NSError* err;
+    NSError* err = NULL;
     CommandLineOptions* options = [underTest parse:input error:&err];
     PASS(options == nil, "There is no valid options to return");
-
     NSString* reason = [err localizedDescription];
     NSString* expectedReason = @"Unexpected positional argument foo";
     NSRange search = [reason rangeOfString:expectedReason options:NSCaseInsensitiveSearch];
@@ -100,21 +99,6 @@ void addForKey_WhenAddingForKey_ResultIsStoredInThatKey(){
     PASS_EQUAL(result, expected, "");
 }
 
-
-void get_WhenHasArgInRemainingArgs_GivesError(){
-    CommandLineOptionParser* underTest = [[[CommandLineOptionParser alloc] init] autorelease];
-    NSArray* input = [NSArray arrayWithObjects: @"foo", @"bar", @"--arg", @"baz", nil];
-
-    NSError* err;
-    CommandLineOptions* options = [underTest parse:input error:&err];
-    PASS(options == nil, "There is no valid options to return");
-
-    NSString* reason = [err localizedDescription];
-    NSString* expectedReason = @"Unexpected argument when parsing remaining options: --arg";
-    NSRange search = [reason rangeOfString:expectedReason options:NSCaseInsensitiveSearch];
-    PASS(search.location != NSNotFound, "");
-}
-
 void add_WhenSetsType_TypeMatches(){
     CommandLineOptionParser* underTest = [[[CommandLineOptionParser alloc] init] autorelease];
     CommandLineType expectedType = Boolean;
@@ -132,6 +116,21 @@ void getKeyFromArgument_WhenIsLongName_GetsNameCorrectly(){
     PASS_EQUAL(key, expectedKey, "");
 }
 
+void parse_WhenHasPositionalArgAndIsNotSet_ReturnsError(){
+    CommandLineOptionParser* underTest = [[[CommandLineOptionParser alloc] init] autorelease];
+    [underTest addArgumentWithName: @"foo" ofType:String];
+
+    NSError* err = NULL;
+    NSArray* input = [[[NSArray alloc] init] autorelease];
+    CommandLineOptions* options = [underTest parse:input error:&err];
+    PASS(options == nil, "There is no valid options to return");
+
+    NSString* reason = [err localizedDescription];
+    NSString* expectedReason = @"There were still positional arguments required: foo";
+    NSRange search = [reason rangeOfString:expectedReason options:NSCaseInsensitiveSearch];
+    PASS(search.location != NSNotFound, "");
+}
+
 int main()
 {
     START_SET("CommandLineOptionParser")
@@ -141,10 +140,10 @@ int main()
         addParse_WhenHasZeroArguments_ParsesAsBoolean();
         addParse_WhenHasUnknownOptionName_ReturnsError();
         addForKey_WhenAddingForKey_ResultIsStoredInThatKey();
-        get_WhenHasArgInRemainingArgs_GivesError();
         parse_WhenBooleanArgNotSet_IsFalse();
         add_WhenSetsType_TypeMatches();
         getKeyFromArgument_WhenIsLongName_GetsNameCorrectly();
+        parse_WhenHasPositionalArgAndIsNotSet_ReturnsError();
     END_SET("CommandLineOptionParser")
 
     return 0;

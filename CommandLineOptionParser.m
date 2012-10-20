@@ -27,24 +27,24 @@ NSString* const COMMAND_LINE_SHORT_PREFIX = @"-";
 - (id)init{
     self = [super init];
     if ( self != nil ){
-        mShortNames = [[NSMutableDictionary alloc] init];
-        mLongNames = [[NSMutableDictionary alloc] init];
-        mTypes = [[NSMutableDictionary alloc] init];
+        mShortArgumentNameToKey = [[NSMutableDictionary alloc] init];
+        mLongArgumentNameToKey = [[NSMutableDictionary alloc] init];
+        mKeyToType = [[NSMutableDictionary alloc] init];
 
         mPositionalArguments = [[NSMutableArray alloc] init];
     }
     return self;
 }
 - (void)dealloc{
-    [mShortNames release];
-    [mLongNames release];
-    [mTypes release];
+    [mShortArgumentNameToKey release];
+    [mLongArgumentNameToKey release];
+    [mKeyToType release];
     [mPositionalArguments release];
     [super dealloc];
 }
 
 - (void)addArgumentWithName:(NSString*)name ofType:(CommandLineType)type{
-    if ( [self isPositionalName:name] ){
+    if ( [self isPositionalArgument:name] ){
         [self addPositionialArgumentForKey:name ofType:type];
     }else{
         NSString* key = [self toKeyFromLongName:name];
@@ -53,7 +53,7 @@ NSString* const COMMAND_LINE_SHORT_PREFIX = @"-";
 }
 
 - (void)addArgumentWithName:(NSString*)name andShortName:(NSString*)shortName ofType:(CommandLineType)type{
-    if ( [self isPositionalName:name] ){
+    if ( [self isPositionalArgument:name] ){
         [self addPositionialArgumentForKey:name ofType:type];
     }else{
         NSString* key = [self toKeyFromLongName:name];
@@ -62,17 +62,17 @@ NSString* const COMMAND_LINE_SHORT_PREFIX = @"-";
 }
 
 - (void)addOptionalArgumentForKey:(NSString*)key withName:(NSString*)name ofType:(CommandLineType)type{
-    [mTypes setObject:[NSNumber numberWithInteger:type] forKey:key];
-    [mLongNames setObject:key forKey:name];
+    [mKeyToType setObject:[NSNumber numberWithInteger:type] forKey:key];
+    [mLongArgumentNameToKey setObject:key forKey:name];
 }
 
 - (void)addOptionalArgumentForKey:(NSString*)key withName:(NSString*)name andShortName:(NSString*)shortName ofType:(CommandLineType)type{
-    [mShortNames setObject:key forKey:name];
+    [mShortArgumentNameToKey setObject:key forKey:shortName];
     [self addOptionalArgumentForKey:key withName:name ofType:type];
 }
 
 - (void)addPositionialArgumentForKey:(NSString*)key ofType:(CommandLineType)type{
-    [mTypes setObject:[NSNumber numberWithInteger:type] forKey:key];
+    [mKeyToType setObject:[NSNumber numberWithInteger:type] forKey:key];
     [mPositionalArguments addObject:key];
 }
 
@@ -80,8 +80,12 @@ NSString* const COMMAND_LINE_SHORT_PREFIX = @"-";
 - (NSString*)toKeyFromLongName:(NSString*)name{
     return [name substringFromIndex:[COMMAND_LINE_LONG_PREFIX length]];
 }
-- (BOOL)isPositionalName:(NSString*)name{
+- (BOOL)isPositionalArgument:(NSString*)name{
     return ![name hasPrefix: COMMAND_LINE_SHORT_PREFIX];
+}
+
+- (BOOL)isOptionalArgument:(NSString*)argument{
+    return [argument hasPrefix:COMMAND_LINE_SHORT_PREFIX];
 }
 
 - (CommandLineOptions*)parse:(NSArray*)arguments{
@@ -91,22 +95,24 @@ NSString* const COMMAND_LINE_SHORT_PREFIX = @"-";
 
 - (CommandLineOptions*)parse:(NSArray*)arguments error:(NSError**)err{
 
-    NSMutableArray* positionalArgsStack = [mPositionalArguments mutableCopy];
-    NSMutableArray* mutableArguments = [arguments mutableCopy];
-    NSMutableDictionary* args = [[NSMutableDictionary alloc] init];
+    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+
+    NSMutableArray* remaingPositionalArgs = [[mPositionalArguments mutableCopy] autorelease];
+    NSMutableArray* mutableArguments = [[arguments mutableCopy] autorelease];
+    NSMutableDictionary* parsedArguments = [[[NSMutableDictionary alloc] init] autorelease];
 
     while ( [mutableArguments count] ){
         NSString* argument = [mutableArguments objectAtIndex:0];
         [mutableArguments removeObjectAtIndex: 0];
 
-        //if ([argument hasPrefix:COMMAND_LINE_SHORT_PREFIX] ){
-        if ([self isOption:argument] ){
+        if ([self isOptionalArgument:argument] ){
             NSString* key = [self getKeyFromArgument:argument];
             if ( key == nil ){
+                [pool drain];
+
                 NSString* description = [NSString stringWithFormat:@"Unknown argument %@", argument];
                 [self makeError:err withDescription:description];
 
-                //TODO memory
                 return nil;
             }
 
@@ -117,54 +123,46 @@ NSString* const COMMAND_LINE_SHORT_PREFIX = @"-";
             }else{
                 result = @"Y";
             }
-            NSLog(key);
-            NSLog(result);
 
-            [args setObject:[self convertString:result toType:[self getArgumentType:key]] forKey: key];
+            id convertedArgument = [self convertString:result toType:[self getArgumentType:key]];
+            [parsedArguments setObject:convertedArgument forKey:key];
         }else{
-            if ( [positionalArgsStack count] == 0 ){
+            if ( [remaingPositionalArgs count] == 0 ){
+                [pool drain];
+
                 NSString* description = [NSString stringWithFormat:@"Unexpected positional argument %@", argument];
                 [self makeError:err withDescription:description];
 
-                //TODO Mem
                 return nil;
             }
-            NSString* positionalArgumentKey = [positionalArgsStack objectAtIndex:0];
-            [positionalArgsStack removeObjectAtIndex:0];
-            [args setObject:argument forKey: positionalArgumentKey];
+            NSString* positionalArgumentKey = [remaingPositionalArgs objectAtIndex:0];
+            [remaingPositionalArgs removeObjectAtIndex:0];
+
+            id convertedArgument = [self convertString:argument toType:[self getArgumentType:positionalArgumentKey]];
+            [parsedArguments setObject:convertedArgument forKey: positionalArgumentKey];
         }
     }
 
+    if ( [remaingPositionalArgs count] > 0 ){
+        NSString* remainingArgs = [remaingPositionalArgs componentsJoinedByString:@","];
+        [remainingArgs retain];
+        [pool drain];
 
-    if ( [positionalArgsStack count] > 0 ){
-        NSString* description = [NSString stringWithFormat:@"There were still positional arguments required"];
-
-        NSDictionary* errorDictionary = [[[NSDictionary alloc]
-                                                        initWithObjectsAndKeys: description, NSLocalizedDescriptionKey, nil]
-                                                        autorelease];
-        *err = [NSError errorWithDomain:ERROR_DOMAIN code:CONFIG_ERROR userInfo:errorDictionary];
-
-        //TODO Mem
+        NSString* description = [NSString stringWithFormat:@"There were still positional arguments required: %@", remainingArgs];
+        [remainingArgs release];
+        [self makeError:err withDescription:description];
         return nil;
     }
+    [self setUnsetBooleansToFalse:parsedArguments];
 
-    //set all arguments that are booleans and unset to false
-    for ( NSString* name in mLongNames ){
-        if ( [self isArgument:name ofType:Boolean] ){
-            if ( [args objectForKey:name] == nil ){
-                [args setObject:[NSNumber numberWithBool:NO] forKey:name];
-            }
-        }
-    }
-
-    CommandLineOptions* toReturn = [[[CommandLineOptions alloc] initWithCommandLineOptions:args] autorelease];
-    
-    //TODO memroy
+    CommandLineOptions* toReturn = [[CommandLineOptions alloc] initWithCommandLineOptions:parsedArguments];
+    [pool drain];
+    [toReturn autorelease];
     return toReturn;
 }
 
 - (BOOL)isArgument:(NSString*)key ofType:(CommandLineType)type{
-    NSNumber* wrappedType = [mTypes objectForKey:key];
+    NSNumber* wrappedType = [mKeyToType objectForKey:key];
     return type == [wrappedType intValue];
 }
 
@@ -182,16 +180,11 @@ NSString* const COMMAND_LINE_SHORT_PREFIX = @"-";
 }
 
 - (CommandLineType)getArgumentType:(NSString*)argumentKey{
-   return [[mTypes objectForKey:argumentKey] intValue];
-}
-
-
-- (BOOL)isOption:(NSString*)argument{
-    return [argument hasPrefix:COMMAND_LINE_SHORT_PREFIX];
+   return [[mKeyToType objectForKey:argumentKey] intValue];
 }
 
 - (NSString*)getKeyFromArgument:(NSString*)argument{
-    NSMutableDictionary* lookupDict = [argument hasPrefix:COMMAND_LINE_LONG_PREFIX] ? mLongNames : mShortNames;
+    NSMutableDictionary* lookupDict = [argument hasPrefix:COMMAND_LINE_LONG_PREFIX] ? mLongArgumentNameToKey : mShortArgumentNameToKey;
     NSString* key = [lookupDict objectForKey:argument];
     return key;
 }
@@ -201,6 +194,16 @@ NSString* const COMMAND_LINE_SHORT_PREFIX = @"-";
                                                     initWithObjectsAndKeys: description, NSLocalizedDescriptionKey, nil]
                                                     autorelease];
     *err = [NSError errorWithDomain:ERROR_DOMAIN code:CONFIG_ERROR userInfo:errorDictionary];
+}
+
+- (void)setUnsetBooleansToFalse:(NSMutableDictionary*)args{
+    for ( NSString* argumentName in mLongArgumentNameToKey ){
+        NSString* argumentKey = [mLongArgumentNameToKey objectForKey:argumentName];
+        if ( [self isArgument:argumentKey ofType:Boolean] &&
+             [args objectForKey:argumentKey] == nil ){
+            [args setObject:[NSNumber numberWithBool:NO] forKey:argumentKey];
+        }
+    }
 }
 
 @end

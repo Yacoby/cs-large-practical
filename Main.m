@@ -28,8 +28,9 @@ int main(void){
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
     CommandLineOptionParser* cmdLineParser = [[CommandLineOptionParser alloc] init];
-    [cmdLineParser addArgumentWithName:@"trackalloc" isBoolean:YES];
-    [cmdLineParser addArgumentWithName:@"seed" andShortName:@"s"];
+    [cmdLineParser addArgumentWithName:@"--trackalloc" ofType:Boolean];
+    [cmdLineParser addArgumentWithName:@"--seed" andShortName:@"-s" ofType:String];
+    [cmdLineParser addArgumentWithName:@"input" ofType:String];
 
     NSArray* processArguments = [[NSProcessInfo processInfo] arguments];
     NSArray* cmdLineArgs = [processArguments subarrayWithRange:NSMakeRange(1, [processArguments count] - 1)];
@@ -47,8 +48,7 @@ int main(void){
     BOOL trackObjectAllocations = [[options getOptionWithName:@"trackalloc"] boolValue];
     GSDebugAllocationActive(trackObjectAllocations);
 
-    NSArray* remainingArguments = [options getRemainingArguments];
-    NSString* inputFile = [remainingArguments objectAtIndex:0];
+    NSString* inputFile = [options getOptionWithName:@"input"];
 
     uint seed = time(NULL);
     if ( [options getOptionWithName:@"seed"] != nil ){

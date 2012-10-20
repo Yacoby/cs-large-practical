@@ -2,31 +2,26 @@
 #import "ErrorConstants.h"
 
 @implementation CommandLineOptions
-
-- (id)initWithOptions:(NSDictionary*)options andArgs:(NSArray*)args{
+- (id)initWithCommandLineOptions:(NSDictionary*)options{
     self = [super init];
     if ( self != nil ){
         [options retain];
         mOptions = options;
-
-        [args retain];
-        mRemainingArgs = args;
     }
     return self;
 }
 - (void)dealloc{
     [mOptions release];
-    [mRemainingArgs release];
     [super dealloc];
 }
 
 - (id)getOptionWithName:(NSString*)name{
     return [mOptions objectForKey:name];
 }
-- (NSArray*)getRemainingArguments{
-    return mRemainingArgs;
-}
 @end
+
+NSString* const COMMAND_LINE_LONG_PREFIX = @"--";
+NSString* const COMMAND_LINE_SHORT_PREFIX = @"-";
 
 @implementation CommandLineOptionParser
 - (id)init{
@@ -34,50 +29,59 @@
     if ( self != nil ){
         mShortNames = [[NSMutableDictionary alloc] init];
         mLongNames = [[NSMutableDictionary alloc] init];
-        mIsBoolean = [[NSMutableDictionary alloc] init];
+        mTypes = [[NSMutableDictionary alloc] init];
+
+        mPositionalArguments = [[NSMutableArray alloc] init];
     }
     return self;
 }
 - (void)dealloc{
     [mShortNames release];
     [mLongNames release];
-    [mIsBoolean release];
+    [mTypes release];
+    [mPositionalArguments release];
     [super dealloc];
 }
 
-- (void)addArgumentWithName:(NSString*)name{
-    [self addArgumentForKey:name withName:name];
+- (void)addArgumentWithName:(NSString*)name ofType:(CommandLineType)type{
+    if ( [self isPositionalName:name] ){
+        [self addPositionialArgumentForKey:name ofType:type];
+    }else{
+        NSString* key = [self toKeyFromLongName:name];
+        [self addOptionalArgumentForKey:key withName:name ofType:type];
+    }
 }
 
-- (void)addArgumentWithName:(NSString*)name andShortName:(NSString*)shortName{
-    [self addArgumentForKey:name withName:name andShortName:shortName];
+- (void)addArgumentWithName:(NSString*)name andShortName:(NSString*)shortName ofType:(CommandLineType)type{
+    if ( [self isPositionalName:name] ){
+        [self addPositionialArgumentForKey:name ofType:type];
+    }else{
+        NSString* key = [self toKeyFromLongName:name];
+        [self addOptionalArgumentForKey:key withName:name andShortName:shortName ofType:type];
+    }
 }
 
-- (void)addArgumentWithName:(NSString*)name andShortName:(NSString*)shortName isBoolean:(BOOL)isBool{
-    [self addArgumentForKey:name withName:name andShortName:shortName isBoolean:isBool];
-}
-
-- (void)addArgumentWithName:(NSString*)name isBoolean:(BOOL)isBool{
-    [self addArgumentForKey:name withName:name isBoolean:isBool];
-}
-
-- (void)addArgumentForKey:(NSString*)key withName:(NSString*)name{
+- (void)addOptionalArgumentForKey:(NSString*)key withName:(NSString*)name ofType:(CommandLineType)type{
+    [mTypes setObject:[NSNumber numberWithInteger:type] forKey:key];
     [mLongNames setObject:key forKey:name];
 }
 
-- (void)addArgumentForKey:(NSString*)key withName:(NSString*)name andShortName:(NSString*)shortName{
-    [mShortNames setObject:key forKey: shortName];
-    [self addArgumentForKey: key withName: name];
+- (void)addOptionalArgumentForKey:(NSString*)key withName:(NSString*)name andShortName:(NSString*)shortName ofType:(CommandLineType)type{
+    [mShortNames setObject:key forKey:name];
+    [self addOptionalArgumentForKey:key withName:name ofType:type];
 }
 
-- (void)addArgumentForKey:(NSString*)key withName:(NSString*)name andShortName:(NSString*)shortName isBoolean:(BOOL)isBool{
-    [mIsBoolean setObject:[NSNumber numberWithBool:isBool] forKey:name];
-    [self addArgumentForKey:key withName:name andShortName:shortName];
+- (void)addPositionialArgumentForKey:(NSString*)key ofType:(CommandLineType)type{
+    [mTypes setObject:[NSNumber numberWithInteger:type] forKey:key];
+    [mPositionalArguments addObject:key];
 }
 
-- (void)addArgumentForKey:(NSString*)key withName:(NSString*)name isBoolean:(BOOL)isBool{
-    [mIsBoolean setObject:[NSNumber numberWithBool:isBool] forKey:name];
-    [self addArgumentForKey:key withName:name];
+
+- (NSString*)toKeyFromLongName:(NSString*)name{
+    return [name substringFromIndex:[COMMAND_LINE_LONG_PREFIX length]];
+}
+- (BOOL)isPositionalName:(NSString*)name{
+    return ![name hasPrefix: COMMAND_LINE_SHORT_PREFIX];
 }
 
 - (CommandLineOptions*)parse:(NSArray*)arguments{
@@ -87,100 +91,116 @@
 
 - (CommandLineOptions*)parse:(NSArray*)arguments error:(NSError**)err{
 
+    NSMutableArray* positionalArgsStack = [mPositionalArguments mutableCopy];
     NSMutableArray* mutableArguments = [arguments mutableCopy];
-    NSMutableArray* remainingArgs = [[NSMutableArray alloc] init];
     NSMutableDictionary* args = [[NSMutableDictionary alloc] init];
 
     while ( [mutableArguments count] ){
         NSString* argument = [mutableArguments objectAtIndex:0];
         [mutableArguments removeObjectAtIndex: 0];
 
-        if ([argument hasPrefix:@"-"] ){
-            NSString* argName = nil;
-            NSMutableDictionary* lookupDict = nil;
-
-            if ([argument hasPrefix:@"--"] ){
-                argName = [argument substringFromIndex:2];
-                lookupDict = mLongNames;
-            }else{
-                argName = [argument substringFromIndex:1];
-                lookupDict = mShortNames;
-            }
-
-            NSString* key = [lookupDict objectForKey: argName];
+        //if ([argument hasPrefix:COMMAND_LINE_SHORT_PREFIX] ){
+        if ([self isOption:argument] ){
+            NSString* key = [self getKeyFromArgument:argument];
             if ( key == nil ){
                 NSString* description = [NSString stringWithFormat:@"Unknown argument %@", argument];
+                [self makeError:err withDescription:description];
 
-                NSDictionary* errorDictionary = [[[NSDictionary alloc]
-                                                                initWithObjectsAndKeys: description, NSLocalizedDescriptionKey, nil]
-                                                                autorelease];
-                *err = [NSError errorWithDomain:ERROR_DOMAIN code:CONFIG_ERROR userInfo:errorDictionary];
-
-                [remainingArgs release];
-                [args release];
-                [mutableArguments release];
+                //TODO memory
                 return nil;
             }
 
-            [args setObject:[self parseSingleArgument:mutableArguments argumentName:argName]
-                     forKey: [lookupDict objectForKey: argName]];
-        }else{
-            [remainingArgs addObject:argument];
-            for ( NSString* arg in mutableArguments){
-                if ([arg hasPrefix:@"-"] ){
-                    NSString* description = [NSString stringWithFormat:@"Unexpected argument when parsing remaining options: %@", arg];
-
-                    NSDictionary* errorDictionary = [[[NSDictionary alloc]
-                                                                    initWithObjectsAndKeys: description, NSLocalizedDescriptionKey, nil]
-                                                                    autorelease];
-                    *err = [NSError errorWithDomain:ERROR_DOMAIN code:CONFIG_ERROR userInfo:errorDictionary];
-
-                    [remainingArgs release];
-                    [args release];
-                    [mutableArguments release];
-                    return nil;
-                }else{
-                    [remainingArgs addObject:arg];
-                }
+            NSString* result = nil;
+            if ( ![self isArgument:key ofType:Boolean] ){
+                result = [mutableArguments objectAtIndex:0];
+                [mutableArguments removeObjectAtIndex: 0];
+            }else{
+                result = @"Y";
             }
+            NSLog(key);
+            NSLog(result);
 
-            break;
+            [args setObject:[self convertString:result toType:[self getArgumentType:key]] forKey: key];
+        }else{
+            if ( [positionalArgsStack count] == 0 ){
+                NSString* description = [NSString stringWithFormat:@"Unexpected positional argument %@", argument];
+                [self makeError:err withDescription:description];
+
+                //TODO Mem
+                return nil;
+            }
+            NSString* positionalArgumentKey = [positionalArgsStack objectAtIndex:0];
+            [positionalArgsStack removeObjectAtIndex:0];
+            [args setObject:argument forKey: positionalArgumentKey];
         }
     }
 
+
+    if ( [positionalArgsStack count] > 0 ){
+        NSString* description = [NSString stringWithFormat:@"There were still positional arguments required"];
+
+        NSDictionary* errorDictionary = [[[NSDictionary alloc]
+                                                        initWithObjectsAndKeys: description, NSLocalizedDescriptionKey, nil]
+                                                        autorelease];
+        *err = [NSError errorWithDomain:ERROR_DOMAIN code:CONFIG_ERROR userInfo:errorDictionary];
+
+        //TODO Mem
+        return nil;
+    }
+
+    //set all arguments that are booleans and unset to false
     for ( NSString* name in mLongNames ){
-        if ( [self isArgumentBool:name] ){
+        if ( [self isArgument:name ofType:Boolean] ){
             if ( [args objectForKey:name] == nil ){
                 [args setObject:[NSNumber numberWithBool:NO] forKey:name];
             }
         }
     }
 
-    CommandLineOptions* toReturn = [[[CommandLineOptions alloc] initWithOptions:args andArgs: remainingArgs] autorelease];
+    CommandLineOptions* toReturn = [[[CommandLineOptions alloc] initWithCommandLineOptions:args] autorelease];
     
-    [remainingArgs release];
-    [args release];
-    [mutableArguments release];
-
+    //TODO memroy
     return toReturn;
 }
 
-- (id)parseSingleArgument:(NSMutableArray*)arguments argumentName:(NSString*) argName{
-    if ( [self isArgumentBool:argName] ){
-        return [NSNumber numberWithBool:YES];
-    }else{
-        NSString* arg = [arguments objectAtIndex:0];
-        [arguments removeObjectAtIndex: 0];
-        return arg;
+- (BOOL)isArgument:(NSString*)key ofType:(CommandLineType)type{
+    NSNumber* wrappedType = [mTypes objectForKey:key];
+    return type == [wrappedType intValue];
+}
+
+- (id)convertString:(NSString*)str toType:(CommandLineType)type{
+    switch(type){
+        case Integer:
+            return [NSNumber numberWithInteger:[str intValue]];
+        case Boolean:
+            return [NSNumber numberWithBool:[str boolValue]];
+        case String:
+            return str;
+        default:
+            return nil;
     }
 }
 
-- (BOOL)isArgumentBool:(NSString*)name{
-    NSNumber* result = [mIsBoolean objectForKey:name];
-    if ( result == nil ){
-        return false;
-    }
-    return [result boolValue];
+- (CommandLineType)getArgumentType:(NSString*)argumentKey{
+   return [[mTypes objectForKey:argumentKey] intValue];
+}
+
+
+- (BOOL)isOption:(NSString*)argument{
+    return [argument hasPrefix:COMMAND_LINE_SHORT_PREFIX];
+}
+
+- (NSString*)getKeyFromArgument:(NSString*)argument{
+    NSMutableDictionary* lookupDict = [argument hasPrefix:COMMAND_LINE_LONG_PREFIX] ? mLongNames : mShortNames;
+    NSString* key = [lookupDict objectForKey:argument];
+    return key;
+}
+
+- (void)makeError:(NSError**)err withDescription:(NSString*)description{
+    NSDictionary* errorDictionary = [[[NSDictionary alloc]
+                                                    initWithObjectsAndKeys: description, NSLocalizedDescriptionKey, nil]
+                                                    autorelease];
+    *err = [NSError errorWithDomain:ERROR_DOMAIN code:CONFIG_ERROR userInfo:errorDictionary];
 }
 
 @end

@@ -2,23 +2,29 @@
 #import "TestingExtension.h"
 #import "CommandLineOptionParser.h"
 
-void get_WhenHasNoRules_ReturnsAllArgsAsPositionalArgs(){
+void get_WhenHasNoRulesAndGivenArgument_ReturnsNil(){
     CommandLineOptionParser* underTest = [[[CommandLineOptionParser alloc] init] autorelease];
     NSArray* input = [NSArray arrayWithObjects: @"foo", @"bar", nil];
 
-    CommandLineOptions* options = [underTest parse:input];
-    NSArray* remainingArgs = [options getRemainingArguments];
+    NSError* err;
+    CommandLineOptions* options = [underTest parse:input error:&err];
+    PASS(options == nil, "There is no valid options to return");
 
-    PASS([remainingArgs isEqualToArray: input], "");
+    NSString* reason = [err localizedDescription];
+    NSString* expectedReason = @"Unexpected positional argument foo";
+    NSRange search = [reason rangeOfString:expectedReason options:NSCaseInsensitiveSearch];
+    PASS(search.location != NSNotFound, "");
 }
 
 void addParse_WhenHasOneArgumentAndOption_ParsesCorrectly(){
     CommandLineOptionParser* underTest = [[[CommandLineOptionParser alloc] init] autorelease];
-    [underTest addArgumentWithName: @"seed"];
+    [underTest addArgumentWithName: @"--seed" ofType:String];
 
     NSArray* input = [NSArray arrayWithObjects: @"--seed", @"10", nil];
 
-    CommandLineOptions* options = [underTest parse:input];
+    NSError* err = nil;
+    CommandLineOptions* options = [underTest parse:input error:&err];
+    PASS(options != nil, "");
 
     NSString* seedResult = [options getOptionWithName: @"seed"];
     NSString* expected = @"10";
@@ -28,9 +34,9 @@ void addParse_WhenHasOneArgumentAndOption_ParsesCorrectly(){
 
 void addParse_WhenHasShortArgumentAndOption_ParsesCorrectly(){
     CommandLineOptionParser* underTest = [[[CommandLineOptionParser alloc] init] autorelease];
-    [underTest addArgumentWithName: @"seed"];
+    [underTest addArgumentWithName: @"--seed" andShortName:@"-s" ofType:String];
 
-    NSArray* input = [NSArray arrayWithObjects: @"--seed", @"10", nil];
+    NSArray* input = [NSArray arrayWithObjects: @"-s", @"10", nil];
 
     CommandLineOptions* options = [underTest parse:input];
 
@@ -42,14 +48,14 @@ void addParse_WhenHasShortArgumentAndOption_ParsesCorrectly(){
 
 void addParse_WhenHasZeroArguments_ParsesAsBoolean(){
     CommandLineOptionParser* underTest = [[[CommandLineOptionParser alloc] init] autorelease];
-    [underTest addArgumentWithName: @"foo" andShortName: @"f" isBoolean:YES];
+    [underTest addArgumentWithName: @"--foo" andShortName: @"-f" ofType:Boolean];
 
     NSArray* input = [NSArray arrayWithObjects: @"--foo", nil];
 
     CommandLineOptions* options = [underTest parse:input];
 
     NSNumber* result = [options getOptionWithName: @"foo"];
-    NSString* expected = [NSNumber numberWithBool:YES];
+    NSNumber* expected = [NSNumber numberWithBool:YES];
     PASS_EQUAL(result, expected, "");
 }
 
@@ -70,20 +76,20 @@ void addParse_WhenHasUnknownOptionName_ReturnsError(){
 
 void parse_WhenBooleanArgNotSet_IsFalse(){
     CommandLineOptionParser* underTest = [[[CommandLineOptionParser alloc] init] autorelease];
-    [underTest addArgumentWithName: @"foo" isBoolean:YES];
+    [underTest addArgumentWithName: @"--foo" ofType:Boolean];
 
     NSArray* input = [NSArray arrayWithObjects: nil];
 
     CommandLineOptions* options = [underTest parse:input];
 
     NSNumber* result = [options getOptionWithName: @"foo"];
-    NSString* expected = [NSNumber numberWithBool:NO];
+    NSNumber* expected = [NSNumber numberWithBool:NO];
     PASS_EQUAL(result, expected, "");
 }
 
 void addForKey_WhenAddingForKey_ResultIsStoredInThatKey(){
     CommandLineOptionParser* underTest = [[[CommandLineOptionParser alloc] init] autorelease];
-    [underTest addArgumentForKey: @"foo" withName:@"bar"];
+    [underTest addOptionalArgumentForKey: @"foo" withName:@"--bar" ofType:String];
 
     NSArray* input = [NSArray arrayWithObjects: @"--bar", @"baz", nil];
 
@@ -109,10 +115,27 @@ void get_WhenHasArgInRemainingArgs_GivesError(){
     PASS(search.location != NSNotFound, "");
 }
 
+void add_WhenSetsType_TypeMatches(){
+    CommandLineOptionParser* underTest = [[[CommandLineOptionParser alloc] init] autorelease];
+    CommandLineType expectedType = Boolean;
+    [underTest addArgumentWithName: @"--foo" ofType:expectedType];
+    CommandLineType result =  [underTest getArgumentType:@"foo"];
+    PASS_INT_EQUAL(expectedType, result, "");
+}
+
+void getKeyFromArgument_WhenIsLongName_GetsNameCorrectly(){
+    CommandLineOptionParser* underTest = [[[CommandLineOptionParser alloc] init] autorelease];
+    NSString* expectedKey = @"foo";
+    NSString* argument = [NSString stringWithFormat:@"%@%@", COMMAND_LINE_LONG_PREFIX, expectedKey];
+    [underTest addArgumentWithName:argument ofType:String];
+    NSString* key = [underTest getKeyFromArgument:argument];
+    PASS_EQUAL(key, expectedKey, "");
+}
+
 int main()
 {
     START_SET("CommandLineOptionParser")
-        get_WhenHasNoRules_ReturnsAllArgsAsPositionalArgs();
+        get_WhenHasNoRulesAndGivenArgument_ReturnsNil();
         addParse_WhenHasShortArgumentAndOption_ParsesCorrectly();
         addParse_WhenHasOneArgumentAndOption_ParsesCorrectly();
         addParse_WhenHasZeroArguments_ParsesAsBoolean();
@@ -120,6 +143,8 @@ int main()
         addForKey_WhenAddingForKey_ResultIsStoredInThatKey();
         get_WhenHasArgInRemainingArgs_GivesError();
         parse_WhenBooleanArgNotSet_IsFalse();
+        add_WhenSetsType_TypeMatches();
+        getKeyFromArgument_WhenIsLongName_GetsNameCorrectly();
     END_SET("CommandLineOptionParser")
 
     return 0;

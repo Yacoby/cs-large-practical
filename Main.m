@@ -6,20 +6,6 @@
 #import "OutputStream.h"
 #import "OutputWriter.h"
 
-void countAllocationsForAllClasses(){
-    int numClasses;
-    numClasses = objc_getClassList(NULL, 0);
-    if (numClasses > 0) {
-        Class* classes = malloc(sizeof(Class) * numClasses);
-        (void) objc_getClassList (classes, numClasses);
-        int i;
-        for (i = 0; i < numClasses; i++) {
-            GSDebugAllocationActiveRecordingObjects(classes[i]);
-        }
-        free(classes);
-    }
-}
-
 void printAllocatedClasses(){
     printf(GSDebugAllocationList(false));
 }
@@ -78,13 +64,6 @@ int main(void){
     }
     SimulationConfiguration* cfg = [ConfigurationTextSerilizer deserilize:rawCfgFile];
 
-    uint seed = time(NULL);
-    if ( [options getOptionWithName:@"seed"] != nil ){
-        seed = [[options getOptionWithName:@"seed"] intValue];
-    }
-    UniformRandom* random = [[UniformRandom alloc] initWithSeed:seed];
-
-
     FileHandleOutputStream* os = nil;
     if ( [options getOptionWithName:@"output"] ){
         NSString* outputFile = [options getOptionWithName:@"output"];
@@ -94,6 +73,12 @@ int main(void){
         os = [[FileHandleOutputStream alloc] initWithFileHandle:[NSFileHandle fileHandleWithStandardOutput]];
     }
     SimpleOutputWriter* writer = [[SimpleOutputWriter alloc] initWithStream:os simulationConfiguration:cfg];
+
+    uint seed = time(NULL);
+    if ( [options getOptionWithName:@"seed"] != nil ){
+        seed = [[options getOptionWithName:@"seed"] intValue];
+    }
+    UniformRandom* random = [[UniformRandom alloc] initWithSeed:seed];
 
     Simulator* simulator = [[Simulator alloc] initWithCfg:cfg randomGen:random outputWriter:writer];
     [simulator runSimulation];

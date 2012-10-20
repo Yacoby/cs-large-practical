@@ -1,0 +1,11 @@
+# simulate to a stop-time of 10 seconds 
+t = 10
+
+# decay reaction rate d is 1 
+d = 1.0
+
+# 100 molecules of X initially 
+X = 100
+
+# X decays to nothing, or disappears 
+d : X ->

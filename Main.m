@@ -7,13 +7,13 @@
 #import "OutputWriter.h"
 
 void printAllocatedClasses(){
+    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     printf(GSDebugAllocationList(false));
+    [pool drain];
 }
 
-int main(void){
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-
-    CommandLineOptionParser* cmdLineParser = [[CommandLineOptionParser alloc] init];
+CommandLineOptionParser* getOptionsParser(){
+    CommandLineOptionParser* cmdLineParser = [[[CommandLineOptionParser alloc] init] autorelease];
     [cmdLineParser addArgumentWithName:@"--trackalloc" ofType:Boolean];
     [cmdLineParser setHelpStringForArgumentKey:@"trackalloc" help:@"Tracks object allocations"];
 
@@ -26,14 +26,51 @@ int main(void){
     [cmdLineParser addArgumentWithName:@"input" ofType:String];
     [cmdLineParser setHelpStringForArgumentKey:@"input" help:@"The path to the input script. If not set the input will be read from stdin"];
     [cmdLineParser setRequiredForArgumentKey:@"input" required:NO];
+    return cmdLineParser;
+}
 
+SimulationConfiguration* getSimulationConfiguration(CommandLineOptions* options){
+    NSString* rawCfgFile = nil;
+    if ( [options getOptionWithName:@"input"] != nil ){
+        NSString* inputFile = [options getOptionWithName:@"input"];
+        rawCfgFile = [NSString stringWithContentsOfFile:inputFile];
+    }else{
+        NSFileHandle* stdinHandle = [NSFileHandle fileHandleWithStandardInput];
+        NSData* cfgData = [NSData dataWithData:[stdinHandle readDataToEndOfFile]];
+        rawCfgFile = [[[NSString alloc] initWithData:cfgData encoding:NSASCIIStringEncoding] autorelease];
+    }
+    return [ConfigurationTextSerilizer deserilize:rawCfgFile];
+}
+
+SimpleOutputWriter* getOutputWriter(CommandLineOptions* options, SimulationConfiguration* cfg){
+    FileHandleOutputStream* os = nil;
+    if ( [options getOptionWithName:@"output"] ){
+        NSString* outputFile = [options getOptionWithName:@"output"];
+        [[NSFileManager defaultManager] createFileAtPath:outputFile contents:nil attributes:nil];
+        os = [[[FileOutputStream alloc] initWithFileName:@"output"] autorelease];
+    }else{
+        os = [[[FileHandleOutputStream alloc] initWithFileHandle:[NSFileHandle fileHandleWithStandardOutput]] autorelease];
+    }
+    return [[[SimpleOutputWriter alloc] initWithStream:os simulationConfiguration:cfg] autorelease];
+}
+
+UniformRandom* getRandomNumberGenerator(CommandLineOptions* options){
+    uint seed = time(NULL);
+    if ( [options getOptionWithName:@"seed"] != nil ){
+        seed = [[options getOptionWithName:@"seed"] intValue];
+    }
+    return [[[UniformRandom alloc] initWithSeed:seed] autorelease];
+}
+
+int main(void){
+    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+
+    CommandLineOptionParser* cmdLineParser = getOptionsParser();
     NSArray* processArguments = [[NSProcessInfo processInfo] arguments];
     NSArray* cmdLineArgs = [processArguments subarrayWithRange:NSMakeRange(1, [processArguments count] - 1)];
 
     NSError* err;
     CommandLineOptions* options = [cmdLineParser parse:cmdLineArgs error:&err];
-    [cmdLineParser release];
-
     if ( options == nil ){
         NSString* errDescription = [err localizedDescription];
         fprintf(stderr, "%s\n", [errDescription cStringUsingEncoding:NSASCIIStringEncoding]);
@@ -45,48 +82,15 @@ int main(void){
         return 0;
     }
 
-    if ( [[options getOptionWithName:@"help"] boolValue] ){
-        fprintf(stderr, "%s\n", [[cmdLineParser helpText] cStringUsingEncoding:NSASCIIStringEncoding]);
-        return 0;
-    }
-
     BOOL trackObjectAllocations = [[options getOptionWithName:@"trackalloc"] boolValue];
     GSDebugAllocationActive(trackObjectAllocations);
 
-    NSString* rawCfgFile = nil;
-    if ( [options getOptionWithName:@"input"] != nil ){
-        NSString* inputFile = [options getOptionWithName:@"input"];
-        rawCfgFile = [NSString stringWithContentsOfFile:inputFile];
-    }else{
-        NSFileHandle* stdinHandle = [NSFileHandle fileHandleWithStandardInput];
-        NSData* cfgData = [NSData dataWithData:[stdinHandle readDataToEndOfFile]];
-        rawCfgFile = [[[NSString alloc] initWithData:cfgData encoding:NSASCIIStringEncoding] autorelease];
-    }
-    SimulationConfiguration* cfg = [ConfigurationTextSerilizer deserilize:rawCfgFile];
+    SimulationConfiguration* cfg = getSimulationConfiguration(options);
+    SimpleOutputWriter* writer = getOutputWriter(options, cfg);
+    UniformRandom* random = getRandomNumberGenerator(options);
 
-    FileHandleOutputStream* os = nil;
-    if ( [options getOptionWithName:@"output"] ){
-        NSString* outputFile = [options getOptionWithName:@"output"];
-        [[NSFileManager defaultManager] createFileAtPath:outputFile contents:nil attributes:nil];
-        os = [[FileOutputStream alloc] initWithFileName:@"output"];
-    }else{
-        os = [[FileHandleOutputStream alloc] initWithFileHandle:[NSFileHandle fileHandleWithStandardOutput]];
-    }
-    SimpleOutputWriter* writer = [[SimpleOutputWriter alloc] initWithStream:os simulationConfiguration:cfg];
-
-    uint seed = time(NULL);
-    if ( [options getOptionWithName:@"seed"] != nil ){
-        seed = [[options getOptionWithName:@"seed"] intValue];
-    }
-    UniformRandom* random = [[UniformRandom alloc] initWithSeed:seed];
-
-    Simulator* simulator = [[Simulator alloc] initWithCfg:cfg randomGen:random outputWriter:writer];
+    Simulator* simulator = [[[Simulator alloc] initWithCfg:cfg randomGen:random outputWriter:writer] autorelease];
     [simulator runSimulation];
-
-    [simulator release];
-    [random release];
-    [os release];
-    [writer release];
 
     [pool drain];
 

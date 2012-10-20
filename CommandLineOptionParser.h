@@ -5,10 +5,15 @@
  */
 @interface CommandLineOptions : NSObject{
     NSDictionary* mOptions;
+    NSString* mHelpText;
 }
+- (id)init;
+- (id)initWithHelpText:(NSString*)helpText;
 - (id)initWithCommandLineOptions:(NSDictionary*)options;
 - (void)dealloc;
 
+- (BOOL)shouldPrintHelpText;
+- (NSString*)helpText;
 - (id)getOptionWithName:(NSString*)name;
 @end
 
@@ -47,12 +52,16 @@ extern NSString* const COMMAND_LINE_SHORT_PREFIX;
     NSMutableDictionary* mKeyToType;
 
     NSMutableArray* mPositionalArguments;
+
+    NSMutableDictionary* mKeyToHelpText;
 }
 - (id)init;
 - (void)dealloc;
 
 - (void)addArgumentWithName:(NSString*)name ofType:(CommandLineType)type;
 - (void)addArgumentWithName:(NSString*)name andShortName:(NSString*)shortName ofType:(CommandLineType)type;
+
+- (void)setHelpStringForArgumentKey:(NSString*)key help:(NSString*)help;
 
 - (CommandLineOptions*)parse:(NSArray*)arguments;
 - (CommandLineOptions*)parse:(NSArray*)arguments error:(NSError**)err;
@@ -76,4 +85,6 @@ extern NSString* const COMMAND_LINE_SHORT_PREFIX;
 - (void)makeError:(NSError**)err withDescription:(NSString*)description;
 
 - (void)setUnsetBooleansToFalse:(NSMutableDictionary*)args;
+
+- (NSString*)helpText;
 @end

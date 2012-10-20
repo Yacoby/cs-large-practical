@@ -2,17 +2,41 @@
 #import "ErrorConstants.h"
 
 @implementation CommandLineOptions
-- (id)initWithCommandLineOptions:(NSDictionary*)options{
+- (id)init{
     self = [super init];
+    if ( self != nil ){
+        mOptions = nil;
+        mHelpText = nil;
+    }
+    return self;
+}
+- (id)initWithCommandLineOptions:(NSDictionary*)options{
+    self = [self init];
     if ( self != nil ){
         [options retain];
         mOptions = options;
     }
     return self;
 }
+- (id)initWithHelpText:(NSString*)helpText{
+    self = [super init];
+    if ( self != nil ){
+        [helpText retain];
+        mHelpText = helpText;
+    }
+    return self;
+}
 - (void)dealloc{
     [mOptions release];
     [super dealloc];
+}
+
+- (BOOL)shouldPrintHelpText{
+    return mHelpText != nil;
+}
+
+- (NSString*)helpText{
+    return mHelpText;
 }
 
 - (id)getOptionWithName:(NSString*)name{
@@ -30,15 +54,19 @@ NSString* const COMMAND_LINE_SHORT_PREFIX = @"-";
         mShortArgumentNameToKey = [[NSMutableDictionary alloc] init];
         mLongArgumentNameToKey = [[NSMutableDictionary alloc] init];
         mKeyToType = [[NSMutableDictionary alloc] init];
+        mKeyToHelpText = [[NSMutableDictionary alloc] init];
 
         mPositionalArguments = [[NSMutableArray alloc] init];
     }
+    [self addArgumentWithName:@"--help" andShortName:@"-h" ofType:Boolean];
+    [self setHelpStringForArgumentKey:@"help" help:@"Prints this output"];
     return self;
 }
 - (void)dealloc{
     [mShortArgumentNameToKey release];
     [mLongArgumentNameToKey release];
     [mKeyToType release];
+    [mKeyToHelpText release];
     [mPositionalArguments release];
     [super dealloc];
 }
@@ -59,6 +87,10 @@ NSString* const COMMAND_LINE_SHORT_PREFIX = @"-";
         NSString* key = [self toKeyFromLongName:name];
         [self addOptionalArgumentForKey:key withName:name andShortName:shortName ofType:type];
     }
+}
+
+- (void)setHelpStringForArgumentKey:(NSString*)key help:(NSString*)help{
+    [mKeyToHelpText setObject:help forKey:key];
 }
 
 - (void)addOptionalArgumentForKey:(NSString*)key withName:(NSString*)name ofType:(CommandLineType)type{
@@ -143,6 +175,11 @@ NSString* const COMMAND_LINE_SHORT_PREFIX = @"-";
         }
     }
 
+    if ( [parsedArguments objectForKey:@"help"] ){
+        [pool drain];
+        return [[CommandLineOptions alloc] initWithHelpText:[self helpText]];
+    }
+
     if ( [remaingPositionalArgs count] > 0 ){
         NSString* remainingArgs = [remaingPositionalArgs componentsJoinedByString:@","];
         [remainingArgs retain];
@@ -205,5 +242,59 @@ NSString* const COMMAND_LINE_SHORT_PREFIX = @"-";
         }
     }
 }
+
+- (NSString*)helpText{
+    NSMutableString* helpText = [[[NSMutableString alloc] init] autorelease];
+
+    [helpText appendString:@"Usage:"];
+    if ( [mLongArgumentNameToKey count] ){
+        [helpText appendString:@" [options] "];
+    }
+    [helpText appendString:[mPositionalArguments componentsJoinedByString:@" "]];
+    [helpText appendString:@"\n"];
+
+    if ( [mLongArgumentNameToKey count] ){
+        [helpText appendString:@"Options\n"];
+        for (NSString* argumentName in  mLongArgumentNameToKey ){
+            [helpText appendString:@"\t"];
+            [helpText appendString:argumentName];
+
+            NSString* key = [mLongArgumentNameToKey objectForKey:argumentName];
+
+            NSArray* objectsForKey = [mShortArgumentNameToKey allKeysForObject:key];
+            if ( [objectsForKey count] ){
+                [helpText appendString:@", "];
+                [helpText appendString:[objectsForKey objectAtIndex:0]];
+            }
+
+            NSString* helpTextForKey = [mKeyToHelpText objectForKey:key];
+            if ( helpTextForKey ){
+                [helpText appendString:@"\t\t"];
+                [helpText appendString:helpTextForKey];
+            }
+
+            [helpText appendString:@"\n"];
+        }
+    }
+
+    if ( [mPositionalArguments count] ){
+        [helpText appendString:@"\n"];
+        [helpText appendString:@"Positional Arguments\n"];
+        for (NSString* argumentName in  mPositionalArguments){
+            [helpText appendString:@"\t"];
+            [helpText appendString:argumentName];
+
+            NSString* helpTextForKey = [mKeyToHelpText objectForKey:argumentName];
+            if ( helpTextForKey ){
+                [helpText appendString:@"\t\t"];
+                [helpText appendString:helpTextForKey];
+            }
+            [helpText appendString:@"\n"];
+        }
+    }
+
+    return helpText;
+}
+
 
 @end

@@ -29,8 +29,13 @@ int main(void){
 
     CommandLineOptionParser* cmdLineParser = [[CommandLineOptionParser alloc] init];
     [cmdLineParser addArgumentWithName:@"--trackalloc" ofType:Boolean];
+    [cmdLineParser setHelpStringForArgumentKey:@"trackalloc" help:@"Tracks object allocations"];
+
     [cmdLineParser addArgumentWithName:@"--seed" andShortName:@"-s" ofType:String];
+    [cmdLineParser setHelpStringForArgumentKey:@"seed" help:@"The seed to initialize the random number generator with."];
+
     [cmdLineParser addArgumentWithName:@"input" ofType:String];
+    [cmdLineParser setHelpStringForArgumentKey:@"input" help:@"The path to the input script"];
 
     NSArray* processArguments = [[NSProcessInfo processInfo] arguments];
     NSArray* cmdLineArgs = [processArguments subarrayWithRange:NSMakeRange(1, [processArguments count] - 1)];
@@ -43,6 +48,16 @@ int main(void){
         NSString* errDescription = [err localizedDescription];
         fprintf(stderr, "%s\n", [errDescription cStringUsingEncoding:NSASCIIStringEncoding]);
         return 1;
+    }
+
+    if ( [options shouldPrintHelpText] ){
+        fprintf(stdout, "%s\n", [[options helpText] cStringUsingEncoding:NSASCIIStringEncoding]);
+        return 0;
+    }
+
+    if ( [[options getOptionWithName:@"help"] boolValue] ){
+        fprintf(stderr, "%s\n", [[cmdLineParser helpText] cStringUsingEncoding:NSASCIIStringEncoding]);
+        return 0;
     }
 
     BOOL trackObjectAllocations = [[options getOptionWithName:@"trackalloc"] boolValue];

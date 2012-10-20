@@ -1,4 +1,4 @@
-Computer Science Large Practical
+Computer Science Large Practical                         {#mainpage}
 ================================
 
 Introduction
@@ -7,8 +7,8 @@ This is the program for 2012 Computer Science Large Practical as setout in the [
 
 
 This file is written using [Markdown](http://daringfireball.net/projects/markdown/).
-To convert it to html use [Markdown.pl](http://daringfireball.net/projects/markdown/) or any other converter.
-Or just keep reading. It is readable enough.
+While you can convert it to html using [Markdown.pl](http://daringfireball.net/projects/markdown/) or any other converter
+it is intergrated with doxygen and apears as the main page of the doxygen documentation
 
 Building
 ------------
@@ -24,10 +24,6 @@ Ensure you have run GNUstep.sh to setup your environmental variables.
 
 `cd` into the root of the Cslp directory and run `make`. This will build the binary and write it to  `Cslp.app/Cslp`.
 This will also compile the code into a library that is used to run tests against.
-
-Running Tests
--------------
-If you want to run the tests, ensure that you have first built the application and then run `gnustep-tests`
 
 Running the Application
 -----------------------
@@ -46,3 +42,13 @@ If you want to output elsewhere than stdout then the following are equivalent:
 Command Line Arguments
 -----------------------
 Run `./Cslp.app/Cslp --help` to see an up to date list of command line options
+
+Documentation
+-------------
+The documentation should be generated using doxygen. This file will be included as part of
+the main page
+
+Running Tests
+-------------
+If you want to run the tests, ensure that you have first built the application and then run `gnustep-tests`
+

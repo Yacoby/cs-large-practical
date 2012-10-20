@@ -50,6 +50,10 @@ extern NSString* const COMMAND_LINE_SHORT_PREFIX;
  *
  * All options can have default values, hover booleans automatically have the default
  * value of NO.
+ *
+ * By default options are not required and positional arguments are required. This
+ * is possible to alter, although be note that it is not possible to have a required
+ * positional argument after an optional positional argument.
  */
 @interface CommandLineOptionParser : NSObject{
     NSMutableDictionary* mShortArgumentNameToKey;
@@ -60,6 +64,8 @@ extern NSString* const COMMAND_LINE_SHORT_PREFIX;
 
     NSMutableDictionary* mKeyToHelpText;
     NSMutableDictionary* mKeyToDefaultValue;
+
+    NSMutableSet* mRequiredKeys;
 }
 - (id)init;
 - (void)dealloc;
@@ -69,6 +75,7 @@ extern NSString* const COMMAND_LINE_SHORT_PREFIX;
 
 - (void)setHelpStringForArgumentKey:(NSString*)key help:(NSString*)help;
 - (void)setDefaultValueForArgumentKey:(NSString*)key value:(id)defaultValue;
+- (void)setRequiredForArgumentKey:(NSString*)key required:(BOOL)required;
 
 - (CommandLineOptions*)parse:(NSArray*)arguments;
 - (CommandLineOptions*)parse:(NSArray*)arguments error:(NSError**)err;
@@ -76,7 +83,6 @@ extern NSString* const COMMAND_LINE_SHORT_PREFIX;
 - (void)addOptionalArgumentForKey:(NSString*)key withName:(NSString*)name ofType:(CommandLineType)type;
 - (void)addOptionalArgumentForKey:(NSString*)key withName:(NSString*)name andShortName:(NSString*)shortName ofType:(CommandLineType)type;
 - (void)addPositionialArgumentForKey:(NSString*)key ofType:(CommandLineType)type;
-
 
 - (id)convertString:(NSString*)str toType:(CommandLineType)type;
 

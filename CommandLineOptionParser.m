@@ -56,6 +56,7 @@ NSString* const COMMAND_LINE_SHORT_PREFIX = @"-";
         mKeyToType = [[NSMutableDictionary alloc] init];
         mKeyToHelpText = [[NSMutableDictionary alloc] init];
         mKeyToDefaultValue = [[NSMutableDictionary alloc] init];
+        mRequiredKeys = [[NSMutableSet alloc] init];
 
         mPositionalArguments = [[NSMutableArray alloc] init];
     }
@@ -69,6 +70,7 @@ NSString* const COMMAND_LINE_SHORT_PREFIX = @"-";
     [mKeyToType release];
     [mKeyToHelpText release];
     [mKeyToDefaultValue release];
+    [mRequiredKeys release];
     [mPositionalArguments release];
     [super dealloc];
 }
@@ -99,6 +101,14 @@ NSString* const COMMAND_LINE_SHORT_PREFIX = @"-";
     [mKeyToDefaultValue setObject:defaultValue forKey:key];
 }
 
+- (void)setRequiredForArgumentKey:(NSString*)key required:(BOOL)required{
+    if ( required ){
+        [mRequiredKeys addObject:key];
+    }else{
+        [mRequiredKeys removeObject:key];
+    }
+}
+
 - (void)addOptionalArgumentForKey:(NSString*)key withName:(NSString*)name ofType:(CommandLineType)type{
     [mKeyToType setObject:[NSNumber numberWithInteger:type] forKey:key];
     [mLongArgumentNameToKey setObject:key forKey:name];
@@ -116,8 +126,8 @@ NSString* const COMMAND_LINE_SHORT_PREFIX = @"-";
 - (void)addPositionialArgumentForKey:(NSString*)key ofType:(CommandLineType)type{
     [mKeyToType setObject:[NSNumber numberWithInteger:type] forKey:key];
     [mPositionalArguments addObject:key];
+    [self setRequiredForArgumentKey:key required:YES];
 }
-
 
 - (NSString*)toKeyFromLongName:(NSString*)name{
     return [name substringFromIndex:[COMMAND_LINE_LONG_PREFIX length]];
@@ -190,15 +200,14 @@ NSString* const COMMAND_LINE_SHORT_PREFIX = @"-";
         return [[CommandLineOptions alloc] initWithHelpText:[self helpText]];
     }
 
-    if ( [remaingPositionalArgs count] > 0 ){
-        NSString* remainingArgs = [remaingPositionalArgs componentsJoinedByString:@","];
-        [remainingArgs retain];
-        [pool drain];
+    for ( NSString* requiredKey in mRequiredKeys ){
+        if ( [parsedArguments objectForKey:requiredKey] == nil ){
+            [pool drain];
 
-        NSString* description = [NSString stringWithFormat:@"There were still positional arguments required: %@", remainingArgs];
-        [remainingArgs release];
-        [self makeError:err withDescription:description];
-        return nil;
+            NSString* description = [NSString stringWithFormat:@"Not all required arguments were given: %@", requiredKey];
+            [self makeError:err withDescription:description];
+            return nil;
+        }
     }
     [self setDefaultValues:parsedArguments];
 
@@ -257,9 +266,15 @@ NSString* const COMMAND_LINE_SHORT_PREFIX = @"-";
 
     [helpText appendString:@"Usage:"];
     if ( [mLongArgumentNameToKey count] ){
-        [helpText appendString:@" [options] "];
+        [helpText appendString:@" [options]"];
     }
-    [helpText appendString:[mPositionalArguments componentsJoinedByString:@" "]];
+    for ( NSString* positionalArgumentKey in mPositionalArguments ){
+        if ( [mRequiredKeys containsObject:positionalArgumentKey] ){
+            [helpText appendString:[NSString stringWithFormat:@" %@", positionalArgumentKey]];
+        }else{
+            [helpText appendString:[NSString stringWithFormat:@" [%@]", positionalArgumentKey]];
+        }
+    }
     [helpText appendString:@"\n"];
 
     if ( [mLongArgumentNameToKey count] ){

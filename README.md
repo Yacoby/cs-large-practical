@@ -27,8 +27,17 @@ If you want to run the tests, ensure that you have first built the application a
 
 Running the Application
 -----------------------
-Run `./Cslp.app/Cslp` with the first argument as the input script file. For example:
-`./Cslp.app/Cslp exampes/decay.txt`
+
+The Unix way of running the program is to pass the program the input script
+through stdin and let the program write the output to stdout.
+For example: `cat ./examples/decay.txt | ./Cslp.app/Cslp`
+
+Due to the requirements of the application it is also possible to pass as the first argument
+the path to the file to read. For example: `./Cslp.app/Cslp exampes/decay.txt`
+
+If you want to output elsewhere than stdout then the following are equivalent:
+`./Cslp.app/Cslp exampes/decay.txt > output.txt`
+`./Cslp.app/Cslp exampes/decay.txt --output output.txt`
 
 Command Line Arguments
 -----------------------

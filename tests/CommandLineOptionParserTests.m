@@ -126,9 +126,20 @@ void parse_WhenHasPositionalArgAndIsNotSet_ReturnsError(){
     PASS(options == nil, "There is no valid options to return");
 
     NSString* reason = [err localizedDescription];
-    NSString* expectedReason = @"There were still positional arguments required: foo";
+    NSString* expectedReason = @"Not all required arguments were given: foo";
     NSRange search = [reason rangeOfString:expectedReason options:NSCaseInsensitiveSearch];
     PASS(search.location != NSNotFound, "");
+}
+
+void parse_WhenHasPositionalArgThatIsNotRequired_DoesntReturnError(){
+    CommandLineOptionParser* underTest = [[[CommandLineOptionParser alloc] init] autorelease];
+    [underTest addArgumentWithName: @"foo" ofType:String];
+    [underTest setRequiredForArgumentKey:@"foo" required:NO];
+
+    NSArray* input = [[[NSArray alloc] init] autorelease];
+    CommandLineOptions* options = [underTest parse:input];
+    PASS(options != nil, "The options should have parsed");
+    PASS([options getOptionWithName:@"foo"] == nil, "foo shouldn't be set");
 }
 
 void parse_WhenOptionHasDefaultArgument_IsSet(){
@@ -156,6 +167,7 @@ int main(){
         add_WhenSetsType_TypeMatches();
         getKeyFromArgument_WhenIsLongName_GetsNameCorrectly();
         parse_WhenHasPositionalArgAndIsNotSet_ReturnsError();
+        parse_WhenHasPositionalArgThatIsNotRequired_DoesntReturnError();
         parse_WhenOptionHasDefaultArgument_IsSet();
     END_SET("CommandLineOptionParser")
 

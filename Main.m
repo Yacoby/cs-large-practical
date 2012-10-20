@@ -35,10 +35,11 @@ int main(void){
     [cmdLineParser setHelpStringForArgumentKey:@"seed" help:@"The seed to initialize the random number generator with."];
 
     [cmdLineParser addArgumentWithName:@"--output" andShortName:@"-o" ofType:String];
-    [cmdLineParser setHelpStringForArgumentKey:@"output" help:@"The file to output the results of the simulation to. If not set output will be sent do stdout"];
+    [cmdLineParser setHelpStringForArgumentKey:@"output" help:@"The file to output the results of the simulation to. If not set output will be sent to stdout"];
 
     [cmdLineParser addArgumentWithName:@"input" ofType:String];
-    [cmdLineParser setHelpStringForArgumentKey:@"input" help:@"The path to the input script"];
+    [cmdLineParser setHelpStringForArgumentKey:@"input" help:@"The path to the input script. If not set the input will be read from stdin"];
+    [cmdLineParser setRequiredForArgumentKey:@"input" required:NO];
 
     NSArray* processArguments = [[NSProcessInfo processInfo] arguments];
     NSArray* cmdLineArgs = [processArguments subarrayWithRange:NSMakeRange(1, [processArguments count] - 1)];
@@ -66,7 +67,16 @@ int main(void){
     BOOL trackObjectAllocations = [[options getOptionWithName:@"trackalloc"] boolValue];
     GSDebugAllocationActive(trackObjectAllocations);
 
-    NSString* inputFile = [options getOptionWithName:@"input"];
+    NSString* rawCfgFile = nil;
+    if ( [options getOptionWithName:@"input"] != nil ){
+        NSString* inputFile = [options getOptionWithName:@"input"];
+        rawCfgFile = [NSString stringWithContentsOfFile:inputFile];
+    }else{
+        NSFileHandle* stdinHandle = [NSFileHandle fileHandleWithStandardInput];
+        NSData* cfgData = [NSData dataWithData:[stdinHandle readDataToEndOfFile]];
+        rawCfgFile = [[[NSString alloc] initWithData:cfgData encoding:NSASCIIStringEncoding] autorelease];
+    }
+    SimulationConfiguration* cfg = [ConfigurationTextSerilizer deserilize:rawCfgFile];
 
     uint seed = time(NULL);
     if ( [options getOptionWithName:@"seed"] != nil ){
@@ -74,8 +84,6 @@ int main(void){
     }
     UniformRandom* random = [[UniformRandom alloc] initWithSeed:seed];
 
-    NSString *fileString = [NSString stringWithContentsOfFile:inputFile];
-    SimulationConfiguration* cfg = [ConfigurationTextSerilizer deserilize:fileString];
 
     FileHandleOutputStream* os = nil;
     if ( [options getOptionWithName:@"output"] ){

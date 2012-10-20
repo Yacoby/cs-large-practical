@@ -47,6 +47,9 @@ extern NSString* const COMMAND_LINE_SHORT_PREFIX;
  *
  * There is one option that is always set, and that is --help. If this is encounted
  * in the arguments then the result of the argument parser is the help text
+ *
+ * All options can have default values, hover booleans automatically have the default
+ * value of NO.
  */
 @interface CommandLineOptionParser : NSObject{
     NSMutableDictionary* mShortArgumentNameToKey;
@@ -56,6 +59,7 @@ extern NSString* const COMMAND_LINE_SHORT_PREFIX;
     NSMutableArray* mPositionalArguments;
 
     NSMutableDictionary* mKeyToHelpText;
+    NSMutableDictionary* mKeyToDefaultValue;
 }
 - (id)init;
 - (void)dealloc;
@@ -64,6 +68,7 @@ extern NSString* const COMMAND_LINE_SHORT_PREFIX;
 - (void)addArgumentWithName:(NSString*)name andShortName:(NSString*)shortName ofType:(CommandLineType)type;
 
 - (void)setHelpStringForArgumentKey:(NSString*)key help:(NSString*)help;
+- (void)setDefaultValueForArgumentKey:(NSString*)key value:(id)defaultValue;
 
 - (CommandLineOptions*)parse:(NSArray*)arguments;
 - (CommandLineOptions*)parse:(NSArray*)arguments error:(NSError**)err;
@@ -86,7 +91,7 @@ extern NSString* const COMMAND_LINE_SHORT_PREFIX;
 
 - (void)makeError:(NSError**)err withDescription:(NSString*)description;
 
-- (void)setUnsetBooleansToFalse:(NSMutableDictionary*)args;
+- (void)setDefaultValues:(NSMutableDictionary*)args;
 
 - (NSString*)helpText;
 @end

@@ -131,8 +131,20 @@ void parse_WhenHasPositionalArgAndIsNotSet_ReturnsError(){
     PASS(search.location != NSNotFound, "");
 }
 
-int main()
-{
+void parse_WhenOptionHasDefaultArgument_IsSet(){
+    CommandLineOptionParser* underTest = [[[CommandLineOptionParser alloc] init] autorelease];
+    [underTest addArgumentWithName: @"--foo" ofType:String];
+    [underTest setDefaultValueForArgumentKey:@"foo" value:@"bar"];
+
+    NSArray* input = [[[NSArray alloc] init] autorelease];
+    CommandLineOptions* options = [underTest parse:input];
+
+    NSString* result = [options getOptionWithName: @"foo"];
+    NSString* expected = @"bar";
+    PASS_EQUAL(result, expected, "");
+}
+
+int main(){
     START_SET("CommandLineOptionParser")
         get_WhenHasNoRulesAndGivenArgument_ReturnsNil();
         addParse_WhenHasShortArgumentAndOption_ParsesCorrectly();
@@ -144,6 +156,7 @@ int main()
         add_WhenSetsType_TypeMatches();
         getKeyFromArgument_WhenIsLongName_GetsNameCorrectly();
         parse_WhenHasPositionalArgAndIsNotSet_ReturnsError();
+        parse_WhenOptionHasDefaultArgument_IsSet();
     END_SET("CommandLineOptionParser")
 
     return 0;

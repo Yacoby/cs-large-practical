@@ -34,6 +34,9 @@ int main(void){
     [cmdLineParser addArgumentWithName:@"--seed" andShortName:@"-s" ofType:String];
     [cmdLineParser setHelpStringForArgumentKey:@"seed" help:@"The seed to initialize the random number generator with."];
 
+    [cmdLineParser addArgumentWithName:@"--output" andShortName:@"-o" ofType:String];
+    [cmdLineParser setHelpStringForArgumentKey:@"output" help:@"The file to output the results of the simulation to. If not set output will be sent do stdout"];
+
     [cmdLineParser addArgumentWithName:@"input" ofType:String];
     [cmdLineParser setHelpStringForArgumentKey:@"input" help:@"The path to the input script"];
 
@@ -74,8 +77,14 @@ int main(void){
     NSString *fileString = [NSString stringWithContentsOfFile:inputFile];
     SimulationConfiguration* cfg = [ConfigurationTextSerilizer deserilize:fileString];
 
-    [[NSFileManager defaultManager] createFileAtPath:@"output" contents:nil attributes:nil];
-    FileOutputStream* os = [[FileOutputStream alloc] initWithFileName:@"output"];
+    FileHandleOutputStream* os = nil;
+    if ( [options getOptionWithName:@"output"] ){
+        NSString* outputFile = [options getOptionWithName:@"output"];
+        [[NSFileManager defaultManager] createFileAtPath:outputFile contents:nil attributes:nil];
+        os = [[FileOutputStream alloc] initWithFileName:@"output"];
+    }else{
+        os = [[FileHandleOutputStream alloc] initWithFileHandle:[NSFileHandle fileHandleWithStandardOutput]];
+    }
     SimpleOutputWriter* writer = [[SimpleOutputWriter alloc] initWithStream:os simulationConfiguration:cfg];
 
     Simulator* simulator = [[Simulator alloc] initWithCfg:cfg randomGen:random outputWriter:writer];

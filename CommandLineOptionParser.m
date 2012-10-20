@@ -55,6 +55,7 @@ NSString* const COMMAND_LINE_SHORT_PREFIX = @"-";
         mLongArgumentNameToKey = [[NSMutableDictionary alloc] init];
         mKeyToType = [[NSMutableDictionary alloc] init];
         mKeyToHelpText = [[NSMutableDictionary alloc] init];
+        mKeyToDefaultValue = [[NSMutableDictionary alloc] init];
 
         mPositionalArguments = [[NSMutableArray alloc] init];
     }
@@ -67,6 +68,7 @@ NSString* const COMMAND_LINE_SHORT_PREFIX = @"-";
     [mLongArgumentNameToKey release];
     [mKeyToType release];
     [mKeyToHelpText release];
+    [mKeyToDefaultValue release];
     [mPositionalArguments release];
     [super dealloc];
 }
@@ -93,9 +95,17 @@ NSString* const COMMAND_LINE_SHORT_PREFIX = @"-";
     [mKeyToHelpText setObject:help forKey:key];
 }
 
+- (void)setDefaultValueForArgumentKey:(NSString*)key value:(id)defaultValue{
+    [mKeyToDefaultValue setObject:defaultValue forKey:key];
+}
+
 - (void)addOptionalArgumentForKey:(NSString*)key withName:(NSString*)name ofType:(CommandLineType)type{
     [mKeyToType setObject:[NSNumber numberWithInteger:type] forKey:key];
     [mLongArgumentNameToKey setObject:key forKey:name];
+
+    if ( type == Boolean ){
+        [self setDefaultValueForArgumentKey:key value:[NSNumber numberWithBool:NO]];
+    }
 }
 
 - (void)addOptionalArgumentForKey:(NSString*)key withName:(NSString*)name andShortName:(NSString*)shortName ofType:(CommandLineType)type{
@@ -190,7 +200,7 @@ NSString* const COMMAND_LINE_SHORT_PREFIX = @"-";
         [self makeError:err withDescription:description];
         return nil;
     }
-    [self setUnsetBooleansToFalse:parsedArguments];
+    [self setDefaultValues:parsedArguments];
 
     CommandLineOptions* toReturn = [[CommandLineOptions alloc] initWithCommandLineOptions:parsedArguments];
     [pool drain];
@@ -233,12 +243,11 @@ NSString* const COMMAND_LINE_SHORT_PREFIX = @"-";
     *err = [NSError errorWithDomain:ERROR_DOMAIN code:CONFIG_ERROR userInfo:errorDictionary];
 }
 
-- (void)setUnsetBooleansToFalse:(NSMutableDictionary*)args{
-    for ( NSString* argumentName in mLongArgumentNameToKey ){
-        NSString* argumentKey = [mLongArgumentNameToKey objectForKey:argumentName];
-        if ( [self isArgument:argumentKey ofType:Boolean] &&
-             [args objectForKey:argumentKey] == nil ){
-            [args setObject:[NSNumber numberWithBool:NO] forKey:argumentKey];
+- (void)setDefaultValues:(NSMutableDictionary*)args{
+    for ( NSString* argumentKey in mKeyToDefaultValue ){
+        if ( [args objectForKey:argumentKey] == nil ){
+            id defaultValue = [mKeyToDefaultValue objectForKey:argumentKey];
+            [args setObject:defaultValue forKey:argumentKey];
         }
     }
 }

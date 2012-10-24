@@ -55,7 +55,7 @@ the main page
 
 Running Tests
 -------------
-If you want to run the tests, ensure that you have first built the application and then run `gnustep-tests`
+From the project root directory run `gnustep-tests`
 
 
 Other code

@@ -1,3 +1,10 @@
 ADDITIONAL_OBJCFLAGS = -I../ -fobjc-exceptions
 ADDITIONAL_TOOL_LIBS = -lCslp
-ADDITIONAL_LDFLAGS = -L../obj -Wl,-rpath,../obj
+ADDITIONAL_LDFLAGS = -L./obj -Wl,-rpath,./obj
+
+
+LIBRARY_NAME = libCslp
+libCslp_OBJC_FILES = $(wildcard ../*.m)
+ADDITIONAL_FLAGS += -std=gnu99 -fobjc-exceptions
+
+include $(GNUSTEP_MAKEFILES)/library.make

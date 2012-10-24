@@ -12,12 +12,38 @@
     NSString* mHelpText;
 }
 - (id)init;
+
+/**
+ * @brief init with help text to display
+ */
 - (id)initWithHelpText:(NSString*)helpText;
+
+/**
+ * @brief init with a dictionary of key -> argument value
+ */
 - (id)initWithCommandLineOptions:(NSDictionary*)options;
 - (void)dealloc;
 
+/**
+ * @brief True if there is help text to print
+ */
 - (BOOL)shouldPrintHelpText;
+
+/**
+ * @brief returns the help text or nil if there is no help text
+ * 
+ * There will be no help text if the user hasn't requested it by 
+ * specifing -h or --help on the command line
+ *
+ * @return the help text or nil if there is no help text
+ */
 - (NSString*)helpText;
+
+/**
+ * @brief retrives an option with the given argument key
+ * @param name the name of the argument to get
+ * @return the value for that argument or nil if it doesn't exist
+ */
 - (id)getOptionWithName:(NSString*)name;
 @end
 
@@ -58,13 +84,13 @@ extern NSString* const COMMAND_LINE_SHORT_PREFIX;
  * By default options are not required and positional arguments are required. This
  * is possible to alter, although be note that it is not possible to have a required
  * positional argument after an optional positional argument.
- *
- * @todo implement type checking
  */
 @interface CommandLineOptionParser : NSObject{
     NSMutableDictionary* mShortArgumentNameToKey;
     NSMutableDictionary* mLongArgumentNameToKey;
     NSMutableDictionary* mKeyToType;
+
+    NSMutableSet* mKeys;
 
     NSMutableArray* mPositionalArguments;
 
@@ -205,7 +231,7 @@ extern NSString* const COMMAND_LINE_SHORT_PREFIX;
 - (NSString*)toKeyFromLongName:(NSString*)name;
 
 /**
- * @brief
+ * @brief Looks up the argument name in the relatant dictionary (based on the prefix) and  returns the key
  * @param argument The argument including the prefix. E.g. "--foo"
  * @return The key for the argument or nil if there is no key for that argument
  */

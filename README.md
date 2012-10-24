@@ -1,6 +1,11 @@
 Computer Science Large Practical                         {#mainpage}
 ================================
 
+Note about current state
+------------------------
+While the solution mostly works, it is far from complete. The main bit of code
+that is in any way close to production ready is the CommandLineOptionParser.
+
 Introduction
 ------------
 This is the program for 2012 Computer Science Large Practical as setout in the [Handout](http://www.inf.ed.ac.uk/teaching/courses/cslp/coursework/CSLP-2012.pdf)

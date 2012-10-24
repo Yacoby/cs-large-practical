@@ -155,7 +155,35 @@ void parse_WhenOptionHasDefaultArgument_IsSet(){
     PASS_EQUAL(result, expected, "");
 }
 
+void setHelpStringForArgumentKey_WhenSetsHelpTextForNotExistKey_Throws(){
+    CommandLineOptionParser* underTest = [[[CommandLineOptionParser alloc] init] autorelease];
+    PASS_EXCEPTION([underTest setHelpStringForArgumentKey:@"foo" help:@"bar"], @"KeyNotExists", "");
+}
+
+void addArgumentWithName_WhenAddingTwice_Throws(){
+    CommandLineOptionParser* underTest = [[[CommandLineOptionParser alloc] init] autorelease];
+    [underTest addArgumentWithName:@"--foo" ofType:Boolean];
+
+    PASS_EXCEPTION([underTest addArgumentWithName:@"--foo" ofType:Boolean], @"KeyExists", "");
+}
+
+void parse_WhenHasArgumentOfIncorrectType_ReturnsError(){
+    CommandLineOptionParser* underTest = [[[CommandLineOptionParser alloc] init] autorelease];
+    [underTest addArgumentWithName: @"--foo" ofType:Integer];
+
+    NSError* err = NULL;
+    NSArray* input = [NSArray arrayWithObjects: @"--foo", @"bar", nil];
+    CommandLineOptions* options = [underTest parse:input error:&err];
+    PASS(options == nil, "There is no valid options to return");
+
+    NSString* reason = [err localizedDescription];
+    NSString* expectedReason = @"Argument --foo was of the incorrect type";
+    NSRange search = [reason rangeOfString:expectedReason options:NSCaseInsensitiveSearch];
+    PASS(search.location != NSNotFound, "");
+}
+
 int main(){
+    
     START_SET("CommandLineOptionParser")
         get_WhenHasNoRulesAndGivenArgument_ReturnsNil();
         addParse_WhenHasShortArgumentAndOption_ParsesCorrectly();
@@ -169,6 +197,10 @@ int main(){
         parse_WhenHasPositionalArgAndIsNotSet_ReturnsError();
         parse_WhenHasPositionalArgThatIsNotRequired_DoesntReturnError();
         parse_WhenOptionHasDefaultArgument_IsSet();
+
+        setHelpStringForArgumentKey_WhenSetsHelpTextForNotExistKey_Throws();
+        addArgumentWithName_WhenAddingTwice_Throws();
+        parse_WhenHasArgumentOfIncorrectType_ReturnsError();
     END_SET("CommandLineOptionParser")
 
     return 0;

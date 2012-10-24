@@ -17,7 +17,7 @@ CommandLineOptionParser* getOptionsParser(){
     [cmdLineParser addArgumentWithName:@"--trackalloc" ofType:Boolean];
     [cmdLineParser setHelpStringForArgumentKey:@"trackalloc" help:@"Tracks object allocations"];
 
-    [cmdLineParser addArgumentWithName:@"--seed" andShortName:@"-s" ofType:String];
+    [cmdLineParser addArgumentWithName:@"--seed" andShortName:@"-s" ofType:Integer];
     [cmdLineParser setHelpStringForArgumentKey:@"seed" help:@"The seed to initialize the random number generator with."];
 
     [cmdLineParser addArgumentWithName:@"--output" andShortName:@"-o" ofType:String];

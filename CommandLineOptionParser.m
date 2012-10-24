@@ -57,8 +57,10 @@ NSString* const COMMAND_LINE_SHORT_PREFIX = @"-";
         mKeyToHelpText = [[NSMutableDictionary alloc] init];
         mKeyToDefaultValue = [[NSMutableDictionary alloc] init];
         mRequiredKeys = [[NSMutableSet alloc] init];
+        mKeys = [[NSMutableSet alloc] init];
 
         mPositionalArguments = [[NSMutableArray alloc] init];
+
     }
     [self addArgumentWithName:@"--help" andShortName:@"-h" ofType:Boolean];
     [self setHelpStringForArgumentKey:@"help" help:@"Prints this output"];
@@ -71,6 +73,7 @@ NSString* const COMMAND_LINE_SHORT_PREFIX = @"-";
     [mKeyToHelpText release];
     [mKeyToDefaultValue release];
     [mRequiredKeys release];
+    [mKeys release];
     [mPositionalArguments release];
     [super dealloc];
 }
@@ -94,14 +97,35 @@ NSString* const COMMAND_LINE_SHORT_PREFIX = @"-";
 }
 
 - (void)setHelpStringForArgumentKey:(NSString*)key help:(NSString*)help{
+    if ( ![mKeys containsObject:key] ){
+        NSException* keyNotExists = [NSException
+                                     exceptionWithName:@"KeyNotExists"
+                                     reason:@"The argument with that key doesn't exist in mKeys"
+                                     userInfo:nil];
+        [keyNotExists raise];
+    }
     [mKeyToHelpText setObject:help forKey:key];
 }
 
 - (void)setDefaultValueForArgumentKey:(NSString*)key value:(id)defaultValue{
+    if ( ![mKeys containsObject:key] ){
+        NSException* keyNotExists = [NSException
+                                     exceptionWithName:@"KeyNotExists"
+                                     reason:@"The argument with that key doesn't exist in mKeys"
+                                     userInfo:nil];
+        [keyNotExists raise];
+    }
     [mKeyToDefaultValue setObject:defaultValue forKey:key];
 }
 
 - (void)setRequiredForArgumentKey:(NSString*)key required:(BOOL)required{
+    if ( ![mKeys containsObject:key] ){
+        NSException* keyNotExists = [NSException
+                                     exceptionWithName:@"KeyNotExists"
+                                     reason:@"The argument with that key doesn't exist in mKeys"
+                                     userInfo:nil];
+        [keyNotExists raise];
+    }
     if ( required ){
         [mRequiredKeys addObject:key];
     }else{
@@ -110,6 +134,15 @@ NSString* const COMMAND_LINE_SHORT_PREFIX = @"-";
 }
 
 - (void)addOptionalArgumentForKey:(NSString*)key withName:(NSString*)name ofType:(CommandLineType)type{
+    if ( [mKeys containsObject:key] ){
+        NSException* keyExists = [NSException
+                                  exceptionWithName:@"KeyExists"
+                                  reason:@"The argument with that key already exists in mKeys"
+                                  userInfo:nil];
+        [keyExists raise];
+    }
+    [mKeys addObject:key];
+
     [mKeyToType setObject:[NSNumber numberWithInteger:type] forKey:key];
     [mLongArgumentNameToKey setObject:key forKey:name];
 
@@ -124,6 +157,14 @@ NSString* const COMMAND_LINE_SHORT_PREFIX = @"-";
 }
 
 - (void)addPositionialArgumentForKey:(NSString*)key ofType:(CommandLineType)type{
+    if ( [mKeys containsObject:key] ){
+        NSException* keyExists = [NSException
+                                  exceptionWithName:@"KeyExists"
+                                  reason:@"The argument with that key already exists in mKeys"
+                                  userInfo:nil];
+        [keyExists raise];
+    }
+    [mKeys addObject:key];
     [mKeyToType setObject:[NSNumber numberWithInteger:type] forKey:key];
     [mPositionalArguments addObject:key];
     [self setRequiredForArgumentKey:key required:YES];
@@ -150,12 +191,12 @@ NSString* const COMMAND_LINE_SHORT_PREFIX = @"-";
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
 
     NSMutableArray* remaingPositionalArgs = [[mPositionalArguments mutableCopy] autorelease];
-    NSMutableArray* mutableArguments = [[arguments mutableCopy] autorelease];
+    NSMutableArray* argumentStack = [[arguments mutableCopy] autorelease];
     NSMutableDictionary* parsedArguments = [[[NSMutableDictionary alloc] init] autorelease];
 
-    while ( [mutableArguments count] ){
-        NSString* argument = [mutableArguments objectAtIndex:0];
-        [mutableArguments removeObjectAtIndex: 0];
+    while ( [argumentStack count] ){
+        NSString* argument = [argumentStack objectAtIndex:0];
+        [argumentStack removeObjectAtIndex: 0];
 
         if ([self isOptionalArgument:argument] ){
             NSString* key = [self getKeyFromArgument:argument];
@@ -168,16 +209,24 @@ NSString* const COMMAND_LINE_SHORT_PREFIX = @"-";
                 return nil;
             }
 
-            NSString* result = nil;
-            if ( ![self isArgument:key ofType:Boolean] ){
-                result = [mutableArguments objectAtIndex:0];
-                [mutableArguments removeObjectAtIndex: 0];
+            id result = nil;
+            if ( [self isArgument:key ofType:Boolean] ){
+                result = [NSNumber numberWithBool:YES];
             }else{
-                result = @"Y";
+                result = [argumentStack objectAtIndex:0];
+                [argumentStack removeObjectAtIndex: 0];
+
+                result = [self convertString:result toType:[self getArgumentType:key]];
+                if ( result == nil ){
+                    [pool drain];
+                    NSString* description = [NSString stringWithFormat:@"Argument %@ was of the incorrect type", argument];
+                    [self makeError:err withDescription:description];
+
+                    return nil;
+                }
             }
 
-            id convertedArgument = [self convertString:result toType:[self getArgumentType:key]];
-            [parsedArguments setObject:convertedArgument forKey:key];
+            [parsedArguments setObject:result forKey:key];
         }else{
             if ( [remaingPositionalArgs count] == 0 ){
                 [pool drain];
@@ -191,6 +240,13 @@ NSString* const COMMAND_LINE_SHORT_PREFIX = @"-";
             [remaingPositionalArgs removeObjectAtIndex:0];
 
             id convertedArgument = [self convertString:argument toType:[self getArgumentType:positionalArgumentKey]];
+            if ( convertedArgument == nil ){
+                [pool drain];
+                NSString* description = [NSString stringWithFormat:@"Argument %@ was of the incorrect type", argument];
+                [self makeError:err withDescription:description];
+
+                return nil;
+            }
             [parsedArguments setObject:convertedArgument forKey: positionalArgumentKey];
         }
     }
@@ -225,14 +281,19 @@ NSString* const COMMAND_LINE_SHORT_PREFIX = @"-";
 - (id)convertString:(NSString*)str toType:(CommandLineType)type{
     switch(type){
         case Integer:
-            return [NSNumber numberWithInteger:[str intValue]];
+            {
+                int intValue;
+                if ( [[NSScanner scannerWithString:str] scanInt:&intValue] ){
+                    return [NSNumber numberWithInteger:intValue];
+                }
+            }
+            break;
         case Boolean:
             return [NSNumber numberWithBool:[str boolValue]];
         case String:
             return str;
-        default:
-            return nil;
     }
+    return nil;
 }
 
 - (CommandLineType)getArgumentType:(NSString*)argumentKey{

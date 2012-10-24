@@ -57,3 +57,9 @@ Running Tests
 -------------
 If you want to run the tests, ensure that you have first built the application and then run `gnustep-tests`
 
+
+Other code
+-----------
+tests/Testing.h is not my code and comes from gnustep. It is a set of macros that
+provide helpers to test functionalith (such as exceptions being raised).
+It is included as it doesn't seem to live in a include directory.

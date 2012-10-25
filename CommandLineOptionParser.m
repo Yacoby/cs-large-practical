@@ -253,7 +253,8 @@ NSString* const COMMAND_LINE_SHORT_PREFIX = @"-";
 
     if ( [parsedArguments objectForKey:@"help"] ){
         [pool drain];
-        return [[CommandLineOptions alloc] initWithHelpText:[self helpText]];
+
+        return [[[CommandLineOptions alloc] initWithHelpText:[self helpText]] autorelease];
     }
 
     for ( NSString* requiredKey in mRequiredKeys ){

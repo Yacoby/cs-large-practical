@@ -39,6 +39,11 @@
 }
 
 + (SimulationConfiguration*)deserilize:(NSString*)input{
+    NSError** err;
+    return [self deserilize:input error:err];
+}
+
++ (SimulationConfiguration*)deserilize:(NSString*)input error:(NSError**)err{
     SimulationConfiguration* cfg = [[[SimulationConfiguration alloc] init] autorelease];
 
     NSArray* lines = [input componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];

@@ -7,6 +7,7 @@
  */
 @protocol ConfigurationSerilizer
 + (SimulationConfiguration*)deserilize:(NSString*)input;
++ (SimulationConfiguration*)deserilize:(NSString*)input error:(NSError**)err;
 @end
 
 /**

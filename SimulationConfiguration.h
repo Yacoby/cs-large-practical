@@ -5,15 +5,12 @@
 
 /**
  * @brief Object holds a valid copy of the configuration 
- *
- * This class is designed so that it is fairly hard to load invalid data into it,
- * however it is possible to have a molecule count that isn't mentioned in a reaction
- * or a molecule mentioned in a reaction that doesn't have an initial count
  */
 @interface SimulationConfiguration : NSObject{
     TimeSpan* mTime;
-    NSMutableDictionary* mReactions;
+    NSMutableDictionary* mReactionEquations;
     NSMutableDictionary* mMoleculeCounts;
+    NSMutableDictionary* mKineticConstants;
 }
 - (id)init;
 - (void)dealloc;
@@ -22,14 +19,22 @@
 //TODO fix name
 - (TimeSpan*)time;
 
-- (void)addReaction:(NSString*)key kineticConstant:(KineticConstant*)kineticConstant reactionComponents:(ReactionComponents*)components;
+- (BOOL)addReactionEquation:(NSString*)key reactionEquation:(ReactionEquation*)components;
+- (BOOL)addKineticConstant:(NSString*)key kineticConstant:(KineticConstant*)kineticConstant;
+
 - (ReactionDefinition*)reaction:(NSString*)key;
 - (NSDictionary*)reactions;
 
 
-- (void)addMoleculeCount:(NSString*)key count:(uint)count;
+- (BOOL)addMoleculeCount:(NSString*)key count:(uint)count;
 - (uint)moleculeCount:(NSString*)key;
 - (NSDictionary*)moleculeCounts;
 - (NSSet*)molecules;
+
+/**
+ * Validates the configruation ensuring that everything that is required is set
+ */
+- (NSError*)validate;
+- (NSError*)makeErrorWithDescription:(NSString*)description;
 
 @end

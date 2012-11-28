@@ -2,6 +2,7 @@
 #import "SimulationConfiguration.h"
 #import "ReactionDefinition.h"
 
+
 /**
  * @brief Protocol defines the deserilization of anything into a SimulationConfiguration*
  */
@@ -17,10 +18,22 @@
 }
 + (SimulationConfiguration*)deserilize:(NSString*)input;
 
+/**
+ * 
+ * @note This is not how I would have written the function had I had access
+ *       to a decent set of libraries. However getting things like ParseKit
+ *       to compile seemed to be an absolute nightmare
+ */
++ (SimulationConfiguration*)deserilize:(NSString*)input error:(NSError**)err;
+
 
 /**
  * @brief Parses the reaction components. E.g: A + B -> C
  */
-+ (ReactionComponents*)parseReactionComponents: (NSString*) reaction;
++ (ReactionEquation*)parseReactionComponents: (NSString*) reaction;
 + (NSCountedSet*)parsePartOfReactionComponents:(NSString*) part;
+
++ (NSString*)trimWhiteSpace:(NSString*)str;
++ (BOOL)isVariableMoleculeCount:(NSString*)var;
++ (NSString*)removeCommentFromLine:(NSString*)line;
 @end

@@ -1,11 +1,15 @@
 #import "ConfigurationSerilizer.h"
 #import "TimeSpan.h"
 
+static NSString* COMMENT_TOKEN = @"#";
+static NSString* SIMPLE_ASSIGNMENT_SEPERATOR = @"=";
+static NSString* EQUATION_SEPERATOR = @":";
+
 @implementation ConfigurationTextSerilizer
-+ (ReactionComponents*)parseReactionComponents:(NSString*)reaction{
++ (ReactionEquation*)parseReactionComponents:(NSString*)reaction{
     NSArray* components = [reaction componentsSeparatedByString: @"->"];
 
-    ReactionComponents* result = [[[ReactionComponents alloc] init] autorelease];
+    ReactionEquation* result = [[[ReactionEquation alloc] init] autorelease];
 
     NSString* requirementString = [components objectAtIndex:0];
     [result setRequirements:[self parsePartOfReactionComponents:requirementString]];
@@ -48,59 +52,70 @@
 
     NSArray* lines = [input componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
 
-    NSMutableDictionary* kineticConstants = [[NSMutableDictionary alloc] init];
-    NSMutableDictionary* reactions = [[NSMutableDictionary alloc] init];
+    for ( int lineIdx = 0; lineIdx < [lines count]; ++lineIdx ){ 
+        NSString* line = [lines objectAtIndex:lineIdx];
 
-    for ( NSString* line in lines ){
-        if ([line hasPrefix:@"#"]){
+        line = [self removeCommentFromLine:line];
+        line = [self trimWhiteSpace:line];
+
+        if ( [line length] == 0 ){
             continue;
         }
 
-        if ([line rangeOfString:@"="].location != NSNotFound ){
-            NSMutableArray* keyValue = [[line componentsSeparatedByString: @"="] mutableCopy];
-            for ( int i = 0; i < [keyValue count]; ++i ){
-                NSString* string = [keyValue objectAtIndex:i];
-                [keyValue replaceObjectAtIndex:i withObject:[string stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceCharacterSet]]];
+        if ([line rangeOfString:SIMPLE_ASSIGNMENT_SEPERATOR].location != NSNotFound ){
+            NSMutableArray* keyValue = [[line componentsSeparatedByString:SIMPLE_ASSIGNMENT_SEPERATOR] mutableCopy];
+            if ( [keyValue count] != 2 ){
+                //error
             }
 
-            NSString* key = [keyValue objectAtIndex:0];
-            NSString* value = [keyValue objectAtIndex:1];
+            NSString* key = [self trimWhiteSpace:[keyValue objectAtIndex:0]];
+            NSString* value = [self trimWhiteSpace:[keyValue objectAtIndex:1]];
+
             if ( [key isEqualToString:@"t"] ){
                 TimeSpan* ts = [[TimeSpan alloc] initFromSeconds:[value doubleValue]];
                 [cfg setTime:ts];
                 [ts release];
-            }else if ( [key characterAtIndex:0] == [[key uppercaseString] characterAtIndex:0]){
+            }else if ( [self isVariableMoleculeCount:key] ){
                 [cfg addMoleculeCount:key count:[value intValue]];
             } else{
                 KineticConstant* constant = [[KineticConstant alloc] initWithDouble:[value doubleValue] ];
-                [kineticConstants setObject:constant forKey:key];
+                [cfg addKineticConstant: key kineticConstant:constant];
                 [constant release];
             }
             [keyValue release];
-        } else if ([line rangeOfString:@":"].location != NSNotFound ){
-            NSArray* reactionNameAndDef = [line componentsSeparatedByString: @":"];
+
+        } else if ([line rangeOfString:EQUATION_SEPERATOR].location != NSNotFound ){
+            NSArray* reactionNameAndDef = [line componentsSeparatedByString: EQUATION_SEPERATOR];
             NSString* reactionName = [reactionNameAndDef objectAtIndex:0];
-            reactionName = [reactionName stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceCharacterSet]];
+            reactionName = [self trimWhiteSpace:reactionName];
 
             NSString* reactionComponentStr = [reactionNameAndDef objectAtIndex:1];
-            ReactionComponents* reactionComonents = [self parseReactionComponents:reactionComponentStr];
+            ReactionEquation* reactionEquation = [self parseReactionComponents:reactionComponentStr];
 
-            [reactions setObject:reactionComonents forKey:reactionName];
+            [cfg addReactionEquation: reactionName reactionEquation:reactionEquation];
+        } else {
+            //error
         }
 
     }
 
-    for (NSString* reactionName in  kineticConstants) {
-        KineticConstant* constant = [kineticConstants objectForKey:reactionName];
-        ReactionComponents* reactionComponents = [reactions objectForKey:reactionName];
-
-        [cfg addReaction:reactionName kineticConstant:constant reactionComponents:reactionComponents];
-    }
-
-    [kineticConstants release];
-    [reactions release];
-
     return cfg;
+}
+
++ (NSString*)trimWhiteSpace:(NSString*)str{
+    return [str stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceCharacterSet]];
+}
+
++ (BOOL)isVariableMoleculeCount:(NSString*)var {
+    return [var characterAtIndex:0] == [[var uppercaseString] characterAtIndex:0];
+}
+
++ (NSString*)removeCommentFromLine:(NSString*)line {
+    const NSUInteger commentTokenLocation = [line rangeOfString:COMMENT_TOKEN].location;
+    if ( commentTokenLocation != NSNotFound ){
+        return [line substringToIndex:commentTokenLocation];
+    }
+    return line;
 }
 
 @end

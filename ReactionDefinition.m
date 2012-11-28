@@ -1,6 +1,6 @@
 #import "ReactionDefinition.h"
 
-@implementation ReactionComponents
+@implementation ReactionEquation
 - (void)dealloc{
     [mRequirements release];
     [mResult release];
@@ -29,21 +29,21 @@
 @end
 
 @implementation ReactionDefinition
-- (id)initFromKineticConstant:(KineticConstant*)k reactionComponents:(ReactionComponents*)components{
+- (id)initFromKineticConstant:(KineticConstant*)k reactionEquation:(ReactionEquation*)eqn{
     self = [super init];
     if ( self != nil ){
         mKineticConstant = k;
         [mKineticConstant retain];
 
-        mComponents = components;
-        [mComponents retain];
+        mEquation = eqn;
+        [mEquation retain];
     }
     return self;
 }
 
 - (void)dealloc{
     [mKineticConstant release];
-    [mComponents release];
+    [mEquation release];
     [super dealloc];
 }
 
@@ -52,11 +52,11 @@
 }
 
 - (NSCountedSet*)requirements{
-    return [mComponents requirements];
+    return [mEquation requirements];
 }
 
 - (NSCountedSet*)result{
-    return [mComponents result];
+    return [mEquation result];
 }
 
 - (double)reactionRate:(SimulationState*)state{

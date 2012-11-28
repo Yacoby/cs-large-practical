@@ -60,28 +60,28 @@ void testDeserilize_WhenHasMoleculeCount_ParsesCorrectly(){
 
 void testParseReactionComponents_WhenHasBasicReaction_ParsesCorrectly(){
     NSString* reactionString = @" A -> B";
-    ReactionComponents* components = [ConfigurationTextSerilizer parseReactionComponents:reactionString];
+    ReactionEquation* equation = [ConfigurationTextSerilizer parseReactionComponents:reactionString];
 
-    PASS_INT_EQUAL([[components requirements] countForObject:@"A"], 1, "");
-    PASS_INT_EQUAL([[components requirements] count], 1, "");
+    PASS_INT_EQUAL([[equation requirements] countForObject:@"A"], 1, "");
+    PASS_INT_EQUAL([[equation requirements] count], 1, "");
 
-    PASS_INT_EQUAL([[components result] countForObject:@"B"], 1, "");
-    PASS_INT_EQUAL([[components result] count], 1, "");
+    PASS_INT_EQUAL([[equation result] countForObject:@"B"], 1, "");
+    PASS_INT_EQUAL([[equation result] count], 1, "");
 }
 
 void testParseReactionComponents_WhenHasDesctuctiveReaction_ParsesCorrectly(){
     NSString* reactionString = @" A -> ";
-    ReactionComponents* components = [ConfigurationTextSerilizer parseReactionComponents:reactionString];
+    ReactionEquation* equation = [ConfigurationTextSerilizer parseReactionComponents:reactionString];
 
-    PASS_INT_EQUAL([[components requirements] countForObject:@"A"], 1, "");
-    PASS_INT_EQUAL([[components requirements] count], 1, "");
+    PASS_INT_EQUAL([[equation requirements] countForObject:@"A"], 1, "");
+    PASS_INT_EQUAL([[equation requirements] count], 1, "");
 
-    PASS_INT_EQUAL([[components result] count], 0, "");
+    PASS_INT_EQUAL([[equation result] count], 0, "");
 }
 
 void testParseReactionComponents_WhenHasCreativeReaction_ParsesCorrectly(){
     NSString* reactionString = @" -> A";
-    ReactionComponents* components = [ConfigurationTextSerilizer parseReactionComponents:reactionString];
+    ReactionEquation* components = [ConfigurationTextSerilizer parseReactionComponents:reactionString];
 
     PASS_INT_EQUAL([[components requirements] count], 0, "");
 
@@ -91,7 +91,7 @@ void testParseReactionComponents_WhenHasCreativeReaction_ParsesCorrectly(){
 
 void testParseReactionComponents_WhenHasTwoRequirements_ParsesCorrectly(){
     NSString* reactionString = @"A + B -> C";
-    ReactionComponents* components = [ConfigurationTextSerilizer parseReactionComponents:reactionString];
+    ReactionEquation* components = [ConfigurationTextSerilizer parseReactionComponents:reactionString];
 
     PASS_INT_EQUAL([[components requirements] countForObject:@"A"], 1, "");
     PASS_INT_EQUAL([[components requirements] countForObject:@"B"], 1, "");
@@ -118,7 +118,7 @@ int main()
         testParseReactionComponents_WhenHasDesctuctiveReaction_ParsesCorrectly();
         testParseReactionComponents_WhenHasCreativeReaction_ParsesCorrectly();
         testParseReactionComponents_WhenHasTwoRequirements_ParsesCorrectly();
-    END_SET("ConfigurationTxtSerilizer")
+    END_SET("ConfigurationTextSerilizer")
 
     return 0;
 }

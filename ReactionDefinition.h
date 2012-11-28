@@ -8,7 +8,7 @@
  * This class holds which components (and their count) make up both the input and
  * output of a reaction
  */
-@interface ReactionComponents : NSObject{
+@interface ReactionEquation : NSObject{
     NSCountedSet* mRequirements;
     NSCountedSet* mResult;
 }
@@ -26,9 +26,9 @@
  */
 @interface ReactionDefinition : NSObject{
     KineticConstant* mKineticConstant;
-    ReactionComponents* mComponents;
+    ReactionEquation * mEquation;
 }
-- (id)initFromKineticConstant:(KineticConstant*)k reactionComponents:(ReactionComponents*)components;
+- (id)initFromKineticConstant:(KineticConstant*)k reactionEquation:(ReactionEquation*)eqn;
 - (void)dealloc;
 
 - (KineticConstant*)kineticConstant;

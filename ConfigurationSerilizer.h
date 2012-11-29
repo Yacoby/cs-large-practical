@@ -33,9 +33,32 @@
 + (ReactionEquation*)parseReactionComponents: (NSString*) reaction error:(NSError**)err;
 + (NSCountedSet*)parsePartOfReactionComponents:(NSString*) part error:(NSError**)err;
 
+/**
+ * @brief Removes all white space from the lhs and rhs of a string
+ */
 + (NSString*)trimWhiteSpace:(NSString*)str;
+
+/**
+ * @breif returns true if a string variable is a molecule count
+ *
+ * Returns true if it starts with a capital letter
+ */ 
 + (BOOL)isVariableMoleculeCount:(NSString*)var;
+
+/**
+ * @breif returns true if a string variable is a kinetic constant
+ *
+ * Returns true if it starts with a lower case letter
+ */ 
 + (BOOL)isKineticConstant:(NSString*)var;
+
+/**
+ * @breif removes everything after the first # symbol (including the # symbol)
+ */ 
 + (NSString*)removeCommentFromLine:(NSString*)line;
+
+/**
+ * @breif makes an error object for the ConfigurationSerilizer.
+ */ 
 + (void)makeError:(NSError**)err withDescription:(NSString*)desc;
 @end

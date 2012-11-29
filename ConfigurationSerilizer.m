@@ -100,7 +100,7 @@ static NSString* EQUATION_SEPERATOR = @":";
                 [cfg setTime:ts];
                 [ts release];
             }else if ( [self isVariableMoleculeCount:key] ){
-                NSDecimalNumber* number = [NumericConversion decimalWithString:value];
+                NSDecimalNumber* number = [NumericConversion intWithString:value];
                 if ( number == nil ){
                     NSString* description = [NSString stringWithFormat:@"Line <%i>: Molecule count <%@> was not set to a value of a int",
                                                                        lineNumber,

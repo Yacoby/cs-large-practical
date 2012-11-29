@@ -225,7 +225,7 @@ static NSString* EQUATION_SEPERATOR = @":";
     NSDictionary* errorDictionary = [[[NSDictionary alloc]
                                                     initWithObjectsAndKeys: description, NSLocalizedDescriptionKey, nil]
                                                     autorelease];
-    *err = [NSError errorWithDomain:ERROR_DOMAIN code:CONFIG_ERROR userInfo:errorDictionary];
+    *err = [NSError errorWithDomain:ERROR_DOMAIN code:CFG_PARSE_ERROR userInfo:errorDictionary];
 }
 
 @end

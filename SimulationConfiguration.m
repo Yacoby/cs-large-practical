@@ -149,7 +149,7 @@
     NSDictionary* errorDictionary = [[[NSDictionary alloc]
                                                     initWithObjectsAndKeys: description, NSLocalizedDescriptionKey, nil]
                                                     autorelease];
-    return [NSError errorWithDomain:ERROR_DOMAIN code:CONFIG_ERROR userInfo:errorDictionary];
+    return [NSError errorWithDomain:ERROR_DOMAIN code:CFG_VALIDATE_ERROR userInfo:errorDictionary];
 }
 
 @end

@@ -311,7 +311,7 @@ NSString* const COMMAND_LINE_SHORT_PREFIX = @"-";
     NSDictionary* errorDictionary = [[[NSDictionary alloc]
                                                     initWithObjectsAndKeys: description, NSLocalizedDescriptionKey, nil]
                                                     autorelease];
-    *err = [NSError errorWithDomain:ERROR_DOMAIN code:CONFIG_ERROR userInfo:errorDictionary];
+    *err = [NSError errorWithDomain:ERROR_DOMAIN code:COMMAND_LINE_ERROR userInfo:errorDictionary];
 }
 
 - (void)setDefaultValues:(NSMutableDictionary*)args{

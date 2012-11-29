@@ -29,7 +29,7 @@ CommandLineOptionParser* getOptionsParser(){
     return cmdLineParser;
 }
 
-SimulationConfiguration* getSimulationConfiguration(CommandLineOptions* options){
+SimulationConfiguration* getSimulationConfiguration(CommandLineOptions* options, NSError** err){
     NSString* rawCfgFile = nil;
     if ( [options getOptionWithName:@"input"] != nil ){
         NSString* inputFile = [options getOptionWithName:@"input"];
@@ -39,7 +39,7 @@ SimulationConfiguration* getSimulationConfiguration(CommandLineOptions* options)
         NSData* cfgData = [NSData dataWithData:[stdinHandle readDataToEndOfFile]];
         rawCfgFile = [[[NSString alloc] initWithData:cfgData encoding:NSASCIIStringEncoding] autorelease];
     }
-    return [ConfigurationTextSerilizer deserilize:rawCfgFile];
+    return [ConfigurationTextSerilizer deserilize:rawCfgFile error:err];
 }
 
 SimpleOutputWriter* getOutputWriter(CommandLineOptions* options, SimulationConfiguration* cfg){
@@ -85,7 +85,20 @@ int main(void){
     BOOL trackObjectAllocations = [[options getOptionWithName:@"trackalloc"] boolValue];
     GSDebugAllocationActive(trackObjectAllocations);
 
-    SimulationConfiguration* cfg = getSimulationConfiguration(options);
+    NSError* cfgError;
+    SimulationConfiguration* cfg = getSimulationConfiguration(options, &cfgError);
+    if ( cfg == nil ){
+        NSString* errDescription = [cfgError localizedDescription];
+        fprintf(stderr, "%s\n", [errDescription cStringUsingEncoding:NSASCIIStringEncoding]);
+        return 2;
+    }
+    NSError* validateError = [cfg validate];
+    if ( validateError ){
+        NSString* errDescription = [validateError localizedDescription];
+        fprintf(stderr, "%s\n", [errDescription cStringUsingEncoding:NSASCIIStringEncoding]);
+        return 3;
+    }
+
     SimpleOutputWriter* writer = getOutputWriter(options, cfg);
     UniformRandom* random = getRandomNumberGenerator(options);
 

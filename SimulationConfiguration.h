@@ -33,6 +33,8 @@
 
 /**
  * Validates the configruation ensuring that everything that is required is set
+ *
+ * @todo Change this so that it only has an error with actual errors, unused molecule counts aren't a problem
  */
 - (NSError*)validate;
 - (NSError*)makeErrorWithDescription:(NSString*)description;

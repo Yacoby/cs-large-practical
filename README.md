@@ -30,10 +30,11 @@ Ensure you have run GNUstep.sh to setup your environmental variables.
 `cd` into the root of the Cslp directory and run `make`. This will build the binary and write it to  `Cslp.app/Cslp`.
 This will also compile the code into a library that is used to run tests against.
 
+
 Running the Application
 -----------------------
 The Unix way of running the program is to pass the program the input script
-through stdin and let the program write the output to stdout.For example:  
+through stdin and let the program write the output to stdout. For example:  
 `cat ./examples/decay.txt | ./Cslp.app/Cslp`
 
 Due to the requirements of the application it is also possible to pass as the first argument
@@ -44,9 +45,11 @@ If you want to output elsewhere than stdout then the following are equivalent:
 `./Cslp.app/Cslp exampes/decay.txt > output.txt`  
 `./Cslp.app/Cslp exampes/decay.txt --output output.txt`
 
+
 Command Line Arguments
 -----------------------
 Run `./Cslp.app/Cslp --help` to see an up to date list of command line options
+
 
 Configuration Script
 --------------------
@@ -56,9 +59,14 @@ following differences.
 * Identifiers must be consistent but you can use words as opposed to letters (so you are not limited to 25 molecules)
 * t has an alias time, so both t and time are reserved identifiers
 * Comments can be written on the same line as settings
+* Support for numbers in scientific notation.
+* Validation is preformed on the scripts. It should be impossible to use an invalid script
+
+
+Output Formats
+--------------
 
 TODO
-* Support for integers in scientific notation.
 
 
 Code Documentation

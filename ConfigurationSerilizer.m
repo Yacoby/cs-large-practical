@@ -95,12 +95,12 @@ static NSString* EQUATION_SEPERATOR = @":";
             NSString* key = [self trimWhiteSpace:[keyValue objectAtIndex:0]];
             NSString* value = [self trimWhiteSpace:[keyValue objectAtIndex:1]];
 
-            if ( [key isEqualToString:@"t"] ){
+            if ( [key isEqualToString:@"t"] || [key isEqualToString:@"time"] ){
                 TimeSpan* ts = [[TimeSpan alloc] initFromSeconds:[value doubleValue]];
                 [cfg setTime:ts];
                 [ts release];
             }else if ( [self isVariableMoleculeCount:key] ){
-                NSDecimalNumber* number = [NumericConversion intWithString:value];
+                NSNumber* number = [NumericConversion intWithString:value];
                 if ( number == nil ){
                     NSString* description = [NSString stringWithFormat:@"Line <%i>: Molecule count <%@> was not set to a value of a int",
                                                                        lineNumber,

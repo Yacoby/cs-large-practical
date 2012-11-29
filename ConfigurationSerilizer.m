@@ -1,6 +1,7 @@
 #import "ConfigurationSerilizer.h"
 #import "TimeSpan.h"
 #import "ErrorConstants.h"
+#import "NumericConversion.h"
 
 static NSString* COMMENT_TOKEN = @"#";
 static NSString* SIMPLE_ASSIGNMENT_SEPERATOR = @"=";
@@ -99,7 +100,22 @@ static NSString* EQUATION_SEPERATOR = @":";
                 [cfg setTime:ts];
                 [ts release];
             }else if ( [self isVariableMoleculeCount:key] ){
-                BOOL moleculeSetCorrectly = [cfg addMoleculeCount:key count:[value intValue]];
+                NSDecimalNumber* number = [NumericConversion decimalWithString:value];
+                if ( number == nil ){
+                    NSString* description = [NSString stringWithFormat:@"Line <%i>: Molecule count <%@> was not set to a value of a int",
+                                                                       lineNumber,
+                                                                       key];
+                    [self makeError:err withDescription:description];
+                    return nil;
+                }
+                if ( [number doubleValue] < 0 ){
+                    NSString* description = [NSString stringWithFormat:@"Line <%i>: Molecule count <%@> should not be less than 0",
+                                                                       lineNumber,
+                                                                       key];
+                    [self makeError:err withDescription:description];
+                    return nil;
+                }
+                BOOL moleculeSetCorrectly = [cfg addMoleculeCount:key count:[number intValue]];
                 if ( !moleculeSetCorrectly ){
                     NSString* description = [NSString stringWithFormat:@"Line <%i>: Molecule <%@> was already set",
                                                                        lineNumber,
@@ -108,7 +124,22 @@ static NSString* EQUATION_SEPERATOR = @":";
                     return nil;
                 }
             } else if ( [self isKineticConstant:key] ){
-                KineticConstant* constant = [[KineticConstant alloc] initWithDouble:[value doubleValue] ];
+                NSDecimalNumber* number = [NumericConversion decimalWithString:value];
+                if ( number == nil ){
+                    NSString* description = [NSString stringWithFormat:@"Line <%i>: Kinetic constant <%@> was not set to a value of a double",
+                                                                       lineNumber,
+                                                                       key];
+                    [self makeError:err withDescription:description];
+                    return nil;
+                }
+                if ( [number doubleValue] < 0 ){
+                    NSString* description = [NSString stringWithFormat:@"Line <%i>: Kinetic constant <%@> should not be less than 0",
+                                                                       lineNumber,
+                                                                       key];
+                    [self makeError:err withDescription:description];
+                    return nil;
+                }
+                KineticConstant* constant = [[KineticConstant alloc] initWithDouble:[number doubleValue] ];
                 BOOL kineticConstantSetCorrectly = [cfg addKineticConstant: key kineticConstant:constant];
                 [constant release];
 

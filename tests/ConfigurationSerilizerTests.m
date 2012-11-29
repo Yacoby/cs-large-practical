@@ -145,6 +145,27 @@ void testDeserilize_WhenHasInvalidIdentifier_Error(){
     PASS(search.location != NSNotFound, "");
 }
 
+void testDeserilize_WhenHasInvalidNumber_Error(){
+    NSString* cfgString = @"x = abcd";
+
+    NSError* err;
+    SimulationConfiguration* cfg = [ConfigurationTextSerilizer deserilize:cfgString error:&err];
+    PASS(cfg == nil, "Should fail to parse");
+
+    NSString* reason = [err localizedDescription];
+    NSString* expectedReason = @"Line <1>: Kinetic constant <x> was not set to a value of a double";
+    NSRange search = [reason rangeOfString:expectedReason options:NSCaseInsensitiveSearch];
+    PASS(search.location != NSNotFound, "");
+}
+
+void testDeserilize_WhenHasValidSFNumber_NoError(){
+    NSString* cfgString = @"x = 1e-5";
+
+    NSError* err;
+    SimulationConfiguration* cfg = [ConfigurationTextSerilizer deserilize:cfgString error:&err];
+    PASS(cfg != nil, "Should not fail to parse");
+}
+
 int main()
 {
     START_SET("ConfigurationTextSerilizer")
@@ -167,6 +188,9 @@ int main()
         testDeserilize_WhenHasTwoEquals_Error();
         testDeserilize_WhenHasInvalidFunctionBody_Error();
         testDeserilize_WhenHasInvalidIdentifier_Error();
+        testDeserilize_WhenHasInvalidNumber_Error();
+
+        testDeserilize_WhenHasValidSFNumber_NoError();
     END_SET("ConfigurationTextSerilizer")
 
     return 0;

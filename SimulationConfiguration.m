@@ -60,6 +60,7 @@
     }
     return result;
 }
+
 - (BOOL)addKineticConstant:(NSString*)key kineticConstant:(KineticConstant*)kineticConstant{
     if ( [mKineticConstants objectForKey:key] != nil ){
         return NO;

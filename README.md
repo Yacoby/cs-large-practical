@@ -48,8 +48,21 @@ Command Line Arguments
 -----------------------
 Run `./Cslp.app/Cslp --help` to see an up to date list of command line options
 
-Documentation
--------------
+Configuration Script
+--------------------
+The configuration script is the same as described in the Handout, but with the
+following differences.
+
+* Identifiers must be consistent but you can use words as opposed to letters (so you are not limited to 25 molecules)
+* t has an alias time, so both t and time are reserved identifiers
+* Comments can be written on the same line as settings
+
+TODO
+* Support for integers in scientific notation.
+
+
+Code Documentation
+------------------
 The documentation should be generated using doxygen. This file will be included as part of
 the main page
 
@@ -61,5 +74,5 @@ From the project root directory run `gnustep-tests`
 Other code
 -----------
 tests/Testing.h is not my code and comes from gnustep. It is a set of macros that
-provide helpers to test functionalith (such as exceptions being raised).
-It is included as it doesn't seem to live in a include directory.
+provide helpers to test functionality (such as exceptions being raised).
+It is included as it doesn't seem to live in a GNUStep include directory.

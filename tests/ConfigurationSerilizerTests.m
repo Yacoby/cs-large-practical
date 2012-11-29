@@ -60,7 +60,9 @@ void testDeserilize_WhenHasMoleculeCount_ParsesCorrectly(){
 
 void testParseReactionComponents_WhenHasBasicReaction_ParsesCorrectly(){
     NSString* reactionString = @" A -> B";
-    ReactionEquation* equation = [ConfigurationTextSerilizer parseReactionComponents:reactionString];
+
+    NSError* error;
+    ReactionEquation* equation = [ConfigurationTextSerilizer parseReactionComponents:reactionString error:&error];
 
     PASS_INT_EQUAL([[equation requirements] countForObject:@"A"], 1, "");
     PASS_INT_EQUAL([[equation requirements] count], 1, "");
@@ -71,7 +73,8 @@ void testParseReactionComponents_WhenHasBasicReaction_ParsesCorrectly(){
 
 void testParseReactionComponents_WhenHasDesctuctiveReaction_ParsesCorrectly(){
     NSString* reactionString = @" A -> ";
-    ReactionEquation* equation = [ConfigurationTextSerilizer parseReactionComponents:reactionString];
+    NSError* error;
+    ReactionEquation* equation = [ConfigurationTextSerilizer parseReactionComponents:reactionString error:&error];
 
     PASS_INT_EQUAL([[equation requirements] countForObject:@"A"], 1, "");
     PASS_INT_EQUAL([[equation requirements] count], 1, "");
@@ -81,24 +84,65 @@ void testParseReactionComponents_WhenHasDesctuctiveReaction_ParsesCorrectly(){
 
 void testParseReactionComponents_WhenHasCreativeReaction_ParsesCorrectly(){
     NSString* reactionString = @" -> A";
-    ReactionEquation* components = [ConfigurationTextSerilizer parseReactionComponents:reactionString];
+    NSError* error;
+    ReactionEquation* equation = [ConfigurationTextSerilizer parseReactionComponents:reactionString error:&error];
 
-    PASS_INT_EQUAL([[components requirements] count], 0, "");
+    PASS_INT_EQUAL([[equation requirements] count], 0, "");
 
-    PASS_INT_EQUAL([[components result] countForObject:@"A"], 1, "");
-    PASS_INT_EQUAL([[components result] count], 1, "");
+    PASS_INT_EQUAL([[equation result] countForObject:@"A"], 1, "");
+    PASS_INT_EQUAL([[equation result] count], 1, "");
 }
 
 void testParseReactionComponents_WhenHasTwoRequirements_ParsesCorrectly(){
     NSString* reactionString = @"A + B -> C";
-    ReactionEquation* components = [ConfigurationTextSerilizer parseReactionComponents:reactionString];
+    NSError* error;
+    ReactionEquation* equation = [ConfigurationTextSerilizer parseReactionComponents:reactionString error:&error];
 
-    PASS_INT_EQUAL([[components requirements] countForObject:@"A"], 1, "");
-    PASS_INT_EQUAL([[components requirements] countForObject:@"B"], 1, "");
-    PASS_INT_EQUAL([[components requirements] count], 2, "");
+    PASS_INT_EQUAL([[equation requirements] countForObject:@"A"], 1, "");
+    PASS_INT_EQUAL([[equation requirements] countForObject:@"B"], 1, "");
+    PASS_INT_EQUAL([[equation requirements] count], 2, "");
 
-    PASS_INT_EQUAL([[components result] countForObject:@"C"], 1, "");
-    PASS_INT_EQUAL([[components result] count], 1, "");
+    PASS_INT_EQUAL([[equation result] countForObject:@"C"], 1, "");
+    PASS_INT_EQUAL([[equation result] count], 1, "");
+}
+
+void testDeserilize_WhenHasTwoEquals_Error(){
+    NSString* cfgString = @"a = 2 = 3";
+
+    NSError* err;
+    SimulationConfiguration* cfg = [ConfigurationTextSerilizer deserilize:cfgString error:&err];
+    PASS(cfg == nil, "Should fail to parse");
+
+    NSString* reason = [err localizedDescription];
+    NSString* expectedReason = @"Line <1>: Too many <=> symbols";
+    NSRange search = [reason rangeOfString:expectedReason options:NSCaseInsensitiveSearch];
+    PASS(search.location != NSNotFound, "");
+}
+
+void testDeserilize_WhenHasInvalidFunctionBody_Error(){
+    NSString* cfgString = @"f : A";
+
+    NSError* err;
+    SimulationConfiguration* cfg = [ConfigurationTextSerilizer deserilize:cfgString error:&err];
+    PASS(cfg == nil, "Should fail to parse");
+
+    NSString* reason = [err localizedDescription];
+    NSString* expectedReason = @"Line <1>: No -> found in function body";
+    NSRange search = [reason rangeOfString:expectedReason options:NSCaseInsensitiveSearch];
+    PASS(search.location != NSNotFound, "");
+}
+
+void testDeserilize_WhenHasInvalidIdentifier_Error(){
+    NSString* cfgString = @"24 = 5";
+
+    NSError* err;
+    SimulationConfiguration* cfg = [ConfigurationTextSerilizer deserilize:cfgString error:&err];
+    PASS(cfg == nil, "Should fail to parse");
+
+    NSString* reason = [err localizedDescription];
+    NSString* expectedReason = @"Line <1>: Invalid identifier on the LHS";
+    NSRange search = [reason rangeOfString:expectedReason options:NSCaseInsensitiveSearch];
+    PASS(search.location != NSNotFound, "");
 }
 
 int main()
@@ -118,6 +162,11 @@ int main()
         testParseReactionComponents_WhenHasDesctuctiveReaction_ParsesCorrectly();
         testParseReactionComponents_WhenHasCreativeReaction_ParsesCorrectly();
         testParseReactionComponents_WhenHasTwoRequirements_ParsesCorrectly();
+
+
+        testDeserilize_WhenHasTwoEquals_Error();
+        testDeserilize_WhenHasInvalidFunctionBody_Error();
+        testDeserilize_WhenHasInvalidIdentifier_Error();
     END_SET("ConfigurationTextSerilizer")
 
     return 0;

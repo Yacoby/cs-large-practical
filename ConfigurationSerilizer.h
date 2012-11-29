@@ -30,10 +30,12 @@
 /**
  * @brief Parses the reaction components. E.g: A + B -> C
  */
-+ (ReactionEquation*)parseReactionComponents: (NSString*) reaction;
-+ (NSCountedSet*)parsePartOfReactionComponents:(NSString*) part;
++ (ReactionEquation*)parseReactionComponents: (NSString*) reaction error:(NSError**)err;
++ (NSCountedSet*)parsePartOfReactionComponents:(NSString*) part error:(NSError**)err;
 
 + (NSString*)trimWhiteSpace:(NSString*)str;
 + (BOOL)isVariableMoleculeCount:(NSString*)var;
++ (BOOL)isKineticConstant:(NSString*)var;
 + (NSString*)removeCommentFromLine:(NSString*)line;
++ (void)makeError:(NSError**)err withDescription:(NSString*)desc;
 @end

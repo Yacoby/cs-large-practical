@@ -1,0 +1,78 @@
+#import "Testing.h"
+#import "TestingExtension.h"
+#import "Logger.h"
+
+void warn_WhenCallsWarn_PassesMsgToLog(){
+    Logger* underTest = [[Logger alloc] init];
+
+    MemoryOutputStream* os = [[[MemoryOutputStream alloc] init] autorelease];
+    Log* log = [[[StreamLog alloc] initWithStream:os] autorelease];
+
+    [underTest addLog:log];
+    [Logger warn:@"foo"];
+
+    PASS_EQUAL([os memory], @"foo", "Should have passed ouptut to logs");
+
+    [underTest release];
+}
+
+void warn_WhenCallsWarnWithFromat_FormatsStringAndPassesMsgToLog(){
+    Logger* underTest = [[Logger alloc] init];
+
+    MemoryOutputStream* os = [[[MemoryOutputStream alloc] init] autorelease];
+    Log* log = [[[StreamLog alloc] initWithStream:os] autorelease];
+
+    [underTest addLog:log];
+    [Logger warn:@"foo %@", @"bar"];
+
+    PASS_EQUAL([os memory], @"foo bar", "Should have passed ouptut to logs");
+
+    [underTest release];
+}
+
+void warn_WhenHasGlobalLevelSetToError_DoesNothing(){
+    Logger* underTest = [[Logger alloc] init];
+
+    [underTest setGlobalLogLevel:LL_ERROR];
+
+    MemoryOutputStream* os = [[[MemoryOutputStream alloc] init] autorelease];
+    Log* log = [[[StreamLog alloc] initWithStream:os] autorelease];
+
+    [underTest addLog:log];
+    [Logger warn:@"foo %@", @"bar"];
+
+    PASS_EQUAL([os memory], @"", "Should do nothing due to log level");
+
+    [underTest release];
+}
+
+void instance_WhenHasNoInstance_ReturnsNil(){
+    PASS([Logger instance] == nil, "When there is no logger it should be nil");
+}
+
+void instance_WhenLoggerCreated_ReturnsThatLogger(){
+    Logger* underTest = [[Logger alloc] init];
+    
+    PASS_EQUAL([Logger instance], underTest, "Instance should be the created instance");
+    [underTest release];
+}
+
+void instance_WhenLoggerCreatedWhenAlreadyExists_ReturnsNil(){
+    Logger* logger = [[Logger alloc] init];
+    Logger* underTest = [[Logger alloc] init];
+    PASS(underTest == nil, "If an instance exists, then we shouldn't be able to create more");
+    [logger release];
+}
+
+int main(){
+    START_SET("RandomTests")
+        warn_WhenCallsWarn_PassesMsgToLog();
+        warn_WhenCallsWarnWithFromat_FormatsStringAndPassesMsgToLog();
+        warn_WhenHasGlobalLevelSetToError_DoesNothing();
+
+        instance_WhenHasNoInstance_ReturnsNil();
+        instance_WhenLoggerCreated_ReturnsThatLogger();
+    END_SET("RandomTests")
+
+    return 0;
+}

@@ -86,30 +86,7 @@ UniformRandom* getRandomNumberGenerator(CommandLineOptions* options){
     return [[[UniformRandom alloc] initWithSeed:seed] autorelease];
 }
 
-int main(void){
-    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-
-    CommandLineOptionParser* cmdLineParser = getOptionsParser();
-    NSArray* processArguments = [[NSProcessInfo processInfo] arguments];
-    NSArray* cmdLineArgs = [processArguments subarrayWithRange:NSMakeRange(1, [processArguments count] - 1)];
-
-    NSError* err;
-    CommandLineOptions* options = [cmdLineParser parse:cmdLineArgs error:&err];
-    if ( options == nil ){
-        NSString* errDescription = [err localizedDescription];
-        fprintf(stderr, "%s\n", [errDescription cStringUsingEncoding:NSASCIIStringEncoding]);
-        return 1;
-    }
-
-    if ( [options shouldPrintHelpText] ){
-        fprintf(stdout, "%s\n", [[options helpText] cStringUsingEncoding:NSASCIIStringEncoding]);
-        return 0;
-    }
-
-    BOOL trackObjectAllocations = [[options getOptionWithName:@"trackalloc"] boolValue];
-    GSDebugAllocationActive(trackObjectAllocations);
-
-
+void makeLogger(CommandLineOptions* options){
     Logger* logger = [[[Logger alloc] init] autorelease];
     {
         FileHandleOutputStream* os = [[FileHandleOutputStream alloc] initWithFileHandle:[NSFileHandle fileHandleWithStandardError]];
@@ -143,6 +120,33 @@ int main(void){
         [fs release];
         [log release];
     }
+}
+
+int main(void){
+    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+
+    CommandLineOptionParser* cmdLineParser = getOptionsParser();
+    NSArray* processArguments = [[NSProcessInfo processInfo] arguments];
+    NSArray* cmdLineArgs = [processArguments subarrayWithRange:NSMakeRange(1, [processArguments count] - 1)];
+
+    NSError* err;
+    CommandLineOptions* options = [cmdLineParser parse:cmdLineArgs error:&err];
+    if ( options == nil ){
+        NSString* errDescription = [err localizedDescription];
+        fprintf(stderr, "%s\n", [errDescription cStringUsingEncoding:NSASCIIStringEncoding]);
+        return 1;
+    }
+
+    if ( [options shouldPrintHelpText] ){
+        fprintf(stdout, "%s\n", [[options helpText] cStringUsingEncoding:NSASCIIStringEncoding]);
+        return 0;
+    }
+
+    BOOL trackObjectAllocations = [[options getOptionWithName:@"trackalloc"] boolValue];
+    GSDebugAllocationActive(trackObjectAllocations);
+
+    makeLogger(options);
+
 
     NSError* cfgError;
     SimulationConfiguration* cfg = getSimulationConfiguration(options, &cfgError);

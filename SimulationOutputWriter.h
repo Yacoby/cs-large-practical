@@ -6,7 +6,7 @@
 /**
  * @brief This is a generic writer that allows writing of the simulation to a stream
  */
-@protocol OutputWriter <NSObject>
+@protocol SimulationOutputWriter <NSObject>
 - (void)writeToStream:(SimulationState*)state;
 @end
 
@@ -16,7 +16,7 @@
  * This is the basic formatter which will output the entire state without attempting
  * to aggregate any of the data
  */
-@interface SimpleOutputWriter : NSObject <OutputWriter>{
+@interface SimpleSimulationOutputWriter : NSObject <SimulationOutputWriter>{
     id <OutputStream> mOutputStream;
     NSArray* mOrderedMolecules;
 }

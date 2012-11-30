@@ -4,7 +4,7 @@
 #import "Simulator.h"
 
 #import "OutputStream.h"
-#import "OutputWriter.h"
+#import "SimulationOutputWriter.h"
 
 #import "Logger.h"
 
@@ -59,7 +59,7 @@ SimulationConfiguration* getSimulationConfiguration(CommandLineOptions* options,
     return [ConfigurationTextSerilizer deserilize:rawCfgFile error:err];
 }
 
-SimpleOutputWriter* getOutputWriter(CommandLineOptions* options, SimulationConfiguration* cfg){
+SimpleSimulationOutputWriter* getOutputWriter(CommandLineOptions* options, SimulationConfiguration* cfg){
     FileHandleOutputStream* os = nil;
     if ( [options getOptionWithName:@"output"] ){
         NSString* outputFile = [options getOptionWithName:@"output"];
@@ -71,7 +71,7 @@ SimpleOutputWriter* getOutputWriter(CommandLineOptions* options, SimulationConfi
         os = [[[FileHandleOutputStream alloc] initWithFileHandle:[NSFileHandle fileHandleWithStandardOutput]] autorelease];
         [Logger info:@"Writing output to stdout"];
     }
-    return [[[SimpleOutputWriter alloc] initWithStream:os simulationConfiguration:cfg] autorelease];
+    return [[[SimpleSimulationOutputWriter alloc] initWithStream:os simulationConfiguration:cfg] autorelease];
 }
 
 UniformRandom* getRandomNumberGenerator(CommandLineOptions* options){
@@ -154,7 +154,7 @@ int main(void){
         return 3;
     }
 
-    SimpleOutputWriter* writer = getOutputWriter(options, cfg);
+    SimpleSimulationOutputWriter* writer = getOutputWriter(options, cfg);
     UniformRandom* random = getRandomNumberGenerator(options);
 
     Simulator* simulator = [[[Simulator alloc] initWithCfg:cfg randomGen:random outputWriter:writer] autorelease];

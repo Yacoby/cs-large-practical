@@ -3,7 +3,7 @@
 #import <math.h>
 
 @implementation Simulator
-- (id)initWithCfg:(SimulationConfiguration*)cfg randomGen:(id <Random>)random outputWriter:(id <OutputWriter>)writer{
+- (id)initWithCfg:(SimulationConfiguration*)cfg randomGen:(id <Random>)random outputWriter:(id <SimulationOutputWriter>)writer{
     self = [super init];
     if ( self != nil ){
         [cfg retain];

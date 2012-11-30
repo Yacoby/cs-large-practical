@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
-#import "OutputWriter.h"
+#import "SimulationOutputWriter.h"
 
-@implementation SimpleOutputWriter
+@implementation SimpleSimulationOutputWriter
 - (id)initWithStream:(id <OutputStream>)stream simulationConfiguration:(SimulationConfiguration*)cfg{
     self = [super init];
     if ( self != nil ){

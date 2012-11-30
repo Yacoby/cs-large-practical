@@ -1,5 +1,5 @@
 #import "Testing.h"
-#import "OutputWriter.h"
+#import "SimulationOutputWriter.h"
 #import "SimulationConfiguration.h"
 
 void writeToStream_init_WritesOnlyHeaders(){
@@ -10,7 +10,7 @@ void writeToStream_init_WritesOnlyHeaders(){
 
     MemoryOutputStream* stream = [[[MemoryOutputStream alloc] init] autorelease];
 
-    [[[SimpleOutputWriter alloc] initWithStream:stream simulationConfiguration:cfg] autorelease];
+    [[[SimpleSimulationOutputWriter alloc] initWithStream:stream simulationConfiguration:cfg] autorelease];
     NSString* expectedOutput = @"t, A, B, C\n";
 
     PASS_EQUAL([stream memory], expectedOutput, "");
@@ -28,7 +28,7 @@ void writeToStream_WhenHasOneItemOfHistory_WritesHeadersAndThatItem(){
     SimulationState* historyItem = [[[SimulationState alloc] initWithTime:timeSpan moleculeCount:state] autorelease];
 
     MemoryOutputStream* stream = [[[MemoryOutputStream alloc] init] autorelease];
-    SimpleOutputWriter* outputWriter = [[[SimpleOutputWriter alloc] initWithStream:stream simulationConfiguration:cfg] autorelease];
+    SimpleSimulationOutputWriter* outputWriter = [[[SimpleSimulationOutputWriter alloc] initWithStream:stream simulationConfiguration:cfg] autorelease];
     [outputWriter writeToStream:historyItem];
 
     NSString* expectedOutput = @"t, A, B\n0.000000, 1, 2\n";
@@ -37,10 +37,10 @@ void writeToStream_WhenHasOneItemOfHistory_WritesHeadersAndThatItem(){
 }
 int main()
 {
-    START_SET("OutputWriter")
+    START_SET("SimulationOutputWriter")
         writeToStream_init_WritesOnlyHeaders();
         writeToStream_WhenHasOneItemOfHistory_WritesHeadersAndThatItem();
-    END_SET("OutputWriter")
+    END_SET("SimulationOutputWriter")
 
     return 0;
 }

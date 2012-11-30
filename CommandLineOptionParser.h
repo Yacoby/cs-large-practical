@@ -1,3 +1,4 @@
+/** @file */
 #import <Foundation/Foundation.h>
 
 /**

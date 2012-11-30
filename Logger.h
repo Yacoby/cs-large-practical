@@ -36,7 +36,20 @@
  */
 - (NSSet*)logs;
 
+/**
+ * @brief sets the global log level
+ * @see globalLogLevel
+ */
 - (void)setGlobalLogLevel:(LogLevel)lvl;
+
+/**
+ * @brief gets the global log level
+ *
+ * The global log level can be set to override the log level of all
+ * Logs used by this Logger. 
+ *
+ * @return the current global log level
+ */
 - (LogLevel)globalLogLevel;
 
 /**
@@ -54,8 +67,18 @@
  * Logger instance
  */
 + (void)error:(NSString*)msg, ...;
+
+/**
+ * @see error:
+ */
 + (void)warn:(NSString*)msg, ...;
+/**
+ * @see error:
+ */
 + (void)info:(NSString*)msg, ...;
+/**
+ * @see error:
+ */
 + (void)debug:(NSString*)msg, ...;
 
 /**

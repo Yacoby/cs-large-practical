@@ -1,6 +1,16 @@
+/** @file */
 #import <Foundation/Foundation.h>
 #import "OutputStream.h"
 
+/**
+ * @brief A list of all log levels
+ *
+ * The LL_UNKNOWN level isn't intended to be used as a log level but rather
+ * as a error condition. I would prefer to use something like Haskells Maybe
+ * however it isn't possible to do for enums in a generic way using Objective-C.
+ *
+ * @see Logger:logLevelFromString
+ */
 typedef enum {
     LL_UNKNOWN,
     LL_DEBUG,

@@ -1,16 +1,16 @@
 #import <Foundation/Foundation.h>
 #import "SimulationConfiguration.h"
 #import "SimulationState.h"
-#import "SimulationOutputWriter.h"
+#import "SimulationOutputAggregator.h"
 #import "Random.h"
 
 @interface Simulator : NSObject {
     SimulationConfiguration* mCfg;
     NSMutableArray* mReactions;
-    id <SimulationOutputWriter> mWriter;
+    id <SimulationOutputAggregator> mAggregator;
     id <Random> mRandom;
 }
-- (id)initWithCfg:(SimulationConfiguration*)cfg randomGen:(id <Random>)random outputWriter:(id <SimulationOutputWriter>)writer;
+- (id)initWithCfg:(SimulationConfiguration*)cfg randomGen:(id <Random>)random outputAggregator:(id <SimulationOutputAggregator>)aggregator;
 - (void)dealloc;
 - (void)runSimulation;
 - (BOOL)runSimulationStep:(SimulationState*)state;

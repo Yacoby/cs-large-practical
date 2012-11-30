@@ -3,14 +3,14 @@
 #import <math.h>
 
 @implementation Simulator
-- (id)initWithCfg:(SimulationConfiguration*)cfg randomGen:(id <Random>)random outputWriter:(id <SimulationOutputWriter>)writer{
+- (id)initWithCfg:(SimulationConfiguration*)cfg randomGen:(id <Random>)random outputAggregator:(id <SimulationOutputAggregator>)aggregator{
     self = [super init];
     if ( self != nil ){
         [cfg retain];
         mCfg = cfg;
 
-        [writer retain];
-        mWriter = writer;
+        [aggregator retain];
+        mAggregator = aggregator;
 
         [random retain];
         mRandom = random;
@@ -27,7 +27,7 @@
 }
 
 - (void)dealloc{
-    [mWriter release];
+    [mAggregator release];
     [mCfg release];
     [mRandom release];
     [mReactions release];
@@ -42,7 +42,7 @@
     TimeSpan* stopTime = [mCfg time];
 
     SimulationState* state = initialState;
-    [mWriter writeToStream:state];
+    [mAggregator stateChangedTo:state];
 
     while ( true ){
         BOOL hasHadReaction = [self runSimulationStep:state];
@@ -51,7 +51,7 @@
             break;
         }
 
-        [mWriter writeToStream:state];
+        [mAggregator stateChangedTo:state];
     }
 
     [startTime release];

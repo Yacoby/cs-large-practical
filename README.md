@@ -68,6 +68,17 @@ Output Formats
 
 TODO
 
+Logging
+--------
+It was suggested that I add logging. While I am not too fussed (I am fairly sure
+about the correctness of the program given the number of unit tests) I suppose it 
+is a good idea to have.
+
+As I didn't want to add huge amounts of requirements for something that would be marked
+(i.e. I didn't want the marker to have to spend 4+ hours setting up an environment to
+build the application) I wrote a very basic logging library that does what I need.
+
+Logging can be enabled using command line paramters
 
 Code Documentation
 ------------------

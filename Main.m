@@ -19,6 +19,12 @@ CommandLineOptionParser* getOptionsParser(){
     [cmdLineParser addArgumentWithName:@"--trackalloc" ofType:Boolean];
     [cmdLineParser setHelpStringForArgumentKey:@"trackalloc" help:@"Tracks object allocations"];
 
+    [cmdLineParser addArgumentWithName:@"--logfname" ofType:String];
+    [cmdLineParser setHelpStringForArgumentKey:@"logfname" help:@"The file name to log to"];
+
+    [cmdLineParser addArgumentWithName:@"--logstderr" ofType:Boolean];
+    [cmdLineParser setHelpStringForArgumentKey:@"logstderr" help:@"Log to standard error"];
+
     [cmdLineParser addArgumentWithName:@"--seed" andShortName:@"-s" ofType:Integer];
     [cmdLineParser setHelpStringForArgumentKey:@"seed" help:@"The seed to initialize the random number generator with."];
 
@@ -67,16 +73,6 @@ UniformRandom* getRandomNumberGenerator(CommandLineOptions* options){
 int main(void){
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
 
-    Logger* logger = [[[Logger alloc] init] autorelease];
-    [[NSFileManager defaultManager] createFileAtPath:@"simulation.log" contents:nil attributes:nil];
-    FileOutputStream* fs = [[FileOutputStream alloc] initWithFileName:@"simulation.log"];
-    Log* fileLog = [[StreamLog alloc] initWithStream:fs];
-    [logger addLog:fileLog];
-
-    [fs release];
-    [fileLog release];
-
-    [Logger error:@"Starting Up"];
 
     CommandLineOptionParser* cmdLineParser = getOptionsParser();
     NSArray* processArguments = [[NSProcessInfo processInfo] arguments];
@@ -97,6 +93,26 @@ int main(void){
 
     BOOL trackObjectAllocations = [[options getOptionWithName:@"trackalloc"] boolValue];
     GSDebugAllocationActive(trackObjectAllocations);
+
+    Logger* logger = [[[Logger alloc] init] autorelease];
+    NSString* logName = [options getOptionWithName:@"logfname"];
+    if ( logName ){
+        [[NSFileManager defaultManager] createFileAtPath:logName contents:nil attributes:nil];
+        FileOutputStream* fs = [[FileOutputStream alloc] initWithFileName:logName];
+        Log* fileLog = [[StreamLog alloc] initWithStream:fs];
+        [logger addLog:fileLog];
+        [fs release];
+        [fileLog release];
+    }
+
+    BOOL logStderr = [[options getOptionWithName:@"logstderr"] boolValue];
+    if ( logStderr ){
+        FileHandleOutputStream* os = [[FileHandleOutputStream alloc] initWithFileHandle:[NSFileHandle fileHandleWithStandardError]];
+        Log* log = [[StreamLog alloc] initWithStream:os];
+        [logger addLog:log];
+        [os release];
+        [log release];
+    }
 
     NSError* cfgError;
     SimulationConfiguration* cfg = getSimulationConfiguration(options, &cfgError);

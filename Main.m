@@ -6,6 +6,8 @@
 #import "OutputStream.h"
 #import "OutputWriter.h"
 
+#import "Logger.h"
+
 void printAllocatedClasses(){
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     printf(GSDebugAllocationList(false));
@@ -64,6 +66,17 @@ UniformRandom* getRandomNumberGenerator(CommandLineOptions* options){
 
 int main(void){
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+
+    Logger* logger = [[[Logger alloc] init] autorelease];
+    [[NSFileManager defaultManager] createFileAtPath:@"simulation.log" contents:nil attributes:nil];
+    FileOutputStream* fs = [[FileOutputStream alloc] initWithFileName:@"simulation.log"];
+    Log* fileLog = [[StreamLog alloc] initWithStream:fs];
+    [logger addLog:fileLog];
+
+    [fs release];
+    [fileLog release];
+
+    [Logger error:@"Starting Up"];
 
     CommandLineOptionParser* cmdLineParser = getOptionsParser();
     NSArray* processArguments = [[NSProcessInfo processInfo] arguments];

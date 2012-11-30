@@ -37,6 +37,7 @@
 - (void)logLevel:(LogLevel)level withFormat:(NSString*)format arguments:(va_list)arguments{
     NSString* msg = [[NSString alloc] initWithFormat:format arguments:arguments];
     [mStream write:msg];
+    [mStream write:@"\n"];
     [msg release];
 }
 @end

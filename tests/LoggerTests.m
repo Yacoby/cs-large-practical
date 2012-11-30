@@ -11,7 +11,7 @@ void warn_WhenCallsWarn_PassesMsgToLog(){
     [underTest addLog:log];
     [Logger warn:@"foo"];
 
-    PASS_EQUAL([os memory], @"foo", "Should have passed ouptut to logs");
+    PASS_EQUAL([os memory], @"foo\n", "Should have passed ouptut to logs");
 
     [underTest release];
 }
@@ -25,7 +25,7 @@ void warn_WhenCallsWarnWithFromat_FormatsStringAndPassesMsgToLog(){
     [underTest addLog:log];
     [Logger warn:@"foo %@", @"bar"];
 
-    PASS_EQUAL([os memory], @"foo bar", "Should have passed ouptut to logs");
+    PASS_EQUAL([os memory], @"foo bar\n", "Should have passed ouptut to logs");
 
     [underTest release];
 }

@@ -11,8 +11,8 @@
 
 - (void)logLevel:(LogLevel)level withFormat:(NSString*)format arguments:(va_list)arguments{
     NSException* exception = [NSException exceptionWithName: @"ProgrammerError"
-                                                 reason: @"Only the subclass of this class should be used"
-                                               userInfo: nil];
+                                                     reason: @"Only the subclass of this class should be used"
+                                                   userInfo: nil];
     [exception raise];
 }
 

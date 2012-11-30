@@ -2,6 +2,7 @@
 #import "OutputStream.h"
 
 typedef enum {
+    LL_UNKNOWN,
     LL_DEBUG,
     LL_INFO,
     LL_WARN,

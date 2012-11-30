@@ -64,6 +64,17 @@ void instance_WhenLoggerCreatedWhenAlreadyExists_ReturnsNil(){
     [logger release];
 }
 
+void logLevelFromString_whenHasValidWarnString_ReturnsLLWARN(){
+    PASS_INT_EQUAL([Logger logLevelFromString:@"warn"], LL_WARN, "");
+}
+void logLevelFromString_whenHasValidWarnStringInOtherCase_ReturnsLLWARN(){
+    PASS_INT_EQUAL([Logger logLevelFromString:@"WARN"], LL_WARN, "");
+    PASS_INT_EQUAL([Logger logLevelFromString:@"WaRn"], LL_WARN, "");
+}
+void logLevelFromString_whenHasInvalidString_ReturnsLLUNKNOWN(){
+    PASS_INT_EQUAL([Logger logLevelFromString:@"foo"], LL_UNKNOWN, "");
+}
+
 int main(){
     START_SET("RandomTests")
         warn_WhenCallsWarn_PassesMsgToLog();
@@ -72,6 +83,10 @@ int main(){
 
         instance_WhenHasNoInstance_ReturnsNil();
         instance_WhenLoggerCreated_ReturnsThatLogger();
+
+        logLevelFromString_whenHasValidWarnString_ReturnsLLWARN();
+        logLevelFromString_whenHasValidWarnStringInOtherCase_ReturnsLLWARN();
+        logLevelFromString_whenHasInvalidString_ReturnsLLUNKNOWN();
     END_SET("RandomTests")
 
     return 0;

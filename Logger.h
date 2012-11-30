@@ -58,4 +58,13 @@
 + (void)info:(NSString*)msg, ...;
 + (void)debug:(NSString*)msg, ...;
 
+/**
+ * @brief Given a string log level such as "WARN" this converts it to the appropriate LogLevel.
+ *
+ * This preforms a case insenstivie comparison, so that warn, Warn, WARN would match LL_WARN 
+ *
+ * @return The given LogLevel or LL_UNKNOWN if the parsing failed
+ */
++ (LogLevel)logLevelFromString:(NSString*)strLevel;
+
 @end

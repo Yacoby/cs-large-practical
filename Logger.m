@@ -86,4 +86,17 @@ static Logger* logger = nil;
         va_end(va);
     }
 }
+
++ (LogLevel)logLevelFromString:(NSString*)strLevel{
+    if ( [strLevel caseInsensitiveCompare:@"debug"] == NSOrderedSame ){
+        return LL_DEBUG;
+    }else if ( [strLevel caseInsensitiveCompare:@"info"] == NSOrderedSame ){
+        return LL_INFO;
+    }else if ( [strLevel caseInsensitiveCompare:@"warn"] == NSOrderedSame ){
+        return LL_WARN;
+    }else if ( [strLevel caseInsensitiveCompare:@"error"] == NSOrderedSame ){
+        return LL_ERROR;
+    }
+    return LL_UNKNOWN;
+}
 @end

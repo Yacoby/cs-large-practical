@@ -78,7 +78,10 @@ As I didn't want to add huge amounts of requirements for something that would be
 (i.e. I didn't want the marker to have to spend 4+ hours setting up an environment to
 build the application) I wrote a very basic logging library that does what I need.
 
-Logging can be enabled using command line paramters
+Logging can be enabled using command line paramters see Command Line Arguments for more details.
+
+Note: Early startup errors such as incorrect command line paramters can only be logged to stderr
+      as at this point no logs have been created.
 
 Code Documentation
 ------------------

@@ -1,6 +1,36 @@
 #import "SimulationConfiguration.h"
 #import "ErrorConstants.h"
 
+@implementation ConfigurationValidation
+- (id)init{
+    self = [super init];
+    if ( self ){
+        mErrorMessages = [[NSMutableSet alloc] init];
+        mWarningMessages = [[NSMutableSet alloc] init];
+    }
+    return self;
+}
+- (void)dealloc{
+    [mErrorMessages release];
+    [mWarningMessages release];
+    [super dealloc];
+}
+- (NSSet*)errors{
+    return mErrorMessages;
+}
+- (NSSet*)warnings{
+    return mWarningMessages;
+}
+
+- (void)addError:(NSString*)errorMsg{
+    [mErrorMessages addObject:errorMsg];
+}
+
+- (void)addWarning:(NSString*)warningMsg{
+    [mWarningMessages addObject:warningMsg];
+}
+@end
+
 @implementation SimulationConfiguration
 - (id)init {
     self = [super init];
@@ -92,15 +122,16 @@
     return [[[NSSet alloc] initWithArray:[mMoleculeCounts allKeys]] autorelease];
 }
 
-- (NSError*)validate{
+- (ConfigurationValidation*)validate{
+    ConfigurationValidation* result = [[ConfigurationValidation alloc] init];
     if ( [self time] == nil ){
-        return [self makeErrorWithDescription:@"The time (t) was not set"];
+        [result addError:@"The time (t) was not set"];
     }
 
     for ( NSString* key in mKineticConstants ){
         if ( [mReactionEquations objectForKey:key] == nil ){
             NSString* description = [NSString stringWithFormat:@"The kinetic constant <%@> has no reaction equation", key];
-            return [self makeErrorWithDescription:description];
+            [result addWarning:description];
         }
     }
 
@@ -108,28 +139,22 @@
     for ( NSString* reactionName in mReactionEquations ){
         if ( [mKineticConstants objectForKey:reactionName] == nil ){
             NSString* description = [NSString stringWithFormat:@"Reaction <%@> has no kinetic constant", reactionName];
-            return [self makeErrorWithDescription:description];
+            [result addError:description];
         }
 
         ReactionEquation* eqn = [mReactionEquations objectForKey:reactionName];
-        for ( NSString* molecule in [eqn requirements] ){
+        NSMutableSet* equationMolecules = [[eqn requirements] mutableCopy];
+        [equationMolecules unionSet:[eqn result]];
+        for ( NSString* molecule in equationMolecules ){
             [usedMolecules addObject:molecule];
             if ( [mMoleculeCounts objectForKey:molecule] == nil ){
                 NSString* description = [NSString stringWithFormat:@"Molecule <%@> in reaction equation <%@> has no count",
                                                                    molecule,
                                                                    reactionName];
-                return [self makeErrorWithDescription:description];
+                [result addError:description];
             }
         }
-        for ( NSString* molecule in [eqn result] ){
-            [usedMolecules addObject:molecule];
-            if ( [mMoleculeCounts objectForKey:molecule] == nil ){
-                NSString* description = [NSString stringWithFormat:@"Molecule <%@> in reaction equation <%@> has no count",
-                                                                   molecule,
-                                                                   reactionName];
-                return [self makeErrorWithDescription:description];
-            }
-        }
+        [equationMolecules release];
     }
 
     //NB: the < case was handled by checking the reaction equations
@@ -137,19 +162,12 @@
         for ( NSString* molecule in mMoleculeCounts ){
             if ( [usedMolecules member:molecule] == nil ){
                 NSString* description = [NSString stringWithFormat:@"Molecule <%@> was not used", molecule];
-                return [self makeErrorWithDescription:description];
+                [result addWarning:description];
             }
         }
     }
 
-    return nil;
-}
-
-- (NSError*)makeErrorWithDescription:(NSString*)description{
-    NSDictionary* errorDictionary = [[[NSDictionary alloc]
-                                                    initWithObjectsAndKeys: description, NSLocalizedDescriptionKey, nil]
-                                                    autorelease];
-    return [NSError errorWithDomain:ERROR_DOMAIN code:CFG_VALIDATE_ERROR userInfo:errorDictionary];
+    return result;
 }
 
 @end

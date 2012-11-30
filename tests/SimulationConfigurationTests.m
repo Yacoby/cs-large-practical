@@ -53,11 +53,13 @@ void addMoleculeCount_WhenHasDuplicate_ReturnsNo(){
 void validate_WhenHasNoTime_Fails(){
     SimulationConfiguration* underTest = [[[SimulationConfiguration alloc] init] autorelease];
 
-    NSError* result = [underTest validate];
-    PASS(result != nil, "There must be some form of error");
+    ConfigurationValidation* result = [underTest validate];
+    PASS([[result errors] count] > 0 , "There must be some form of error");
 
-    NSString* reason = [result localizedDescription];
+    NSSet* errors = [result errors];
+    PASS_INT_EQUAL([errors count], 1, "");
     NSString* expectedReason = @"time (t) was not set";
+    NSString* reason = [errors anyObject];
 
     NSRange search = [reason rangeOfString:expectedReason options:NSCaseInsensitiveSearch];
     PASS(search.location != NSNotFound, "");
@@ -71,10 +73,14 @@ void validate_WhenHasNoKineticConstantForEqn_Fails(){
     [underTest addKineticConstant:@"key" kineticConstant:k];
 
     NSError* result = [underTest validate];
-    PASS(result != nil, "There must be some form of error");
+    PASS([[result warnings] count] > 0 , "There must be some form of warning");
 
-    NSString* reason = [result localizedDescription];
+    NSSet* warnings = [result warnings];
+    NSSet* errors = [result errors];
+    PASS_INT_EQUAL([warnings count], 1, "");
+    PASS_INT_EQUAL([errors count], 0, "");
     NSString* expectedReason = @"The kinetic constant <key> has no reaction equation";
+    NSString* reason = [errors anyObject];
 
     NSRange search = [reason rangeOfString:expectedReason options:NSCaseInsensitiveSearch];
     PASS(search.location != NSNotFound, "");
@@ -96,10 +102,12 @@ void validate_ReactionMentionsMoleculeThatDoesntExist_Fails(){
 
 
     NSError* result = [underTest validate];
-    PASS(result != nil, "There must be some form of error");
+    PASS([[result errors] count] > 0 , "There must be some form of error");
 
-    NSString* reason = [result localizedDescription];
+    NSSet* errors = [result errors];
+    PASS_INT_EQUAL([errors count], 1, "");
     NSString* expectedReason = @"Molecule <key> in reaction equation <reaction> has no count";
+    NSString* reason = [errors anyObject];
 
     NSRange search = [reason rangeOfString:expectedReason options:NSCaseInsensitiveSearch];
     PASS(search.location != NSNotFound, "");

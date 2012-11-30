@@ -3,6 +3,20 @@
 #import "ReactionDefinition.h"
 #import "TimeSpan.h"
 
+@interface ConfigurationValidation : NSObject{
+    NSMutableSet* mErrorMessages;
+    NSMutableSet* mWarningMessages;
+}
+- (id)init;
+- (void)dealloc;
+- (NSSet*)errors;
+- (NSSet*)warnings;
+
+- (void)addError:(NSString*)errorMsg;
+- (void)addWarning:(NSString*)warningMsg;
+@end
+
+
 /**
  * @brief Object holds a valid copy of the configuration 
  */
@@ -33,10 +47,7 @@
 
 /**
  * Validates the configruation ensuring that everything that is required is set
- *
- * @todo Change this so that it only has an error with actual errors, unused molecule counts aren't a problem
  */
-- (NSError*)validate;
-- (NSError*)makeErrorWithDescription:(NSString*)description;
+- (ConfigurationValidation*)validate;
 
 @end

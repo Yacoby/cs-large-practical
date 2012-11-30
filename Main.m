@@ -33,8 +33,11 @@ CommandLineOptionParser* getOptionsParser(){
     [cmdLineParser addArgumentWithName:@"--seed" andShortName:@"-s" ofType:Integer];
     [cmdLineParser setHelpStringForArgumentKey:@"seed" help:@"The seed to initialize the random number generator with."];
 
-    [cmdLineParser addArgumentWithName:@"--output" andShortName:@"-o" ofType:String];
-    [cmdLineParser setHelpStringForArgumentKey:@"output" help:@"The file to output the results of the simulation to. If not set output will be sent to stdout"];
+    [cmdLineParser addArgumentWithName:@"--strict" andShortName:@"-s" ofType:Integer];
+    [cmdLineParser setHelpStringForArgumentKey:@"strict" help:@"The seed to initialize the random number generator with."];
+
+    [cmdLineParser addArgumentWithName:@"--wall" ofType:Boolean];
+    [cmdLineParser setHelpStringForArgumentKey:@"wall" help:@"Treats script warnings as errors"];
 
     [cmdLineParser addArgumentWithName:@"input" ofType:String];
     [cmdLineParser setHelpStringForArgumentKey:@"input" help:@"The path to the input script. If not set the input will be read from stdin"];
@@ -155,11 +158,20 @@ int main(void){
         [Logger error:errDescription];
         return 2;
     }
-    NSError* validateError = [cfg validate];
-    if ( validateError ){
-        NSString* errDescription = [validateError localizedDescription];
-        [Logger error:errDescription];
+    ConfigurationValidation* validateError = [cfg validate];
+    if ( [[validateError errors] count] > 0 ){
+        NSString* strErr = [[[validateError errors] allObjects] componentsJoinedByString:@"\n"];
+        [Logger error:strErr];
         return 3;
+    }
+    if ( [[validateError warnings] count] > 0 ){
+        NSString* strWarnings = [[[validateError warnings] allObjects] componentsJoinedByString:@"\n"];
+        if ( [[options getOptionWithName:@"wall"] boolValue] ){
+            [Logger error:strWarnings];
+            return 4;
+        }else{
+            [Logger warn:strWarnings];
+        }
     }
 
     id<SimulationOutputWriter> writer = getOutputWriter(options, cfg);

@@ -8,10 +8,15 @@
 - (LogLevel)logLevel{
     return mLogLevel;
 }
-
 - (void)logLevel:(LogLevel)level withFormat:(NSString*)format arguments:(va_list)arguments{
+    if ( level >= [self logLevel] ){
+        [self logLevelImpl:level withFormat:format arguments:arguments];
+    }
+}
+
+- (void)logLevelImpl:(LogLevel)level withFormat:(NSString*)format arguments:(va_list)arguments{
     NSException* exception = [NSException exceptionWithName: @"ProgrammerError"
-                                                     reason: @"Only the subclass of this class should be used"
+                                                     reason: @"Only the subclass of this class should be used and it should override this method"
                                                    userInfo: nil];
     [exception raise];
 }
@@ -34,7 +39,7 @@
     [super dealloc];
 }
 
-- (void)logLevel:(LogLevel)level withFormat:(NSString*)format arguments:(va_list)arguments{
+- (void)logLevelImpl:(LogLevel)level withFormat:(NSString*)format arguments:(va_list)arguments{
     NSString* msg = [[NSString alloc] initWithFormat:format arguments:arguments];
     [mStream write:msg];
     [mStream write:@"\n"];

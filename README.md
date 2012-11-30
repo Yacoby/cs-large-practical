@@ -60,7 +60,7 @@ following differences.
 * t has an alias time, so both t and time are reserved identifiers
 * Comments can be written on the same line as settings
 * Support for numbers in scientific notation.
-* Validation is preformed on the scripts. It should be impossible to use an invalid script
+* Validation is preformed on the scripts. It should be impossible to use an invalid script and warnings are given for scripts that are have problems (it is possible to treat warnings as errors using the --wall command line option)
 
 
 Output Formats

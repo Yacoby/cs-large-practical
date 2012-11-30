@@ -8,7 +8,7 @@
         [stream retain];
         mOutputStream = stream;
 
-        mOrderedMolecules = [[[cfg molecules] allObjects] sortedArrayUsingSelector:@selector(compare:)];
+        mOrderedMolecules = [[cfg orderedMolecules] retain];
         [mOutputStream write:@"t"];
         for ( NSString* molecule in mOrderedMolecules ){
             [mOutputStream write:[NSString stringWithFormat:@", %@", molecule]];
@@ -19,6 +19,7 @@
 }
 
 - (void)dealloc{
+    [mOrderedMolecules release];
     [mOutputStream release];
     [super dealloc];
 }

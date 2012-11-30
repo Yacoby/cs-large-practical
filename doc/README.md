@@ -1,10 +1,5 @@
-Computer Science Large Practical                         {#mainpage}
+Computer Science Large Practical
 ================================
-
-Note about current state
-------------------------
-While the solution mostly works, it is far from complete. The main bit of code
-that is in any way close to production ready is the CommandLineOptionParser.
 
 Introduction
 ------------
@@ -16,7 +11,7 @@ While you can convert it to html using [Markdown.pl](http://daringfireball.net/p
 it is intergrated with doxygen and apears as the main page of the doxygen documentation
 
 Building
-------------
+--------
 The program requires:
 
 * gnustep-base
@@ -28,8 +23,16 @@ Ensure you have run GNUstep.sh to setup your environmental variables.
 [See the GNUstep documentation for more details](http://www.gnustep.org/resources/documentation/User/GNUstep/gnustep-howto_4.html)
 
 `cd` into the root of the Cslp directory and run `make`. This will build the binary and write it to  `Cslp.app/Cslp`.
-This will also compile the code into a library that is used to run tests against.
 
+Building Documentation
+----------------------
+Documentation for the project can be built using `make docs`. This requires:
+
+* [gimli](https://github.com/walle/gimli)
+* `sed` and `rm` (Should be installed)
+* [Doxygen](http://www.doxygen.org)
+
+Due to these requirements, the documentation has been prebuilt
 
 Running the Application
 -----------------------
@@ -57,10 +60,10 @@ The configuration script is the same as described in the Handout, but with the
 following differences.
 
 * Identifiers must be consistent but you can use words as opposed to letters (so you are not limited to 25 molecules)
-* t has an alias time, so both t and time are reserved identifiers
+* t has an alias time, so both `t` and `time` are reserved identifiers
 * Comments can be written on the same line as settings
 * Support for numbers in scientific notation.
-* Validation is preformed on the scripts. It should be impossible to use an invalid script and warnings are given for scripts that are have problems (it is possible to treat warnings as errors using the --wall command line option)
+* Validation is preformed on the scripts. It should be impossible to use an invalid script and warnings are given for scripts that are have problems (it is possible to treat warnings as errors using the `--wall` command line option)
 
 
 Output Formats
@@ -85,13 +88,11 @@ Note: Early startup errors such as incorrect command line paramters can only be 
 
 Code Documentation
 ------------------
-The documentation should be generated using doxygen. This file will be included as part of
-the main page
+Documentation for the code (generated using doxygen) can be accessed from the [codedocs.html](codedocs.html) file found in the `doc` directory.
 
 Running Tests
 -------------
 From the project root directory run `gnustep-tests`
-
 
 Other code
 -----------

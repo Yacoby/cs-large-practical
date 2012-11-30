@@ -35,9 +35,11 @@
 - (id)init {
     self = [super init];
     if (self != nil) {
-        mReactionEquations = [[NSMutableDictionary init] alloc];
-        mMoleculeCounts    = [[NSMutableDictionary init] alloc];
-        mKineticConstants  = [[NSMutableDictionary init] alloc];
+        mReactionEquations = [[NSMutableDictionary alloc] init];
+        mMoleculeCounts    = [[NSMutableDictionary alloc] init];
+        mKineticConstants  = [[NSMutableDictionary alloc] init];
+
+        mMoleculeOrder = [[NSMutableArray alloc] init];
 
         mTime = nil;
     }
@@ -48,6 +50,7 @@
     [mReactionEquations release];
     [mMoleculeCounts release];
     [mKineticConstants release];
+    [mMoleculeOrder release];
 
     [mTime release];
 
@@ -103,6 +106,8 @@
     if ( [mMoleculeCounts objectForKey:key] != nil ){
         return NO;
     }
+    [mMoleculeOrder addObject:key];
+
     NSNumber* number = [[NSNumber alloc] initWithUnsignedInt: count];
     [mMoleculeCounts setObject:number forKey:key];
     [number release];
@@ -116,6 +121,10 @@
 
 - (NSDictionary*)moleculeCounts{
     return mMoleculeCounts;
+}
+
+- (NSArray*)orderedMolecules{
+    return mMoleculeOrder;
 }
 
 - (NSSet*)molecules{

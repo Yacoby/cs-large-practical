@@ -18,19 +18,21 @@
 
 
 /**
- * @brief Object holds a valid copy of the configuration 
+ * @brief Object holds a copy of the configuration, which may or may not be valid
+ *
  */
 @interface SimulationConfiguration : NSObject{
     TimeSpan* mTime;
     NSMutableDictionary* mReactionEquations;
     NSMutableDictionary* mMoleculeCounts;
     NSMutableDictionary* mKineticConstants;
+
+    NSMutableArray* mMoleculeOrder;
 }
 - (id)init;
 - (void)dealloc;
 
 - (void)setTime:(TimeSpan*)time;
-//TODO fix name
 - (TimeSpan*)time;
 
 - (BOOL)addReactionEquation:(NSString*)key reactionEquation:(ReactionEquation*)components;
@@ -39,14 +41,20 @@
 - (ReactionDefinition*)reaction:(NSString*)key;
 - (NSDictionary*)reactions;
 
-
 - (BOOL)addMoleculeCount:(NSString*)key count:(uint)count;
 - (uint)moleculeCount:(NSString*)key;
 - (NSDictionary*)moleculeCounts;
+
+/**
+ * @brief returns a list of molecule names (NSString*) 
+ * 
+ * The array is ordered by their occurrence in the configuration 
+ */
+- (NSArray*)orderedMolecules;
 - (NSSet*)molecules;
 
 /**
- * Validates the configruation ensuring that everything that is required is set
+ * Validates the configuration ensuring that everything that is required is set
  */
 - (ConfigurationValidation*)validate;
 

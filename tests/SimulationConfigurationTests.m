@@ -113,6 +113,16 @@ void validate_ReactionMentionsMoleculeThatDoesntExist_Fails(){
     PASS(search.location != NSNotFound, "");
 }
 
+void orderedMolecules_WhenMoleculesAreAdded_ReturnsCorrectOrder(){
+    SimulationConfiguration* underTest = [[[SimulationConfiguration alloc] init] autorelease];
+    [underTest addMoleculeCount:@"m1" count:1];
+    [underTest addMoleculeCount:@"m2" count:1];
+
+    NSArray* orderedMolecules = [underTest orderedMolecules];
+    PASS_EQUAL([orderedMolecules objectAtIndex:0], @"m1", "");
+    PASS_EQUAL([orderedMolecules objectAtIndex:1], @"m2", "");
+}
+
 int main() {
     START_SET("SimulationConfiguration")
         addReaction_WhenAddsReaction_HasReactionForKey();
@@ -123,6 +133,7 @@ int main() {
         validate_WhenHasNoTime_Fails();
         validate_WhenHasNoKineticConstantForEqn_Fails();
         validate_ReactionMentionsMoleculeThatDoesntExist_Fails();
+        orderedMolecules_WhenMoleculesAreAdded_ReturnsCorrectOrder();
     END_SET("SimulationConfiguration")
 
     return 0;

@@ -11,3 +11,5 @@ docs:
 	doxygen
 	rm doc/mdreadme.md
 	gimli -f doc/README.md -o doc
+
+	md2man doc/manpage.md > doc/CSLP.1

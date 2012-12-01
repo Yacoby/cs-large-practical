@@ -29,8 +29,9 @@ Building Documentation
 Documentation for the project can be built using `make docs`. This requires:
 
 * [gimli](https://github.com/walle/gimli)
-* `sed` and `rm` (Should be installed)
+* `sed` and `rm` (Obviously should be installed)
 * [Doxygen](http://www.doxygen.org)
+* [md2man](https://github.com/sunaku/md2man)
 
 Due to these requirements, the documentation has been prebuilt
 
@@ -74,7 +75,7 @@ the command line. The first is the aggregator (`--aggregator`)
 which can group up simulator state changes. Valid options for this are:
 
 * `PassthroughAggregator` - All state changes are logged
-* `HundredMsAggregator` - At least a hundred ms needs to have passed for a state change to have been logged
+* `HundredMsAggregator` - At least a hundred ms needs to have passed for a state change to be logged
 
 The second option that can effec the output is the writer itself (`--writer`). Valid options are
 

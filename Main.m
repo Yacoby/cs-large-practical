@@ -1,3 +1,11 @@
+/**
+ * @file 
+ *
+ * This is the main file with the entry point for the appliction. 
+ *
+ * NB: It is written using functions rather than using objects as there
+ *      isn't anything to gain by using them.
+ */
 #import <Foundation/Foundation.h>
 #import "ConfigurationSerilizer.h"
 #import "CommandLineOptionParser.h"
@@ -7,6 +15,7 @@
 #import "SimulationOutputWriter.h"
 
 #import "Logger.h"
+#import "Factory.h"
 
 void printAllocatedClasses(){
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
@@ -42,6 +51,15 @@ CommandLineOptionParser* getOptionsParser(){
     [cmdLineParser addArgumentWithName:@"input" ofType:String];
     [cmdLineParser setHelpStringForArgumentKey:@"input" help:@"The path to the input script. If not set the input will be read from stdin"];
     [cmdLineParser setRequiredForArgumentKey:@"input" required:NO];
+
+    [cmdLineParser addArgumentWithName:@"--writer" ofType:String];
+    [cmdLineParser setHelpStringForArgumentKey:@"writer" help:@"The output writer that defines the format"];
+    [cmdLineParser setDefaultValueForArgumentKey:@"writer" value:@"AssignmentCsvWriter"];
+
+    [cmdLineParser addArgumentWithName:@"--aggregator" ofType:String];
+    [cmdLineParser setHelpStringForArgumentKey:@"aggregator" help:@"Sets how the output is aggregated"];
+    [cmdLineParser setDefaultValueForArgumentKey:@"aggregator" value:@"PassthroughAggregator"];
+
     return cmdLineParser;
 }
 
@@ -62,7 +80,7 @@ SimulationConfiguration* getSimulationConfiguration(CommandLineOptions* options,
     return [ConfigurationTextSerilizer deserilize:rawCfgFile error:err];
 }
 
-id<SimulationOutputWriter> getOutputWriter(CommandLineOptions* options, SimulationConfiguration* cfg){
+id<SimulationOutputWriter> getOutputWriter(CommandLineOptions* options, SimulationConfiguration* cfg, NSError** error){
     FileHandleOutputStream* os = nil;
     if ( [options getOptionWithName:@"output"] ){
         NSString* outputFile = [options getOptionWithName:@"output"];
@@ -74,11 +92,29 @@ id<SimulationOutputWriter> getOutputWriter(CommandLineOptions* options, Simulati
         os = [[[FileHandleOutputStream alloc] initWithFileHandle:[NSFileHandle fileHandleWithStandardOutput]] autorelease];
         [Logger info:@"Writing output to stdout"];
     }
-    return [[[SimpleSimulationOutputWriter alloc] initWithStream:os simulationConfiguration:cfg] autorelease];
+
+    Factory* writerFactory = [[Factory alloc] initFromProtocol:@protocol(SimulationOutputWriter)];
+    NSString* writerStr = [options getOptionWithName:@"writer"];
+    Class writerClass = [writerFactory classFromString:writerStr error:error];
+    if ( writerClass == nil ){
+        return nil;
+    }
+    [writerFactory release];
+
+    return [[[writerClass alloc] initWithStream:os simulationConfiguration:cfg] autorelease];
 }
 
-id<SimulationOutputAggregator> getOutputAggregator(CommandLineOptions* options, SimulationConfiguration* cfg, id<SimulationOutputWriter> writer){
-    return [[[PassthroughAggregator alloc] initWithWriter:writer] autorelease];
+id<SimulationOutputAggregator> getOutputAggregator(CommandLineOptions* options,
+                                                   SimulationConfiguration* cfg,
+                                                   id<SimulationOutputWriter> writer,
+                                                   NSError** error){
+    Factory* writerFactory = [[Factory alloc] initFromProtocol:@protocol(SimulationOutputAggregator)];
+    Class cls = [writerFactory classFromString:[options getOptionWithName:@"aggregator"] error:error];
+    if ( cls == nil ){
+        return nil;
+    }
+    [writerFactory release];
+    return [[[cls alloc] initWithWriter:writer] autorelease];
 }
 
 UniformRandom* getRandomNumberGenerator(CommandLineOptions* options){
@@ -174,8 +210,21 @@ int main(void){
         }
     }
 
-    id<SimulationOutputWriter> writer = getOutputWriter(options, cfg);
-    id<SimulationOutputAggregator> aggregator = getOutputAggregator(options, cfg, writer);
+    NSError* writerError;
+    id<SimulationOutputWriter> writer = getOutputWriter(options, cfg, &writerError);
+    if ( !writer ){
+        NSString* errDescription = [NSString stringWithFormat:@"Invalid Writer Class: %@", [writerError localizedDescription]];
+        [Logger error:errDescription];
+        return 5;
+    }
+
+    NSError* aggregatorError;
+    id<SimulationOutputAggregator> aggregator = getOutputAggregator(options, cfg, writer, &aggregatorError);
+    if ( !aggregator ){
+        NSString* errDescription = [NSString stringWithFormat:@"Invalid Aggregator Class: %@", [aggregatorError localizedDescription]];
+        [Logger error:errDescription];
+        return 6;
+    }
     UniformRandom* random = getRandomNumberGenerator(options);
 
     Simulator* simulator = [[[Simulator alloc] initWithCfg:cfg randomGen:random outputAggregator:aggregator] autorelease];

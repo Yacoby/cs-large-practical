@@ -10,17 +10,22 @@
 - (void)writeToStream:(SimulationState*)state;
 @end
 
-/**
- * @brief Outputs the entire state in the required format
- *
- * This is the basic formatter which will output the entire state without attempting
- * to aggregate any of the data
- */
-@interface SimpleSimulationOutputWriter : NSObject <SimulationOutputWriter>{
+@interface RfcCsvWriter : NSObject <SimulationOutputWriter>{
     id <OutputStream> mOutputStream;
     NSArray* mOrderedMolecules;
 }
 - (id)initWithStream:(id <OutputStream>)stream simulationConfiguration:(SimulationConfiguration*)cfg;
+- (void)writeHeaders;
+
 - (void)dealloc;
 - (void)writeToStream:(SimulationState*)state;
 @end
+
+/**
+ * @brief Outputs the entire state in the required format
+ */
+@interface AssignmentCsvWriter: RfcCsvWriter <SimulationOutputWriter>
+- (void)writeHeaders;
+- (void)writeToStream:(SimulationState*)state;
+@end
+

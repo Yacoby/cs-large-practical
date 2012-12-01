@@ -69,7 +69,16 @@ following differences.
 Output Formats
 --------------
 
-TODO
+There are two things that can effect the output, both configurable via
+the command line. The first is the aggregator (`--aggregator`)
+which can group up simulator state changes. Valid options for this are:
+
+* `PassthroughAggregator` - All state changes are logged
+
+The second option that can effec the output is the writer itself (`--writer`). Valid options are
+
+* `AssignmentCsvWriter` - Writes in the (invalid) Csv format specified by the assignment
+* `RfcCsvWriter` - Csv writer that conforms to [RFC 4180](http://tools.ietf.org/html/rfc4180)
 
 Logging
 --------

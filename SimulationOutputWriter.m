@@ -1,21 +1,26 @@
 #import <Foundation/Foundation.h>
 #import "SimulationOutputWriter.h"
 
-@implementation SimpleSimulationOutputWriter
+@implementation RfcCsvWriter
 - (id)initWithStream:(id <OutputStream>)stream simulationConfiguration:(SimulationConfiguration*)cfg{
     self = [super init];
     if ( self != nil ){
         [stream retain];
         mOutputStream = stream;
-
         mOrderedMolecules = [[cfg orderedMolecules] retain];
-        [mOutputStream write:@"t"];
-        for ( NSString* molecule in mOrderedMolecules ){
-            [mOutputStream write:[NSString stringWithFormat:@", %@", molecule]];
-        }
-        [mOutputStream write:@"\n"];
+
+        [self writeHeaders];
     }
     return self;
+}
+
+- (void)writeHeaders{
+    [mOutputStream write:@"t"];
+    if ( [mOrderedMolecules count] ){
+        [mOutputStream write:@", "];
+        [mOutputStream write:[mOrderedMolecules componentsJoinedByString:@", "]];
+    }
+    [mOutputStream write:@"\n"];
 }
 
 - (void)dealloc{
@@ -34,5 +39,19 @@
         [mOutputStream write:[NSString stringWithFormat:@", %i", count]];
     }
     [mOutputStream write:@"\n"];
+}
+@end
+
+@implementation AssignmentCsvWriter
+- (void)writeHeaders{
+    [mOutputStream write:@"#t"];
+    if ( [mOrderedMolecules count] ){
+        [mOutputStream write:@", "];
+        [mOutputStream write:[mOrderedMolecules componentsJoinedByString:@", "]];
+    }
+    [mOutputStream write:@"\n"];
+}
+- (void)writeToStream:(SimulationState*)state{
+    [super writeToStream:state];
 }
 @end

@@ -30,10 +30,12 @@ Documentation for the project can be built using `make docs`. This requires:
 
 * [gimli](https://github.com/walle/gimli)
 * `sed` and `rm` (Obviously should be installed)
-* [Doxygen](http://www.doxygen.org)
+* [Doxygen](http://www.doxygen.org) 1.8 or greater
 * [md2man](https://github.com/sunaku/md2man)
 
 Due to these requirements, the documentation has been prebuilt
+
+(Note: There are a lot of warnings when building the doxygen documentation. This is because I didn't and don't intend to document everything. For example it should be clear what `-(id)dealloc;` does and documentation adds nothing).
 
 Running the Application
 -----------------------

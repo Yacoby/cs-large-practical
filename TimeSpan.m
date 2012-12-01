@@ -28,4 +28,8 @@
 - (void)addSeconds:(double)seconds{
     mTimeSpanSeconds += seconds;
 }
+
+- (id)mutableCopyWithZone:(NSZone*)zone{
+    return [[TimeSpan alloc] initFromSeconds:[self totalSeconds]];
+}
 @end

@@ -30,4 +30,17 @@
     return mTimeSinceSimulationStart;
 }
 
+- (void)setTimeSinceSimulationStart:(TimeSpan*)time{
+    [mTimeSinceSimulationStart release];
+    [time retain];
+    mTimeSinceSimulationStart = time;
+}
+
+- (id)mutableCopyWithZone:(NSZone*)zone{
+    NSMutableDictionary* newCounts = [mMoleculeCount mutableCopyWithZone:zone];
+    TimeSpan* newTimeSinceSimulationStart = [mTimeSinceSimulationStart mutableCopyWithZone:zone];
+    return [[SimulationState alloc] initWithTime:newTimeSinceSimulationStart moleculeCount:newCounts];
+}
+
+
 @end

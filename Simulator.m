@@ -53,6 +53,7 @@
 
         [mAggregator stateChangedTo:state];
     }
+    [mAggregator simulationEnded];
 
     [startTime release];
     [initialState release];

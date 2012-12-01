@@ -4,7 +4,7 @@
 /**
  * @brief Represents a state (molecule counts) at a spesific point in time from the start of the simulation
  */
-@interface SimulationState : NSObject{
+@interface SimulationState : NSObject <NSMutableCopying>{
     TimeSpan* mTimeSinceSimulationStart;
     NSMutableDictionary* mMoleculeCount;
 }
@@ -14,4 +14,8 @@
 - (NSMutableDictionary*)moleculeCounts;
 - (uint)moleculeCount:(NSString*)moleculeName;
 - (TimeSpan*)timeSinceSimulationStart;
+
+- (void)setTimeSinceSimulationStart:(TimeSpan*)time;
+
+- (id)mutableCopyWithZone:(NSZone*)zone;
 @end

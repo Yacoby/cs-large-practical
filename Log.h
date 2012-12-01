@@ -28,7 +28,15 @@ typedef enum {
     LogLevel mLogLevel;
 }
 
+/**
+ * @brief sets the level of the log. All messages equal to or above this level will be logged
+ */
 - (void)setLogLevel:(LogLevel)level;
+
+/*
+ * @return the current log level
+ * @see setLogLevel:
+ */
 - (LogLevel)logLevel;
 
 /**

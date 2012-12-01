@@ -13,7 +13,17 @@
  */
 @protocol SimulationOutputAggregator <NSObject>
 - (id)initWithWriter:(id<SimulationOutputWriter>)writer;
+
+/**
+ * @brief Called by the simulator when the state changes
+ * @param state the new state
+ *
+ * @note If you want to retain the state beyond the lifetime of the function
+ * then you must make a copy of the state
+ */
 - (void)stateChangedTo:(SimulationState*)state;
+
+- (void)simulationEnded;
 @end
 
 /**
@@ -25,13 +35,52 @@
 - (id)initWithWriter:(id<SimulationOutputWriter>)writer;
 - (void)dealloc;
 - (void)stateChangedTo:(SimulationState*)state;
+- (void)simulationEnded;
 @end
 
+/**
+ * @brief This writes the state at maximum once every simulated 100ms
+ */
 @interface HundredMsAggregator : NSObject<SimulationOutputAggregator>{
     id<SimulationOutputWriter> mWriter;
+    /**
+     * @brief holds the simulation time of the last write. The epoch is the simulation start
+     */
     TimeSpan* mLastLogTime;
 }
 - (id)initWithWriter:(id<SimulationOutputWriter>)writer;
 - (void)dealloc;
 - (void)stateChangedTo:(SimulationState*)state;
+- (void)simulationEnded;
+@end
+
+/**
+ * @brief This writes the state exactly once every simulated 100ms
+ */
+@interface ExactHundredMsAggregator : NSObject<SimulationOutputAggregator>{
+    /**
+     * Holds the last state of the simulation
+     */
+    SimulationState* mLastState;
+
+    id<SimulationOutputWriter> mWriter;
+
+    /**
+     * @brief holds the simulation time of the last write. The epoch is the simulation start
+     */
+    TimeSpan* mLastLogTime;
+}
+
+- (id)initWithWriter:(id<SimulationOutputWriter>)writer;
+- (void)dealloc;
+
+/**
+ * @brief writes the mLastState from mLastLogTime until the current state
+ */
+- (void)stateChangedTo:(SimulationState*)state;
+
+/**
+ * @brief writes mLastState as it is currently unwritten
+ */
+- (void)simulationEnded;
 @end

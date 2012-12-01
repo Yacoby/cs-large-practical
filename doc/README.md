@@ -76,6 +76,7 @@ which can group up simulator state changes. Valid options for this are:
 
 * `PassthroughAggregator` - All state changes are logged
 * `HundredMsAggregator` - At least a hundred ms needs to have passed for a state change to be logged
+* `ExactHundredMsAggregator` - Writes the state exactly every hundred milliseconds. Possibly slightly slower than the other aggregator as it has to do more allocations
 
 The second option that can effec the output is the writer itself (`--writer`). Valid options are
 

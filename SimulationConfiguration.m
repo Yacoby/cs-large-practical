@@ -1,6 +1,8 @@
 #import "SimulationConfiguration.h"
 #import "ErrorConstants.h"
 
+int UNKNOWN_MOLECULE = -1;
+
 @implementation ConfigurationValidation
 - (id)init{
     self = [super init];
@@ -114,8 +116,11 @@
     return YES;
 }
 
-- (uint)moleculeCount:(NSString*)key{
+- (int)moleculeCount:(NSString*)key{
     NSNumber* number = [mMoleculeCounts objectForKey:key];
+    if ( number == nil ){
+        return UNKNOWN_MOLECULE;
+    }
     return [number unsignedIntValue];
 }
 

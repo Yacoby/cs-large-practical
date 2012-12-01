@@ -9,8 +9,20 @@
     return self;
 }
 
+
 - (double)totalSeconds{
     return mTimeSpanSeconds;
+}
+
+- (double)totalMilliseconds{
+    return [self totalSeconds]*1000;
+}
+
+- (void)setTotalMilliseconds:(double)ms{
+   [self setTotalSeconds:ms/1000];
+}
+- (void)setTotalSeconds:(double)s{
+    mTimeSpanSeconds = s;
 }
 
 - (void)addSeconds:(double)seconds{

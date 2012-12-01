@@ -74,6 +74,7 @@ the command line. The first is the aggregator (`--aggregator`)
 which can group up simulator state changes. Valid options for this are:
 
 * `PassthroughAggregator` - All state changes are logged
+* `HundredMsAggregator` - At least a hundred ms needs to have passed for a state change to have been logged
 
 The second option that can effec the output is the writer itself (`--writer`). Valid options are
 

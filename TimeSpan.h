@@ -12,6 +12,11 @@
 }
 
 - (id)initFromSeconds:(double)seconds;
+- (double)totalMilliseconds;
 - (double)totalSeconds;
+
+- (void)setTotalMilliseconds:(double)ms;
+- (void)setTotalSeconds:(double)s;
+
 - (void)addSeconds:(double)seconds;
 @end

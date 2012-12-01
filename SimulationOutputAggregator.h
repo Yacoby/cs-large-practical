@@ -1,5 +1,6 @@
 #import <Foundation/Foundation.h>
 #import "SimulationOutputWriter.h"
+#import "TimeSpan.h"
 
 /**
  * @brief Allows the aggregation of state changes
@@ -20,6 +21,15 @@
  */
 @interface PassthroughAggregator : NSObject<SimulationOutputAggregator>{
     id<SimulationOutputWriter> mWriter;
+}
+- (id)initWithWriter:(id<SimulationOutputWriter>)writer;
+- (void)dealloc;
+- (void)stateChangedTo:(SimulationState*)state;
+@end
+
+@interface HundredMsAggregator : NSObject<SimulationOutputAggregator>{
+    id<SimulationOutputWriter> mWriter;
+    TimeSpan* mLastLogTime;
 }
 - (id)initWithWriter:(id<SimulationOutputWriter>)writer;
 - (void)dealloc;

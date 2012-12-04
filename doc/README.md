@@ -113,3 +113,38 @@ Other code
 tests/Testing.h is not my code and comes from gnustep. It is a set of macros that
 provide helpers to test functionality (such as exceptions being raised).
 It is included as it doesn't seem to live in a GNUStep include directory.
+
+
+Commenting
+-----------
+My general view on code commenting is that if you have to comment the code *implementation*
+to explain what you did or why you did it then the code isn't good enough. There are a few exceptions such as:
+
+* Optimized Code
+* Code working around bugs/problems
+
+Hence my code has very few comments in the implementation (.m files) but has a quite heavily commented
+header files. This comes from experience that despite best intentions comments drift out of sync with
+the code which means that you become unsure which is correct (Is comment right and the code wrong or the other way around?).
+
+This partly stems out of having worked on a large project (averaging 8 developers)
+ with [Skyscanner](http://www.skyscanner.net) that had almost no comments,
+and which tended to mean that developers couldn't write messy code and "fix" it 
+by adding a comment and the functions tended to be cleaner. E.g. You couldn't get away with writing:
+
+    int dooFoo(int time);
+
+As it isn't clear what it returns and you know that it takes a time, but is it hours? decades?
+So you would would write:
+
+    TimeSpan* dooFoo(TimeSpan* time)
+
+Which adds type safety and removes ambiguity from the arguments without having to resort to comments
+
+While I haven't gone to that extreme in this project, where I have thought that comments may
+be needed in the implementation I have instead re-factored the code to attempt to make it more
+readable.
+
+
+
+

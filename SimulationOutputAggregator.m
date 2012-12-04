@@ -45,7 +45,8 @@
 - (void)stateChangedTo:(SimulationState*)state{
     TimeSpan* stateTime = [state timeSinceSimulationStart];
 
-    if ( [stateTime totalMilliseconds] > [mLastLogTime totalMilliseconds] + 100 ){
+    BOOL hasHundredMsSinceLastLogTime = [stateTime totalMilliseconds] > [mLastLogTime totalMilliseconds] + 100;
+    if ( hasHundredMsSinceLastLogTime ){
         [mWriter writeToStream:state];
         double newLastLogMs = [stateTime totalMilliseconds] - floor(([stateTime totalMilliseconds]/100)*100);
         [mLastLogTime setTotalMilliseconds:newLastLogMs];
@@ -77,27 +78,27 @@
 - (void)stateChangedTo:(SimulationState*)state{
     TimeSpan* currentStateTime = [state timeSinceSimulationStart];
 
-    if ( [currentStateTime totalMilliseconds] >= [mLastLogTime totalMilliseconds] ){
-        if ( mLastState ){
-            while ( [mLastLogTime totalMilliseconds] < [currentStateTime totalMilliseconds] ){
-                [mLastState setTimeSinceSimulationStart:mLastLogTime];
-                [mWriter writeToStream:mLastState];
-                [mLastLogTime addSeconds:0.1];
-            }
-        }
-        [mLastState release];
-        mLastState = [state mutableCopy];
+    while ( mLastState && [mLastLogTime totalMilliseconds] < [currentStateTime totalMilliseconds] ){
+        [mLastState setTimeSinceSimulationStart:mLastLogTime];
+        [mWriter writeToStream:mLastState];
+        [mLastLogTime addMilliseconds:100];
     }
+    [mLastState release];
+    mLastState = [state mutableCopy];
 }
 
 - (void)simulationEnded{
-    if ( mLastState ){
-        TimeSpan* lastStateTime = [mLastState timeSinceSimulationStart];
-        while ( [mLastLogTime totalMilliseconds] <  [lastStateTime totalMilliseconds] + 100 ){
-            [mLastState setTimeSinceSimulationStart:mLastLogTime];
-            [mWriter writeToStream:mLastState];
-            [mLastLogTime addSeconds:0.1];
-        }
+    TimeSpan* lastStateTime = [mLastState timeSinceSimulationStart];
+
+    TimeSpan* lastStateTimePastNextLogTime = [lastStateTime mutableCopy];
+    [lastStateTimePastNextLogTime addMilliseconds:100];
+
+    while ( mLastState && [mLastLogTime totalMilliseconds] <  [lastStateTimePastNextLogTime totalMilliseconds] ){
+        [mLastState setTimeSinceSimulationStart:mLastLogTime];
+        [mWriter writeToStream:mLastState];
+        [mLastLogTime addMilliseconds:100];
     }
+
+    [lastStateTimePastNextLogTime release];
 }
 @end

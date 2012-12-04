@@ -40,6 +40,7 @@
  * @brief adds a number of seconds to the TimeSpan
  */
 - (void)addSeconds:(double)seconds;
+- (void)addMilliseconds:(double)ms;
 
 - (id)mutableCopyWithZone:(NSZone*)zone;
 @end

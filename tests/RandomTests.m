@@ -8,8 +8,7 @@ void staticRandom_WhenInitedWith5_AlwaysReturns5(){
     PASS_INT_EQUAL(5, [underTest next], "");
 }
 
-int main()
-{
+int main() {
     START_SET("RandomTests")
         staticRandom_WhenInitedWith5_AlwaysReturns5();
     END_SET("RandomTests")

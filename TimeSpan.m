@@ -29,6 +29,10 @@
     mTimeSpanSeconds += seconds;
 }
 
+- (void)addMilliseconds:(double)ms{
+    mTimeSpanSeconds += ms/1000;
+}
+
 - (id)mutableCopyWithZone:(NSZone*)zone{
     return [[TimeSpan alloc] initFromSeconds:[self totalSeconds]];
 }

@@ -43,19 +43,15 @@ static NSString* EQUATION_SEPERATOR = @":";
         return result;
     }
 
-    if ([part rangeOfString:@"+"].location != NSNotFound ){ //todo is this needed
-        NSArray* partReactionComponents = [part componentsSeparatedByString: @"+"];
+    NSArray* partReactionComponents = [part componentsSeparatedByString: @"+"];
 
-        for ( NSString* component in partReactionComponents ){
-            NSString* strippedString = [self trimWhiteSpace:component];
-            if ( [strippedString length] == 0 ){
-                [self makeError:err withDescription:@"No molecule idenfier"];
-                return nil;
-            }
-            [result addObject:strippedString];
+    for ( NSString* component in partReactionComponents ){
+        NSString* strippedString = [self trimWhiteSpace:component];
+        if ( [strippedString length] == 0 ){
+            [self makeError:err withDescription:@"No molecule idenfier"];
+            return nil;
         }
-    }else{
-        [result addObject:part];
+        [result addObject:strippedString];
     }
 
     return result;

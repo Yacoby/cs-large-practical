@@ -49,13 +49,26 @@
 @end
 
 
+/**
+ * Represents the type of command line options. This allows a basic form
+ * of type checking as well as being able to provide the parsed argument with
+ * the correct type
+ */
 typedef enum {
     Boolean,
     String,
     Integer
 } CommandLineType;
 
+/**
+ * The prefix appended to the start of arguments used from the command line. In
+ * most applications it is --
+ */
 extern NSString* const COMMAND_LINE_LONG_PREFIX;
+/**
+ * The prefix appended to the start of one letter arguments used from the command line. In
+ * most applications it is -
+ */
 extern NSString* const COMMAND_LINE_SHORT_PREFIX;
 
 /**
@@ -125,6 +138,8 @@ extern NSString* const COMMAND_LINE_SHORT_PREFIX;
 
 /**
  * @brief Sets the help text for the argument
+ *
+ * If the key doesn't exist this will raise an exception
  */
 - (void)setHelpStringForArgumentKey:(NSString*)key help:(NSString*)help;
 
@@ -133,6 +148,8 @@ extern NSString* const COMMAND_LINE_SHORT_PREFIX;
  *
  * In some cases, this is already set, for example Boolean arguments have
  * the defalut to NO.
+ *
+ * If the key doesn't exist this will raise an exception
  *
  * @param key the key of the argument
  * @param defaultValue The default value for the argument, which is set if the
@@ -146,6 +163,8 @@ extern NSString* const COMMAND_LINE_SHORT_PREFIX;
  * By default positional arguments are required and optional arguments are not
  * required. Given how positional arguments work, only the last argument can be
  * set to not required. This restriction is not enforced.
+ *
+ * If the key doesn't exist this will raise an exception
  *
  * @param key the key of the argument
  * @param required Set to YES if the argument is required

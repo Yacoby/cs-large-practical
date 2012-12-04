@@ -10,6 +10,10 @@
 - (void)writeToStream:(SimulationState*)state;
 @end
 
+/**
+ * @brief Writer that follows RFC 4180 to provide a standard CSV file
+ * @see http://tools.ietf.org/html/rfc4180
+ */
 @interface RfcCsvWriter : NSObject <SimulationOutputWriter>{
     id <OutputStream> mOutputStream;
     NSArray* mOrderedMolecules;
@@ -22,7 +26,10 @@
 @end
 
 /**
- * @brief Outputs the entire state in the required format
+ * @brief Writer that outputs in the format set out in the handout (headers prefixed by #)
+ *
+ * The only difference is that the output headers are prefixed by a #. This isn't
+ * allowed in RFC 4180 and so technically isn't a valid CSV file.
  */
 @interface AssignmentCsvWriter: RfcCsvWriter <SimulationOutputWriter>
 - (void)writeHeaders;

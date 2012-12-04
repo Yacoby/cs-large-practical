@@ -16,13 +16,20 @@
 @interface MemoryOutputStream : NSObject <OutputStream>{
     NSMutableString* mMemory;
 }
-- (id)init ;
+- (id)init;
 - (void)dealloc;
 
 - (void)write:(NSString*)str;
+
+/**
+ * @return gets everything that has been written
+ */
 - (NSString*)memory;
 @end
 
+/**
+ * @brief stream wrapper around file functions so that all messages are written via the handle
+ */
 @interface FileHandleOutputStream : NSObject <OutputStream>{
     NSFileHandle* mFileHandle;
 }
@@ -31,6 +38,9 @@
 - (void)write:(NSString*)str;
 @end
 
+/**
+ * @brief convineince wrapper around FileHandleOutputStream to allow construction from a file
+ */
 @interface FileOutputStream : FileHandleOutputStream {
 }
 - (id)initWithFileName:(NSString*)fileName;

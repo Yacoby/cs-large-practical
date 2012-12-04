@@ -19,7 +19,7 @@
 }
 /**
  * @brief Creates an instance of the Logger class if one doesn't exist already
- * 
+ *
  * @return A new instance of the Logger class or nil if one already exists
  */
 - (id)init;
@@ -46,7 +46,13 @@
  * @brief gets the global log level
  *
  * The global log level can be set to override the log level of all
- * Logs used by this Logger. 
+ * Logs used by this Logger. Log messages will not be passed on to Logs unless they are equal to
+ * or higher than the global level. So if the global level is LL_WARN then
+ * LL_DEBUG messages will get dropped but LL_WARN and LL_ERROR messages will be
+ * passed to the registered Log classes
+ *
+ * Note, Logs also have a simalar log level, so even if a message is passed to a
+ * Log, it is up to that Log if it actually logs the message
  *
  * @return the current global log level
  */

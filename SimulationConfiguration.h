@@ -6,13 +6,29 @@
 #import "ReactionDefinition.h"
 #import "TimeSpan.h"
 
+/**
+ * @brief Holds the result of a validation of SimulationConfiguration
+ *
+ * This is used as the result of the SimulationConfiguration::validate: and 
+ * allows a distinction between critical errors (which means that the Configuration
+ * is invalid) and warnings which means that it has some issues that will not cause
+ * a problem with using the configuration.
+ */
 @interface ConfigurationValidation : NSObject{
     NSMutableSet* mErrorMessages;
     NSMutableSet* mWarningMessages;
 }
 - (id)init;
 - (void)dealloc;
+/**
+ * @brief gets all errors - things which mean that the configuration is invalid
+ * @return the set of NSString* of all errors
+ */
 - (NSSet*)errors;
+/**
+ * @brief gets all warnings - problems with the configuration that are not errors
+ * @return the set of NSString* of all warnings
+ */
 - (NSSet*)warnings;
 
 - (void)addError:(NSString*)errorMsg;
@@ -111,7 +127,7 @@ extern int UNKNOWN_MOLECULE;
 - (NSArray*)orderedMolecules;
 
 /**
- * @return a set of NSString with all molecules
+ * @return a set of NSString* with all molecules
  */
 - (NSSet*)molecules;
 

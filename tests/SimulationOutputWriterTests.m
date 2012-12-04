@@ -10,7 +10,7 @@ void writeToStream_init_WritesOnlyHeaders(){
 
     MemoryOutputStream* stream = [[[MemoryOutputStream alloc] init] autorelease];
 
-    [[[SimpleSimulationOutputWriter alloc] initWithStream:stream simulationConfiguration:cfg] autorelease];
+    [[[RfcCsvWriter alloc] initWithStream:stream simulationConfiguration:cfg] autorelease];
     NSString* expectedOutput = @"t, A, B, C\n";
 
     PASS_EQUAL([stream memory], expectedOutput, "");
@@ -28,7 +28,7 @@ void writeToStream_WhenHasOneItemOfHistory_WritesHeadersAndThatItem(){
     SimulationState* historyItem = [[[SimulationState alloc] initWithTime:timeSpan moleculeCount:state] autorelease];
 
     MemoryOutputStream* stream = [[[MemoryOutputStream alloc] init] autorelease];
-    SimpleSimulationOutputWriter* outputWriter = [[[SimpleSimulationOutputWriter alloc] initWithStream:stream simulationConfiguration:cfg] autorelease];
+    RfcCsvWriter* outputWriter = [[[RfcCsvWriter alloc] initWithStream:stream simulationConfiguration:cfg] autorelease];
     [outputWriter writeToStream:historyItem];
 
     NSString* expectedOutput = @"t, A, B\n0.000000, 1, 2\n";

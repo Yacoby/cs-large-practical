@@ -9,10 +9,10 @@
     return nil;
 }
 + (NSNumber*)intWithString:(NSString*)str{
-    //We canot use NSNumberFormatter here as it isn't implemented.
+    //We cannot use NSNumberFormatter here as it isn't implemented in gnustep
     NSScanner* scanner = [NSScanner scannerWithString:str];
     if ( [scanner scanDouble:NULL] && [scanner isAtEnd] ){
-        if ( [str rangeOfString:@"."].location == NSNotFound ){ //NB: This is not locale awear at all
+        if ( [str rangeOfString:@"."].location == NSNotFound ){ //NB: This is not locale aware at all
             NSDecimalNumber* decimalNum = [NSDecimalNumber decimalNumberWithString:str];
             long long num = [decimalNum longLongValue];
             return [NSNumber numberWithLongLong:num];

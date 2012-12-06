@@ -44,12 +44,8 @@
 
 @implementation AssignmentCsvWriter
 - (void)writeHeaders{
-    [mOutputStream write:@"#t"];
-    if ( [mOrderedMolecules count] ){
-        [mOutputStream write:@", "];
-        [mOutputStream write:[mOrderedMolecules componentsJoinedByString:@", "]];
-    }
-    [mOutputStream write:@"\n"];
+    [mOutputStream write:@"#"];
+    [super writeHeaders];
 }
 - (void)writeToStream:(SimulationState*)state{
     [super writeToStream:state];

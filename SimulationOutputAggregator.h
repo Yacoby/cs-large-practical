@@ -59,7 +59,8 @@
  */
 @interface ExactHundredMsAggregator : NSObject<SimulationOutputAggregator>{
     /**
-     * Holds the last state of the simulation
+     * Holds the last state of the simulation so that when a new state comes in
+     * this state can be written up to the new state
      */
     SimulationState* mLastState;
 

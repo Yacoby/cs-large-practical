@@ -19,6 +19,15 @@
     NSArray* mOrderedMolecules;
 }
 - (id)initWithStream:(id <OutputStream>)stream simulationConfiguration:(SimulationConfiguration*)cfg;
+
+/**
+ * @brief writes the csv headers (column headings)
+ *
+ * This is split from initWithStream to allow subclasses to alter the behavior of
+ * the function.
+ * 
+ * @see AssignmentCsvWriter::writeHeaders
+ */
 - (void)writeHeaders;
 
 - (void)dealloc;

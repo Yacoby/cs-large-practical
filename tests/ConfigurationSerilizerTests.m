@@ -24,8 +24,11 @@ void testDeserilize_WhenHasComment_DoesNotAffectParsing(){
 void testDeserilize_WhenHasTimeAndKineticConstant_ParsesConstantCorrectly(){
     NSString* configurationStr = @"t = 10\nd = 5";
     SimulationConfiguration* cfg = [ConfigurationTextSerilizer deserilize:configurationStr];
+    [cfg addReactionEquation:@"d" reactionEquation:[[[ReactionEquation alloc] init] autorelease]];
+
     ReactionDefinition* reaction = [cfg reaction:@"d"];
-    PASS_INT_EQUAL([[reaction kineticConstant] doubleValue], 5, "");
+    PASS(reaction != nil, "Must be able to get the given reaction");
+    PASS_DOUBLE_EQUAL([[reaction kineticConstant] doubleValue], 5, "");
 }
 
 void testDeserilize_WhenHasBasicReaction_ParsesReactionCorrectly(){

@@ -12,7 +12,7 @@ void get_WhenHasNoRulesAndGivenArgument_ReturnsNil(){
     NSString* reason = [err localizedDescription];
     NSString* expectedReason = @"Unexpected positional argument foo";
     NSRange search = [reason rangeOfString:expectedReason options:NSCaseInsensitiveSearch];
-    PASS(search.location != NSNotFound, "");
+    PASS(search.location != NSNotFound, "We should be able to find the expectedReason");
 }
 
 void addParse_WhenHasOneArgumentAndOption_ParsesCorrectly(){
@@ -28,7 +28,7 @@ void addParse_WhenHasOneArgumentAndOption_ParsesCorrectly(){
     NSString* seedResult = [options getOptionWithName: @"seed"];
     NSString* expected = @"10";
 
-    PASS_EQUAL(seedResult, expected, "");
+    PASS_EQUAL(seedResult, expected, "The seed should have been set to 10");
 }
 
 void addParse_WhenHasShortArgumentAndOption_ParsesCorrectly(){
@@ -42,7 +42,7 @@ void addParse_WhenHasShortArgumentAndOption_ParsesCorrectly(){
     NSString* seedResult = [options getOptionWithName: @"seed"];
     NSString* expected = @"10";
 
-    PASS_EQUAL(seedResult, expected, "");
+    PASS_EQUAL(seedResult, expected, "The seed should have been set to 10");
 }
 
 void addParse_WhenHasZeroArguments_ParsesAsBoolean(){

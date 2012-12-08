@@ -161,7 +161,7 @@ id<SimulationOutputAggregator> getOutputAggregator(CommandLineOptions* options,
  * If the CommandLineOptions parameter doesn't contain the seed, the current time is used to provide the
  * seed. Allowing the seed to be manually specified allows the simulation to be deterministic.
  */
-id<Random>* getRandomNumberGenerator(CommandLineOptions* options){
+id<Random> getRandomNumberGenerator(CommandLineOptions* options){
     uint seed = time(NULL);
     if ( [options getOptionWithName:@"seed"] != nil ){
         seed = [[options getOptionWithName:@"seed"] intValue];

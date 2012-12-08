@@ -17,7 +17,7 @@ void decimalWithString_WhenHasSFNotation_Parses(){
 
 void decimalWithString_WhenHasNegativeNumber_Parses(){
     NSDecimalNumber* number = [NumericConversion decimalWithString:@"-5e-2"];
-    PASS([number doubleValue] == -0.05, "Negatives should be supported");
+    PASS_DOUBLE_EQUAL([number doubleValue], -0.05, "Negatives should be supported");
 }
 
 void intWithString_WhenHasDecimalNumber_ReturnsNil(){

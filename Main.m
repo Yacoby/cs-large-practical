@@ -19,7 +19,7 @@
 
 void printAllocatedClasses(){
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-    printf(GSDebugAllocationList(false));
+    printf("%s", GSDebugAllocationList(false));
     [pool drain];
 }
 

@@ -13,7 +13,7 @@
 @end
 
 /**
- * @brief desgined to be used for testing, this provides a static random number
+ * @brief designed to be used for testing, this provides a static random number
  *
  * To be valid the random number used with this must be chosen with a dice or
  * something. Else it wouldn't be random ;)

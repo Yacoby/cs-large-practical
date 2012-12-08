@@ -5,8 +5,8 @@
 /**
  * @brief Represents the components that make up the reaction
  *
- * This class holds which components (and their count) make up both the input and
- * output of a reaction
+ * This class holds which components (and their count) make up both the input (requirements) and
+ * output (result) of a reaction.
  */
 @interface ReactionEquation : NSObject{
     NSCountedSet* mRequirements;
@@ -34,6 +34,14 @@
 - (KineticConstant*)kineticConstant;
 - (NSCountedSet*)requirements;
 - (NSCountedSet*)result;
+
+/**
+ *
+ */
 - (double)reactionRate:(SimulationState*)state;
+
+/**
+ * @brief Applies the current reaction to the molecule counts, altering them
+ */
 - (void)applyReactionToCounts:(NSMutableDictionary*)state;
 @end

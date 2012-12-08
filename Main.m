@@ -17,12 +17,26 @@
 #import "Logger.h"
 #import "Factory.h"
 
+/**
+ * @brief Prints a list of allocated classes and their current allocation count to stdout
+ *
+ * Used with the command line options to allow an overview of what hasn't been released
+ * although it turns out to be a bit useless in some cases due to the gnustep runtime purposefully
+ * leaking to avoid mutex locking.
+ *
+ * This function doesn't make the assumption that a pool exists
+ */
 void printAllocatedClasses(){
+    //Pool is needed as the GSDebugAllocationList allocates autorelease memory
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     printf("%s", GSDebugAllocationList(false));
     [pool drain];
 }
 
+/**
+ * @brief generates an option parser that has all the options for the program
+ * @return This always returns a command line option parser
+ */
 CommandLineOptionParser* getOptionsParser(){
     CommandLineOptionParser* cmdLineParser = [[[CommandLineOptionParser alloc] init] autorelease];
     [cmdLineParser addArgumentWithName:@"--trackalloc" ofType:Boolean];
@@ -63,6 +77,13 @@ CommandLineOptionParser* getOptionsParser(){
     return cmdLineParser;
 }
 
+/**
+ * @brief gets the simulation configuration based on the given options
+ * @param options the options that allow that define where to get the configuration from
+ * @param err an error object that will be filled if there is an error
+ * @return nil on an error, otherwise a SimulationConfiguration object
+ *
+ */
 SimulationConfiguration* getSimulationConfiguration(CommandLineOptions* options, NSError** err){
     NSString* rawCfgFile = nil;
     if ( [options getOptionWithName:@"input"] != nil ){
@@ -80,6 +101,14 @@ SimulationConfiguration* getSimulationConfiguration(CommandLineOptions* options,
     return [ConfigurationTextSerilizer deserilize:rawCfgFile error:err];
 }
 
+/**
+ * @brief gets an output writer from the command line options and configuration
+ * @param options the command line options that define what output to use
+ * @param cfg configuration that is passed to the new writer
+ * @param error this is filled with the details of the error that occured if getOutputWriter returns nil
+ * @return nil on error or the requested type of SimulationOutputWriter
+ *
+ */
 id<SimulationOutputWriter> getOutputWriter(CommandLineOptions* options, SimulationConfiguration* cfg, NSError** error){
     FileHandleOutputStream* os = nil;
     if ( [options getOptionWithName:@"output"] ){
@@ -104,8 +133,16 @@ id<SimulationOutputWriter> getOutputWriter(CommandLineOptions* options, Simulati
     return [[[writerClass alloc] initWithStream:os simulationConfiguration:cfg] autorelease];
 }
 
+/**
+ * @brief builds an output aggregator
+ * 
+ * @param options the options that define which aggregator to use
+ * @param writer this is the writer that is passed to the aggregator to allow the aggregator to 
+ *               pass state change messages to the writer
+ * @param error filled if the function returns nil, which happens when the given class cannot be found
+ *
+ */
 id<SimulationOutputAggregator> getOutputAggregator(CommandLineOptions* options,
-                                                   SimulationConfiguration* cfg,
                                                    id<SimulationOutputWriter> writer,
                                                    NSError** error){
     Factory* writerFactory = [[Factory alloc] initFromProtocol:@protocol(SimulationOutputAggregator)];
@@ -117,7 +154,14 @@ id<SimulationOutputAggregator> getOutputAggregator(CommandLineOptions* options,
     return [[[cls alloc] initWithWriter:writer] autorelease];
 }
 
-UniformRandom* getRandomNumberGenerator(CommandLineOptions* options){
+/**
+ * @brief gets a random number generator
+ * @param options CommandLineOptions that optionally provide the seed for the random number genrator
+ *
+ * If the CommandLineOptions parameter doesn't contain the seed, the current time is used to provide the
+ * seed. Allowing the seed to be manually specified allows the simulation to be deterministic.
+ */
+id<Random>* getRandomNumberGenerator(CommandLineOptions* options){
     uint seed = time(NULL);
     if ( [options getOptionWithName:@"seed"] != nil ){
         seed = [[options getOptionWithName:@"seed"] intValue];
@@ -125,6 +169,17 @@ UniformRandom* getRandomNumberGenerator(CommandLineOptions* options){
     return [[[UniformRandom alloc] initWithSeed:seed] autorelease];
 }
 
+/**
+ * @brief builds loggers based on the settings passed in via the CommandLineOptions
+ * @param defines the options for creating logs, log levels for both logs and the file log output name
+ *
+ * This builds both a file logger and a stderr logger and adds them to the static
+ * Logger class that this function creates. This allows use of the created Logs through
+ * the functions in the Logger class
+ *
+ * Given that this creates a Logger class it can only be called once (as it is impossible
+ * to create multiple Logger classes)
+ */
 void makeLogger(CommandLineOptions* options){
     Logger* logger = [[[Logger alloc] init] autorelease];
     {
@@ -186,7 +241,6 @@ int main(void){
 
     makeLogger(options);
 
-
     NSError* cfgError;
     SimulationConfiguration* cfg = getSimulationConfiguration(options, &cfgError);
     if ( cfg == nil ){
@@ -194,6 +248,7 @@ int main(void){
         [Logger error:errDescription];
         return 2;
     }
+
     ConfigurationValidation* validateError = [cfg validate];
     if ( [[validateError errors] count] > 0 ){
         NSString* strErr = [[[validateError errors] allObjects] componentsJoinedByString:@"\n"];
@@ -219,7 +274,7 @@ int main(void){
     }
 
     NSError* aggregatorError;
-    id<SimulationOutputAggregator> aggregator = getOutputAggregator(options, cfg, writer, &aggregatorError);
+    id<SimulationOutputAggregator> aggregator = getOutputAggregator(options, writer, &aggregatorError);
     if ( !aggregator ){
         NSString* errDescription = [NSString stringWithFormat:@"Invalid Aggregator Class: %@", [aggregatorError localizedDescription]];
         [Logger error:errDescription];

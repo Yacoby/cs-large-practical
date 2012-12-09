@@ -1,5 +1,13 @@
 #import "SimulationOutputAggregator.h"
 
+/**
+ * @brief a "small" number used for float comparison
+ *
+ * Small is relative, in this case the 0.01 of a ms is fairly small and as it is
+ * only used for deciding what to output it shouldn't effect the accuracy of the simulation
+ */
+const double EPSILON = 0.01;
+
 @implementation PassthroughAggregator
 
 - (id)initWithWriter:(id<SimulationOutputWriter>)writer{
@@ -93,7 +101,9 @@
     TimeSpan* lastStateTimePastNextLogTime = [lastStateTime mutableCopy];
     [lastStateTimePastNextLogTime addMilliseconds:100];
 
-    while ( mLastState && [mLastLogTime totalMilliseconds] <  [lastStateTimePastNextLogTime totalMilliseconds] ){
+    //EPSILON is required to add some small difference to the time to ensure that the floating point
+    //comparison works when the numbers are the same. This issue was only reproducable on some Systems.
+    while ( mLastState && [mLastLogTime totalMilliseconds] + EPSILON <  [lastStateTimePastNextLogTime totalMilliseconds] ){
         [mLastState setTimeSinceSimulationStart:mLastLogTime];
         [mWriter writeToStream:mLastState];
         [mLastLogTime addMilliseconds:100];

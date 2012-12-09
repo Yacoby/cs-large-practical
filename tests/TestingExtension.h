@@ -17,6 +17,7 @@
       if (!_cond) \
 	{ \
               fprintf(stderr, "%s: Expected '%d' and got '%d'\n", __FUNCTION__,  _exp, _obj); \
+              return; \
 	} \
     } \
   NS_HANDLER \

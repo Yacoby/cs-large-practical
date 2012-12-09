@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 
 /**
- * @brief This represents some form of string output to some location.
+ * @brief This represents some form of string output to some stream location.
  */
 @protocol OutputStream <NSObject>
 - (void)write:(NSString*)str;
@@ -22,13 +22,13 @@
 - (void)write:(NSString*)str;
 
 /**
- * @return gets everything that has been written
+ * @return gets everything that has been written to this object
  */
 - (NSString*)memory;
 @end
 
 /**
- * @brief stream wrapper around file functions so that all messages are written via the handle
+ * @brief stream wrapper around file functions so that all messages are written via the given handle
  */
 @interface FileHandleOutputStream : NSObject <OutputStream>{
     NSFileHandle* mFileHandle;
@@ -39,7 +39,7 @@
 @end
 
 /**
- * @brief convineince wrapper around FileHandleOutputStream to allow construction from a file
+ * @brief convenience wrapper around FileHandleOutputStream to allow construction from a file
  */
 @interface FileOutputStream : FileHandleOutputStream {
 }

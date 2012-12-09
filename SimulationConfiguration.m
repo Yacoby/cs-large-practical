@@ -3,6 +3,35 @@
 
 int UNKNOWN_MOLECULE = -1;
 
+@implementation ReactionMoleculePair
+- (id)initWithReactionName:(NSString*)reaction moleculeName:(NSString*)molecule{
+    self = [super init];
+    if ( self ){
+        [reaction retain];
+        mReaction = reaction;
+
+        [molecule retain];
+        mMolecule = molecule;
+    }
+    return self;
+}
+
+- (void)dealloc{
+    [mReaction release];
+    [mMolecule release];
+    [super dealloc];
+}
+
+- (NSString*)reactionName{
+    return mReaction;
+}
+
+- (NSString*)moleculeName{
+    return mMolecule;
+}
+
+@end
+
 @implementation ConfigurationValidation
 - (id)init{
     self = [super init];
@@ -137,51 +166,94 @@ int UNKNOWN_MOLECULE = -1;
 }
 
 - (ConfigurationValidation*)validate{
-    ConfigurationValidation* result = [[ConfigurationValidation alloc] init];
+    ConfigurationValidation* result = [[[ConfigurationValidation alloc] init] autorelease];
     if ( [self time] == nil ){
         [result addError:@"The time (t) was not set"];
     }
 
-    for ( NSString* key in mKineticConstants ){
-        if ( [mReactionEquations objectForKey:key] == nil ){
-            NSString* description = [NSString stringWithFormat:@"The kinetic constant <%@> has no reaction equation", key];
-            [result addWarning:description];
-        }
+    for ( NSString* kineticConstant in [self kineticConstantsWithoutReactionEquations] ){
+        NSString* description = [NSString stringWithFormat:@"The kinetic constant <%@> has no reaction equation",
+                                                            kineticConstant];
+        [result addWarning:description];
     }
 
-    NSMutableSet* usedMolecules = [[NSMutableSet alloc] init];
-    for ( NSString* reactionName in mReactionEquations ){
-        if ( [mKineticConstants objectForKey:reactionName] == nil ){
-            NSString* description = [NSString stringWithFormat:@"Reaction <%@> has no kinetic constant", reactionName];
-            [result addError:description];
-        }
-
-        ReactionEquation* eqn = [mReactionEquations objectForKey:reactionName];
-        NSMutableSet* equationMolecules = [[eqn requirements] mutableCopy];
-        [equationMolecules unionSet:[eqn result]];
-        for ( NSString* molecule in equationMolecules ){
-            [usedMolecules addObject:molecule];
-            if ( [mMoleculeCounts objectForKey:molecule] == nil ){
-                NSString* description = [NSString stringWithFormat:@"Molecule <%@> in reaction equation <%@> has no count",
-                                                                   molecule,
-                                                                   reactionName];
-                [result addError:description];
-            }
-        }
-        [equationMolecules release];
+    for ( NSString* reactionName in [self reactionEquationsWithoutKineticConstants] ){
+        NSString* description = [NSString stringWithFormat:@"Reaction <%@> has no kinetic constant",
+                                                           reactionName];
+        [result addError:description];
     }
 
-    //NB: the < case was handled by checking the reaction equations
-    if ( [mMoleculeCounts count] > [usedMolecules count] ){
-        for ( NSString* molecule in mMoleculeCounts ){
-            if ( [usedMolecules member:molecule] == nil ){
-                NSString* description = [NSString stringWithFormat:@"Molecule <%@> was not used", molecule];
-                [result addWarning:description];
-            }
-        }
+    for ( ReactionMoleculePair* reactionAndMolecule in [self moleculesInReactionsWithNoCount]){
+        NSString* description = [NSString stringWithFormat:@"Molecule <%@> in reaction equation <%@> has no count",
+                                                           [reactionAndMolecule moleculeName],
+                                                           [reactionAndMolecule reactionName]];
+        [result addError:description];
+    }
+
+    for ( NSString* unusedMoleculeName in [self moleculesNotUsedInReactions] ){
+        NSString* description = [NSString stringWithFormat:@"Molecule <%@> was not used in a reaction but has a count",
+                                                            unusedMoleculeName];
+        [result addWarning:description];
     }
 
     return result;
+}
+
+- (NSSet*)kineticConstantsWithoutReactionEquations{
+    NSMutableSet* result = [[[NSMutableSet alloc] init] autorelease];
+    for ( NSString* key in mKineticConstants ){
+        if ( [mReactionEquations objectForKey:key] == nil ){
+            [result addObject:key];
+        }
+    }
+    return result;
+}
+- (NSSet*)reactionEquationsWithoutKineticConstants{
+    NSMutableSet* result = [[[NSMutableSet alloc] init] autorelease];
+    for ( NSString* reactionName in mReactionEquations ){
+        if ( [mKineticConstants objectForKey:reactionName] == nil ){
+           [result addObject:reactionName];
+        }
+    }
+    return result;
+}
+
+- (NSSet*)moleculesInReactionsWithNoCount{
+    NSMutableSet* result = [[[NSMutableSet alloc] init] autorelease];
+    for ( NSString* reactionName in mReactionEquations ){
+        ReactionEquation* reactionEquation = [mReactionEquations objectForKey:reactionName];
+
+        NSMutableSet* allEquationMolecules = [[reactionEquation requirements] mutableCopy];
+        [allEquationMolecules unionSet:[reactionEquation result]];
+        for ( NSString* molecule in allEquationMolecules ){
+            if ( [mMoleculeCounts objectForKey:molecule] == nil ){
+                ReactionMoleculePair* pair = [[ReactionMoleculePair alloc]
+                                                                   initWithReactionName:reactionName
+                                                                           moleculeName:molecule];
+                [result addObject:pair];
+                [pair release];
+            }
+        }
+        [allEquationMolecules release];
+    }
+    return result;
+}
+
+- (NSSet*)moleculesNotUsedInReactions{
+    return [[[NSSet alloc] init] autorelease];
+    NSMutableSet* moleculesUsedInReaction = [[NSMutableSet alloc] init];
+    for ( NSString* reactionName in mReactionEquations ){
+        ReactionEquation* reactionEquation = [mReactionEquations objectForKey:reactionName];
+        [moleculesUsedInReaction unionSet:[reactionEquation result]];
+        [moleculesUsedInReaction unionSet:[reactionEquation requirements]];
+    }
+
+    NSMutableSet* moleculesWithOnlyCounts = [[mMoleculeCounts mutableCopy] autorelease];
+    [moleculesWithOnlyCounts minusSet:moleculesUsedInReaction];
+
+    [moleculesUsedInReaction release];
+
+    return moleculesWithOnlyCounts;
 }
 
 @end

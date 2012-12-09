@@ -15,8 +15,9 @@
 }
 
 - (void)logLevelImpl:(LogLevel)level withFormat:(NSString*)format arguments:(va_list)arguments{
+    NSString* reason =  @"Only the subclass of this class should be used and it should override this method";
     NSException* exception = [NSException exceptionWithName: @"ProgrammerError"
-                                                     reason: @"Only the subclass of this class should be used and it should override this method"
+                                                     reason: reason
                                                    userInfo: nil];
     [exception raise];
 }
@@ -24,7 +25,6 @@
 @end
 
 @implementation StreamLog
-
 - (id)initWithStream:(id<OutputStream>)stream{
     self = [super init];
     if ( self ){

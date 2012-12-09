@@ -21,7 +21,7 @@
 @end
 
 /** 
- * @brief Immutable description of a reaction containing the Kinetic Constant and Forumula
+ * @brief Immutable description of a reaction containing the Kinetic Constant and Formula
  *
  * By providing a state this allows computation involving this reaction
  *

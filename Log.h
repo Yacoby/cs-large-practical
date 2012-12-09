@@ -9,7 +9,7 @@
  * as a error condition. I would prefer to use something like Haskells Maybe
  * however it isn't possible to do for enums in a generic way using Objective-C.
  *
- * @see Logger:logLevelFromString
+ * @see Logger::logLevelFromString:
  */
 typedef enum {
     LL_UNKNOWN,

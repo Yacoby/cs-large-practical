@@ -7,6 +7,22 @@
 #import "TimeSpan.h"
 
 /**
+ * @brief used to hold the names of a reaction and a molecule
+ *
+ * Used in validation to hold a molecule mentioned in a reaction that doesn't have an initial count
+ */
+@interface ReactionMoleculePair : NSObject{
+    NSString* mReaction;
+    NSString* mMolecule;
+}
+- (id)initWithReactionName:(NSString*)reaction moleculeName:(NSString*)molecle;
+- (void)dealloc;
+
+- (NSString*)reactionName;
+- (NSString*)moleculeName;
+@end
+
+/**
  * @brief Holds the result of a validation of SimulationConfiguration
  *
  * This is used as the result of the SimulationConfiguration::validate: and 
@@ -25,6 +41,7 @@
  * @return the set of NSString* of all errors
  */
 - (NSSet*)errors;
+
 /**
  * @brief gets all warnings - problems with the configuration that are not errors
  * @return the set of NSString* of all warnings
@@ -135,5 +152,26 @@ extern int UNKNOWN_MOLECULE;
  * Validates the configuration ensuring that everything that is required is set
  */
 - (ConfigurationValidation*)validate;
+
+/**
+ * @return a set of NSString* that contains the name of every kinetic constant that doesn't have a reaction equation
+ */
+- (NSSet*)kineticConstantsWithoutReactionEquations;
+
+/**
+ * @return a set of NSString* that contains the name of every reaction that doesn't have a kinetic constant
+ */
+- (NSSet*)reactionEquationsWithoutKineticConstants;
+
+/**
+ * @return a set of ReactionMoleculePair* that holds the name of every molecule 
+            reaction pair such that the molecule does not have a count
+ */
+- (NSSet*)moleculesInReactionsWithNoCount;
+
+/**
+ * @return a set of NSString* containing all the molecules not used in any reactions
+ */
+- (NSSet*)moleculesNotUsedInReactions;
 
 @end

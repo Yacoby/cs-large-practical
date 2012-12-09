@@ -52,6 +52,7 @@ void addMoleculeCount_WhenHasDuplicate_ReturnsNo(){
 
 void validate_WhenHasNoTime_Fails(){
     SimulationConfiguration* underTest = [[[SimulationConfiguration alloc] init] autorelease];
+    PASS(underTest != nil, "");
 
     ConfigurationValidation* result = [underTest validate];
     PASS([[result errors] count] > 0 , "There must be some form of error");
@@ -80,7 +81,7 @@ void validate_WhenHasNoKineticConstantForEqn_Fails(){
     PASS_INT_EQUAL([warnings count], 1, "");
     PASS_INT_EQUAL([errors count], 0, "");
     NSString* expectedReason = @"The kinetic constant <key> has no reaction equation";
-    NSString* reason = [errors anyObject];
+    NSString* reason = [warnings anyObject];
 
     NSRange search = [reason rangeOfString:expectedReason options:NSCaseInsensitiveSearch];
     PASS(search.location != NSNotFound, "");
@@ -99,7 +100,6 @@ void validate_ReactionMentionsMoleculeThatDoesntExist_Fails(){
     NSCountedSet* req = [[[NSCountedSet alloc] init] autorelease];
     [req addObject:@"key"];
     [eqn setRequirements:req];
-
 
     ConfigurationValidation* result = [underTest validate];
     PASS([[result errors] count] > 0 , "There must be some form of error");

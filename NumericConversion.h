@@ -3,7 +3,7 @@
 /**
  * @brief Provides a thin facade over the conversion provided by NSNumber
  * 
- * This was written to provide better and more consitent error handling over
+ * This was written to provide better and more consistent error handling over
  * NSNumber as well as try and cope with unimplemented features in gnustep.
  */
 @interface NumericConversion

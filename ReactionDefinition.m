@@ -62,6 +62,7 @@
 - (double)reactionRate:(SimulationState*)state{
     NSCountedSet* req = [self requirements];
     double rate = [mKineticConstant doubleValue];
+
     if ( [req count] == 1 ){
         NSString* moleculeName = [req anyObject];
 
@@ -71,7 +72,6 @@
         }
     }
 
-
     for ( NSString* moleculeName in req ){
         rate *= [state moleculeCount:moleculeName];
     }
@@ -80,6 +80,9 @@
 }
 
 - (void)applyReactionToCounts:(NSMutableDictionary*)counts{
+    //Looking at refactoring the duplicated code. Major issue is that objc doesn't
+    //have first class functions which means that passing + or - as a function would be
+    //problematic
     NSCountedSet* req = [self requirements];
     for ( NSString* moleculeName in req ){
         NSNumber* count = [counts objectForKey:moleculeName];

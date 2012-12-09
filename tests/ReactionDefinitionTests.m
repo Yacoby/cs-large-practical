@@ -85,7 +85,7 @@ void reactionRate_WhenHasDuplicate_RateEqualsComplexMult(){
                                                 initWithTime:time moleculeCount:counts]
                                                 autorelease];
 
-    PASS_INT_EQUAL([underTest reactionRate:state], 5*6*(6-1), "");
+    PASS_INT_EQUAL([underTest reactionRate:state], 5*6*(6-1)*0.5, "");
 }
 
 int main(){

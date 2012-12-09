@@ -72,7 +72,7 @@ void validate_WhenHasNoKineticConstantForEqn_Fails(){
     KineticConstant* k = [[[KineticConstant alloc] init] autorelease];
     [underTest addKineticConstant:@"key" kineticConstant:k];
 
-    NSError* result = [underTest validate];
+    ConfigurationValidation* result = [underTest validate];
     PASS([[result warnings] count] > 0 , "There must be some form of warning");
 
     NSSet* warnings = [result warnings];
@@ -101,7 +101,7 @@ void validate_ReactionMentionsMoleculeThatDoesntExist_Fails(){
     [eqn setRequirements:req];
 
 
-    NSError* result = [underTest validate];
+    ConfigurationValidation* result = [underTest validate];
     PASS([[result errors] count] > 0 , "There must be some form of error");
 
     NSSet* errors = [result errors];

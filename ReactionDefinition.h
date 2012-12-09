@@ -23,6 +23,8 @@
 /** 
  * @brief Immutable description of a reaction containing the Kinetic Constant and Forumula
  *
+ * By providing a state this allows computation involving this reaction
+ *
  */
 @interface ReactionDefinition : NSObject{
     KineticConstant* mKineticConstant;
@@ -36,12 +38,22 @@
 - (NSCountedSet*)result;
 
 /**
+ * @brief given a state (containing molecule counts) this gets the reaction rate
+ * @param state the current state of the simulation containing the molecule counts that the computation will be based on
  *
+ * This takes into account when the reaction involves two of the same molecules
+ * as a requirement
  */
-- (double)reactionRate:(SimulationState*)state;
+- (double)reactionRate:(SimulationState*)counts;
 
 /**
  * @brief Applies the current reaction to the molecule counts, altering them
+ * @param counts the current molecule counts of the simulation which will be altered to reflect this reaction happening
+ *
+ * The alteration to the state happens in place rather than doing the more elegant thing
+ * of returning a new state to avoid the overhead of memory allocation during the 
+ * simulation step. If needed it is trivial to add a wrapper that returns a new state without
+ * altering the current state.
  */
-- (void)applyReactionToCounts:(NSMutableDictionary*)state;
+- (void)applyReactionToCounts:(NSMutableDictionary*)counts;
 @end

@@ -79,17 +79,21 @@
 
 }
 
-- (void)applyReactionToCounts:(NSMutableDictionary*)state{
-    for ( NSString* moleculeName in [self requirements] ){
-        NSNumber* count = [state objectForKey:moleculeName];
-        NSNumber* newCount = [NSNumber numberWithInt:[count intValue]-1];
-        [state setObject:newCount forKey:moleculeName];
+- (void)applyReactionToCounts:(NSMutableDictionary*)counts{
+    NSCountedSet* req = [self requirements];
+    for ( NSString* moleculeName in req ){
+        NSNumber* count = [counts objectForKey:moleculeName];
+        int primativeNewCount = [count intValue]-[req countForObject:moleculeName];
+        NSNumber* newCount = [NSNumber numberWithInt:primativeNewCount];
+        [counts setObject:newCount forKey:moleculeName];
     }
 
-    for ( NSString* moleculeName in [self result] ){
-        NSNumber* count = [state objectForKey:moleculeName];
-        NSNumber* newCount = [NSNumber numberWithInt:[count intValue]+1];
-        [state setObject:newCount forKey:moleculeName];
+    NSCountedSet* result = [self result];
+    for ( NSString* moleculeName in result ){
+        NSNumber* count = [counts objectForKey:moleculeName];
+        int primativeNewCount = [count intValue]+[result countForObject:moleculeName];
+        NSNumber* newCount = [NSNumber numberWithInt:primativeNewCount];
+        [counts setObject:newCount forKey:moleculeName];
     }
 }
 

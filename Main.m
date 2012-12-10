@@ -171,7 +171,7 @@ id<Random> getRandomNumberGenerator(CommandLineOptions* options){
 
 /**
  * @brief builds loggers based on the settings passed in via the CommandLineOptions
- * @param defines the options for creating logs, log levels for both logs and the file log output name
+ * @param options defines the options for creating logs, log levels for both logs and the file log output name
  *
  * This builds both a file logger and a stderr logger and adds them to the static
  * Logger class that this function creates. This allows use of the created Logs through

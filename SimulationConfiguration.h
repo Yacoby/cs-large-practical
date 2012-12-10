@@ -155,22 +155,26 @@ extern int UNKNOWN_MOLECULE;
 
 /**
  * @return a set of NSString* that contains the name of every kinetic constant that doesn't have a reaction equation
+ * Used by validate
  */
 - (NSSet*)kineticConstantsWithoutReactionEquations;
 
 /**
  * @return a set of NSString* that contains the name of every reaction that doesn't have a kinetic constant
+ * Used by validate
  */
 - (NSSet*)reactionEquationsWithoutKineticConstants;
 
 /**
  * @return a set of ReactionMoleculePair* that holds the name of every molecule 
             reaction pair such that the molecule does not have a count
+ * Used by validate
  */
 - (NSSet*)moleculesInReactionsWithNoCount;
 
 /**
  * @return a set of NSString* containing all the molecules not used in any reactions
+ * Used by validate
  */
 - (NSSet*)moleculesNotUsedInReactions;
 

@@ -19,10 +19,14 @@
 - (id)init;
 - (void)dealloc;
 
+/**
+ * @brief writes str to a member of this class where it can later be retrived
+ * @param str the string to append to the current state
+ */
 - (void)write:(NSString*)str;
 
 /**
- * @return gets everything that has been written to this object
+ * @return gets everything that has been written using write:
  */
 - (NSString*)memory;
 @end

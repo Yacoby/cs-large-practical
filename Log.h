@@ -20,7 +20,10 @@ typedef enum {
 } LogLevel;
 
 /**
- * @brief base class for logging classes to inherit from. Not intended to be used directly
+ * @brief base class for logging classes to inherit from. 
+ *
+ * @note This class is not intended to be used directly and needs to be subclassed
+ *       for some methods to work.
  *
  * Provides common functions and functions that sub classes should override.
  */
@@ -52,7 +55,7 @@ typedef enum {
 - (void)logLevel:(LogLevel)level withFormat:(NSString*)format arguments:(va_list)arguments;
 
 /**
- * @brief functiont that does the work of logging. Should be overwritten by subclasses
+ * @brief function that does the work of logging. Should be overwritten by subclasses
 
  * @param level the log level for this message
  * @param format the format string
@@ -62,7 +65,7 @@ typedef enum {
 @end
 
 /**
- * @brief Log to an output stream of some form
+ * @brief Writes log messages to an OutputStream
  */
 @interface StreamLog : Log{
     id<OutputStream> mStream;

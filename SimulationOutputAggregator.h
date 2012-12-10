@@ -23,6 +23,13 @@
  */
 - (void)stateChangedTo:(SimulationState*)state;
 
+/**
+ * @brief this is called by the simulator when the simulation has finished
+ *
+ * It is impossible to know just from stateChangedTo: to know when the simulation
+ * has finished. This allows aditional writing to happen after simulation such as
+ * in ExactHundredMsAggregator::simulationEnded
+ */
 - (void)simulationEnded;
 @end
 

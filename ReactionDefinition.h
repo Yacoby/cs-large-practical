@@ -23,8 +23,8 @@
 /** 
  * @brief Immutable description of a reaction containing the Kinetic Constant and Formula
  *
- * By providing a state this allows computation involving this reaction
- *
+ * The class has methods to allow calculations based on this reaction if the apropraite simulaton
+ * state is provided.
  */
 @interface ReactionDefinition : NSObject{
     KineticConstant* mKineticConstant;
@@ -39,7 +39,7 @@
 
 /**
  * @brief given a state (containing molecule counts) this gets the reaction rate
- * @param state the current state of the simulation containing the molecule counts that the computation will be based on
+ * @param counts the counts of the molecules at the current simulation state that the computation will be based on
  *
  * This takes into account when the reaction involves two of the same molecules
  * as a requirement

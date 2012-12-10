@@ -16,9 +16,11 @@
 /**
  * @param cfg the simulation configuration file
  * @param random The random number generator to be used by the simulation
- * @param outputAggregator The aggregator where the state changes are sent
+ * @param aggregator The aggregator where the state changes are sent
  */
-- (id)initWithCfg:(SimulationConfiguration*)cfg randomGen:(id <Random>)random outputAggregator:(id <SimulationOutputAggregator>)aggregator;
+- (id)initWithCfg:(SimulationConfiguration*)cfg
+        randomGen:(id <Random>)random
+ outputAggregator:(id <SimulationOutputAggregator>)aggregator;
 - (void)dealloc;
 
 /**

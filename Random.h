@@ -1,7 +1,11 @@
 #import <Foundation/Foundation.h>
 
 /**
- * @brief object that holds the state of a random number
+ * @brief object that holds the state of a random number and allows advancing that state
+ * 
+ * The encapsulation of the random state rather than relying on a global random state allows
+ * the application to be reasoned about in a better way. Standard arguments for the creation of
+ * this class are the same as the arguments behind "Global variables are a bad thing".
  */
 @protocol Random <NSObject>
 
@@ -34,15 +38,13 @@
 
 /**
  * @brief This provides a uniform random number generator that generates numbers based on the given seed
- * 
- * This allows for deterministic runs of the program so that it is possible to reproduce 
- * a given set of results
  */
 @interface UniformRandom : NSObject <Random>{
     uint mSeed;
 }
 /**
- * @brief creates a random number generator based on the given seed.
+ * @brief creates a random number generator with an initial state
+ * @param seed the initial sate of the random number generator
  */
 - (id)initWithSeed:(uint)seed;
 

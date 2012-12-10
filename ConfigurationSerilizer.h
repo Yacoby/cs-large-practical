@@ -29,9 +29,9 @@
 /**
  * @brief Parses an assignment such as b = 5
  * @param cfg The configuration to apply the parsed line to
- * @param fromLine the line to parse. This must be an assignment
+ * @param line the line to parse. This must be an assignment
  * @param lineNumber the line number to be used in error messages
- * @param error the error to be filled with details if an error occurs
+ * @param err the error to be filled with details if an error occurs
  * @return YES on success NO otherwise
  *
  * @note This method is only meant to be called by deserilize:error:
@@ -48,7 +48,7 @@
  * @param key The name (key) of the molecule
  * @param value The value of the assignment. This should be an integer in string form
  * @param lineNumber the line number to be used in error messages
- * @param error the error to be filled with details if an error occurs
+ * @param err the error to be filled with details if an error occurs
  * @return YES on success NO otherwise
  *
  * @note this method is only meant to be called from parseSimpleAssignmentForCfg:fromLine:lineNumber:error
@@ -65,7 +65,7 @@
  * @param key The name (key) of the kinetic constant.
  * @param value The value of the assignment. This should be a double in string form
  * @param lineNumber the line number to be used in error messages
- * @param error the error to be filled with details if an error occurs
+ * @param err the error to be filled with details if an error occurs
  * @return YES on success NO otherwise
  *
  * @note this method is only meant to be called from parseSimpleAssignmentForCfg:fromLine:lineNumber:error
@@ -79,9 +79,9 @@
 /**
  * @brief parses an equation such as f : A -> B
  * @param cfg The configuration to apply the parsed line to
- * @param fromLine the line to parse. This must be an equation assignment
+ * @param line the line to parse. This must be an equation assignment
  * @param lineNumber the line number to be used in error messages
- * @param error the error to be filled with details if an error occurs
+ * @param err the error to be filled with details if an error occurs
  * @return YES on success NO otherwise
  */
 + (BOOL)parseEquationForCfg:(SimulationConfiguration*)cfg

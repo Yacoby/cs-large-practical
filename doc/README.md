@@ -5,19 +5,13 @@ Introduction
 ------------
 This is the program for 2012 Computer Science Large Practical as setout in the [Handout](http://www.inf.ed.ac.uk/teaching/courses/cslp/coursework/CSLP-2012.pdf)
 
-
 This file is written using [Markdown](http://daringfireball.net/projects/markdown/).
 While you can convert it to html using [Markdown.pl](http://daringfireball.net/projects/markdown/) or any other converter
-it is intergrated with doxygen and apears as the main page of the doxygen documentation
+it is intergrated with doxygen and apears as the main page of the doxygen documentation and also bundled as a pdf
 
 Building
 --------
-The program requires:
-
-* gnustep-base
-* gnustep-make
-
-This was also built on (Arch) Linux using GNUstep.
+The program requires GNUstep and was built on Ubunut 12.10 and Arch Linux GNUstep.
 
 Ensure you have run GNUstep.sh to setup your environmental variables.
 [See the GNUstep documentation for more details](http://www.gnustep.org/resources/documentation/User/GNUstep/gnustep-howto_4.html)
@@ -35,7 +29,7 @@ Documentation for the project can be built using `make docs`. This requires:
 
 Due to these requirements, the documentation has been prebuilt
 
-(Note: There are a lot of warnings when building the doxygen documentation. This is because I didn't and don't intend to document everything. For example it should be clear what `-(id)dealloc;` does and documentation adds nothing).
+(Note: There are a lot of warnings when building the doxygen documentation. This is because I didn't and don't intend to document everything. For example in most cases it should be clear what `-(void)dealloc;` does and documentation adds nothing).
 
 Running the Application
 -----------------------
@@ -65,7 +59,7 @@ following differences.
 * Identifiers must be consistent but you can use words as opposed to letters (so you are not limited to 25 molecules)
 * t has an alias time, so both `t` and `time` are reserved identifiers
 * Comments can be written on the same line as settings
-* Support for numbers in scientific notation.
+* Support for numbers in scientific notation
 * Validation is preformed on the scripts. It should be impossible to use an invalid script and warnings are given for scripts that are have problems (it is possible to treat warnings as errors using the `--wall` command line option)
 
 

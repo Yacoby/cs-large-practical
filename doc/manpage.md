@@ -4,7 +4,7 @@ CSLP 1 "DECEMBER 2012" Linux "User Manuals"
 NAME
 ----
 
-cslp - Exact Stocastic Simulation
+cslp - An Exact Stochastic Simulator
 
 SYNOPSIS
 --------

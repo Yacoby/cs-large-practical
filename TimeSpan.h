@@ -38,6 +38,7 @@
 
 /**
  * @brief adds a number of seconds to the TimeSpan
+ * @param seconds the number of seconds added to the current time span
  */
 - (void)addSeconds:(double)seconds;
 - (void)addMilliseconds:(double)ms;

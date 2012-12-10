@@ -177,7 +177,7 @@ void parse_WhenHasArgumentOfIncorrectType_ReturnsError(){
     PASS(options == nil, "There is no valid options to return");
 
     NSString* reason = [err localizedDescription];
-    NSString* expectedReason = @"Argument --foo was of the incorrect type";
+    NSString* expectedReason = @"Argument foo was of the incorrect type";
     NSRange search = [reason rangeOfString:expectedReason options:NSCaseInsensitiveSearch];
     PASS(search.location != NSNotFound, "");
 }

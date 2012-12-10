@@ -1,6 +1,32 @@
 #import "CommandLineOptionParser.h"
 #import "ErrorConstants.h"
 
+@implementation CommandLineKeyValue
+- (id)initWithKey:(NSString*)key value:(id)value{
+    self = [super init];
+    if ( self ){
+        [key retain];
+        mKey = key;
+
+        [value retain];
+        mValue = value;
+    }
+    return self;
+}
+- (void)dealloc{
+    [mKey release];
+    [mValue release];
+    [super dealloc];
+}
+
+- (NSString*)key{
+    return mKey;
+}
+- (id)value{
+    return mValue;
+}
+@end
+
 @implementation CommandLineOptions
 - (id)init{
     self = [super init];
@@ -188,79 +214,17 @@ NSString* const COMMAND_LINE_SHORT_PREFIX = @"-";
 
 - (CommandLineOptions*)parse:(NSArray*)arguments error:(NSError**)err{
 
-    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-
-    NSMutableArray* remaingPositionalArgs = [[mPositionalArguments mutableCopy] autorelease];
-    NSMutableArray* argumentStack = [[arguments mutableCopy] autorelease];
-    NSMutableDictionary* parsedArguments = [[[NSMutableDictionary alloc] init] autorelease];
-
-    while ( [argumentStack count] ){
-        NSString* argument = [argumentStack objectAtIndex:0];
-        [argumentStack removeObjectAtIndex: 0];
-
-        if ([self isOptionalArgument:argument] ){
-            NSString* key = [self getKeyFromArgument:argument];
-            if ( key == nil ){
-                [pool drain];
-
-                NSString* description = [NSString stringWithFormat:@"Unknown argument %@", argument];
-                [self makeError:err withDescription:description];
-
-                return nil;
-            }
-
-            id result = nil;
-            if ( [self isArgument:key ofType:Boolean] ){
-                result = [NSNumber numberWithBool:YES];
-            }else{
-                result = [argumentStack objectAtIndex:0];
-                [argumentStack removeObjectAtIndex: 0];
-
-                result = [self convertString:result toType:[self getArgumentType:key]];
-                if ( result == nil ){
-                    [pool drain];
-                    NSString* description = [NSString stringWithFormat:@"Argument %@ was of the incorrect type", argument];
-                    [self makeError:err withDescription:description];
-
-                    return nil;
-                }
-            }
-
-            [parsedArguments setObject:result forKey:key];
-        }else{
-            if ( [remaingPositionalArgs count] == 0 ){
-                [pool drain];
-
-                NSString* description = [NSString stringWithFormat:@"Unexpected positional argument %@", argument];
-                [self makeError:err withDescription:description];
-
-                return nil;
-            }
-            NSString* positionalArgumentKey = [remaingPositionalArgs objectAtIndex:0];
-            [remaingPositionalArgs removeObjectAtIndex:0];
-
-            id convertedArgument = [self convertString:argument toType:[self getArgumentType:positionalArgumentKey]];
-            if ( convertedArgument == nil ){
-                [pool drain];
-                NSString* description = [NSString stringWithFormat:@"Argument %@ was of the incorrect type", argument];
-                [self makeError:err withDescription:description];
-
-                return nil;
-            }
-            [parsedArguments setObject:convertedArgument forKey: positionalArgumentKey];
-        }
+    NSMutableDictionary* parsedArguments = [self parseAllCommandLineArguments:arguments error:err];
+    if ( parsedArguments == nil ){
+        return nil;
     }
 
     if ( [parsedArguments objectForKey:@"help"] ){
-        [pool drain];
-
         return [[[CommandLineOptions alloc] initWithHelpText:[self helpText]] autorelease];
     }
 
     for ( NSString* requiredKey in mRequiredKeys ){
         if ( [parsedArguments objectForKey:requiredKey] == nil ){
-            [pool drain];
-
             NSString* description = [NSString stringWithFormat:@"Not all required arguments were given: %@", requiredKey];
             [self makeError:err withDescription:description];
             return nil;
@@ -268,10 +232,7 @@ NSString* const COMMAND_LINE_SHORT_PREFIX = @"-";
     }
     [self setDefaultValues:parsedArguments];
 
-    CommandLineOptions* toReturn = [[CommandLineOptions alloc] initWithCommandLineOptions:parsedArguments];
-    [pool drain];
-    [toReturn autorelease];
-    return toReturn;
+    return [[[CommandLineOptions alloc] initWithCommandLineOptions:parsedArguments] autorelease];
 }
 
 - (BOOL)isArgument:(NSString*)key ofType:(CommandLineType)type{
@@ -382,5 +343,99 @@ NSString* const COMMAND_LINE_SHORT_PREFIX = @"-";
     return helpText;
 }
 
+- (CommandLineKeyValue*)parseOptionalArgument:(NSString*)argument
+                        withRemainingStack:(NSMutableArray*)argumentStack
+                                     error:(NSError**)err{
+    NSString* key = [self getKeyFromArgument:argument];
+    if ( key == nil ){
+        NSString* description = [NSString stringWithFormat:@"Unknown argument %@", argument];
+        [self makeError:err withDescription:description];
+        return nil;
+    }
+
+    id result = nil;
+    if ( [self isArgument:key ofType:Boolean] ){
+        //due to having to return a string at this point as conversion happens elsewhere
+        //we can't return a BOOL
+        result = @"YES";
+    }else{
+        result = [argumentStack objectAtIndex:0];
+        [argumentStack removeObjectAtIndex: 0];
+    }
+
+    return [[[CommandLineKeyValue alloc] initWithKey:key value:result] autorelease];
+}
+
+- (CommandLineKeyValue*)parsePositionalArgument:(NSString*)argument 
+                remainingPositionalArguments:(NSMutableArray*)remaingPositionalArgs
+                error:(NSError**)err{
+    if ( [remaingPositionalArgs count] == 0 ){
+        NSString* description = [NSString stringWithFormat:@"Unexpected positional argument %@", argument];
+        [self makeError:err withDescription:description];
+        return nil;
+    }
+    NSString* positionalArgumentKey = [remaingPositionalArgs objectAtIndex:0];
+    [remaingPositionalArgs removeObjectAtIndex:0];
+
+    return [[[CommandLineKeyValue alloc] initWithKey:positionalArgumentKey value:argument] autorelease];
+}
+
+- (CommandLineKeyValue*)parseCommandLineArgumentFromStack:(NSMutableArray*)argumentStack
+                             remainingPositionalArguments:(NSMutableArray*)remaingPositionalArgs
+                                                    error:(NSError**)err{
+    NSString* argument = [argumentStack objectAtIndex:0];
+    [argumentStack removeObjectAtIndex: 0];
+
+    CommandLineKeyValue* parseResult = nil;
+    if ([self isOptionalArgument:argument] ){
+        parseResult = [self parseOptionalArgument:argument
+                               withRemainingStack:argumentStack
+                                            error:err];
+    }else{
+        parseResult = [self parsePositionalArgument:argument
+                       remainingPositionalArguments:remaingPositionalArgs
+                                              error:err];
+    }
+    if ( parseResult == nil ){
+        return nil;
+    }
+
+    NSString* key = [parseResult key];
+    id value = [parseResult value];
+
+    id convertedValue = [self convertString:value toType:[self getArgumentType:key]];
+    if ( convertedValue == nil ){
+        NSString* description = [NSString stringWithFormat:@"Argument %@ was of the incorrect type", key];
+        [self makeError:err withDescription:description];
+        return nil;
+    }
+    return [[[CommandLineKeyValue alloc] initWithKey:key value:convertedValue] autorelease];
+}
+
+- (NSMutableDictionary*)parseAllCommandLineArguments:(NSArray*)arguments error:(NSError**)err{
+    NSMutableDictionary* parsedArguments = [[[NSMutableDictionary alloc] init] autorelease];
+
+    NSMutableArray* argumentStack = [arguments mutableCopy];
+    NSMutableArray* remaingPositionalArgs = [mPositionalArguments mutableCopy];
+
+    while ( [argumentStack count] ){
+        CommandLineKeyValue* parsedArgument = [self parseCommandLineArgumentFromStack:argumentStack
+                                                         remainingPositionalArguments:remaingPositionalArgs
+                                                                                error:err];
+        if ( parsedArgument == nil ){
+            [argumentStack release];
+            [remaingPositionalArgs release];
+            return nil;
+        }
+
+        NSString* argumentKey = [parsedArgument key];
+        id convertedValue = [parsedArgument value];
+        [parsedArguments setObject:convertedValue forKey:argumentKey];
+    }
+
+    [argumentStack release];
+    [remaingPositionalArgs release];
+    return parsedArguments;
+}
 
 @end

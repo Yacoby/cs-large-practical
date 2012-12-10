@@ -54,7 +54,7 @@
 
 /**
  * Used as a molecule count to indicate there is no molecule with the given key
- * @see moleculeCount:
+ * @see SimulationConfiguration::moleculeCount:
  */
 extern int UNKNOWN_MOLECULE;
 

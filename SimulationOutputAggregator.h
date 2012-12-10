@@ -3,7 +3,7 @@
 #import "TimeSpan.h"
 
 /**
- * @brief Allows the aggregation of state changes
+ * @brief Allows the aggregation of state changes before those changes are sent to the writer
  * 
  * This provides a layer between the simulator and the output writer to allow
  * the state changes to be aggregated in some form to allow different output
@@ -19,7 +19,7 @@
  * @param state the new state
  *
  * @note If you want to retain the state beyond the lifetime of the function
- * then you must make a copy of the state
+ * then you must make a copy of the state as the state may be changed
  */
 - (void)stateChangedTo:(SimulationState*)state;
 
@@ -50,6 +50,7 @@
 }
 - (id)initWithWriter:(id<SimulationOutputWriter>)writer;
 - (void)dealloc;
+
 - (void)stateChangedTo:(SimulationState*)state;
 - (void)simulationEnded;
 @end

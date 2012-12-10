@@ -66,7 +66,6 @@ static NSString* EQUATION_SEPERATOR = @":";
     SimulationConfiguration* cfg = [[[SimulationConfiguration alloc] init] autorelease];
 
     NSArray* lines = [input componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
-
     for ( int lineIdx = 0; lineIdx < [lines count]; ++lineIdx ){ 
         const int lineNumber = lineIdx + 1;
         NSString* line = [lines objectAtIndex:lineIdx];

@@ -18,7 +18,7 @@
         mReactions = [[NSMutableArray alloc] init];
 
         NSDictionary* reactions = [cfg reactions];
-        for ( NSString* reactionName in reactions ){ //TODO
+        for ( NSString* reactionName in reactions ){
             [mReactions addObject:[reactions objectForKey:reactionName]];
         }
 

@@ -1,6 +1,17 @@
 /** @file */
 #import <Foundation/Foundation.h>
 
+@interface CommandLineKeyValue : NSObject{
+    NSString* mKey;
+    id mValue;
+}
+- (id)initWithKey:(NSString*)key value:(id)value;
+- (void)dealloc;
+
+- (NSString*)key;
+- (id)value;
+@end
+
 /**
  * @brief Parsed command line options
  *
@@ -171,6 +182,10 @@ extern NSString* const COMMAND_LINE_SHORT_PREFIX;
  */
 - (void)setRequiredForArgumentKey:(NSString*)key required:(BOOL)required;
 
+/**
+ * @brief same as parse:error: but does not record the details of any error that occurs
+ * @see parse:error:
+ */
 - (CommandLineOptions*)parse:(NSArray*)arguments;
 
 /**
@@ -187,11 +202,62 @@ extern NSString* const COMMAND_LINE_SHORT_PREFIX;
 - (CommandLineOptions*)parse:(NSArray*)arguments error:(NSError**)err;
 
 /**
- * @brief Allows adding an optional argument while specifing a key
+ * @brief Parses all the arguments given into a dictionary 
+ * @param arguments a list of all the arguments given to the program excluding the program name
+ * @param err the variable that is filled if an error occurs 
+ * @return a NSMutableDictionary* of NSString* to id of arguments 
+ *
+ * @note this method is only called from parse:error: and is only intended to be used by that method
+ */
+- (NSMutableDictionary*)parseAllCommandLineArguments:(NSArray*)arguments error:(NSError**)err;
 
+/**
+ * @brief parses a single command line argument from the stack of available arguments
+ * @param argumentStack an ordered list of arguments yet to parse
+ * @param remaingPositionalArgs the positional arguments that have yet to be parsed
+ * @param err the variable that will be filled if an error occurs (ie if the method returns nil)
+ * @return the parsed option, with the value converted to the appropriate type or nil if an error occurred
+ *
+ * @note this method is only called from parseAllCommandLineArguments:error: and is 
+ *       only intended to be used by that method
+ */
+- (CommandLineKeyValue*)parseCommandLineArgumentFromStack:(NSMutableArray*)argumentStack
+                             remainingPositionalArguments:(NSMutableArray*)remaingPositionalArgs
+                                                    error:(NSError**)err;
+/**
+ * @brief Parses an optional argument and alters the argumentStack
+ * @param argument the first bit of the optional argument (--foo for example).
+ * @param argumentStack the remaining argument stack, this is updated depending on argument
+ *        (boolean arguments don't need to read any more information for the argumentStack).
+ * @param error this is filled with error information if an error occurs
+ * @return a parsed option or nil if there was an error. The option value will not have been converted from a NSString
+ *
+ * @note this method is called from parseCommandLineArgumentFromStack:remainingPositionalArguments:error:
+ *       and so is only intended to be used by that method
+ */
+- (CommandLineKeyValue*)parseOptionalArgument:(NSString*)argument
+                        withRemainingStack:(NSMutableArray*)argumentStack
+                                     error:(NSError**)err;
+/** 
+ * @brief Parses a positional argument and alters the remaingPositionalArgs
+ * @param argument the value of the positional argument
+ * @param remaingPositionalArgs the keys of the remaining positional arguments
+ * @param error this is filled with error information if an error occurs
+ * @return a parsed option or nil if there was an error
+ *
+ * @note this method is called from parseCommandLineArgumentFromStack:remainingPositionalArguments:error:
+ *       and so is only intended to be used by that method
+ */
+- (CommandLineKeyValue*)parsePositionalArgument:(NSString*)argument
+                remainingPositionalArguments:(NSMutableArray*)remaingPositionalArgs
+                error:(NSError**)err;
+
+/**
+ * @brief Allows adding an optional argument while specifying a key
+ *
  * @see addArgumentWithName:ofType:
-
- * This allows adding an argument with more control as you can specifiy exactly
+ *
+ * This allows adding an argument with more control as you can specify exactly
  * what type of argument you want to add as well as the key that it should
  * be associated with
  */

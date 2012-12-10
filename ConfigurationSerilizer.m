@@ -8,7 +8,7 @@ static NSString* SIMPLE_ASSIGNMENT_SEPERATOR = @"=";
 static NSString* EQUATION_SEPERATOR = @":";
 
 @implementation ConfigurationTextSerilizer
-+ (ReactionEquation*)parseReactionComponents:(NSString*)reaction error:(NSError**)err{
++ (ReactionEquation*)parseEquationComponents:(NSString*)reaction error:(NSError**)err{
     ReactionEquation* result = [[[ReactionEquation alloc] init] autorelease];
 
     if ( [reaction rangeOfString:@"->"].location == NSNotFound ){
@@ -19,14 +19,14 @@ static NSString* EQUATION_SEPERATOR = @":";
     NSArray* lhsAndRhs = [reaction componentsSeparatedByString: @"->"];
     NSString* requirementString = [lhsAndRhs objectAtIndex:0];
 
-    NSCountedSet* req = [self parsePartOfReactionComponents:requirementString error:err];
+    NSCountedSet* req = [self parsePartOfEquationComponents:requirementString error:err];
     if ( req == nil ){
         return nil;
     }
     [result setRequirements:req];
 
     NSString* resultString = [lhsAndRhs objectAtIndex:1];
-    NSCountedSet* resultParseResult = [self parsePartOfReactionComponents:resultString error:err];
+    NSCountedSet* resultParseResult = [self parsePartOfEquationComponents:resultString error:err];
     if ( resultParseResult == nil ){
         return nil;
     }
@@ -35,7 +35,7 @@ static NSString* EQUATION_SEPERATOR = @":";
     return result;
 }
 
-+ (NSCountedSet*)parsePartOfReactionComponents:(NSString*)part error:(NSError**)err{
++ (NSCountedSet*)parsePartOfEquationComponents:(NSString*)part error:(NSError**)err{
     NSCountedSet* result = [[[NSCountedSet alloc] init] autorelease];
     part = [self trimWhiteSpace:part];
 
@@ -78,105 +78,13 @@ static NSString* EQUATION_SEPERATOR = @":";
         }
 
         if ([line rangeOfString:SIMPLE_ASSIGNMENT_SEPERATOR].location != NSNotFound ){
-            NSMutableArray* keyValue = [[line componentsSeparatedByString:SIMPLE_ASSIGNMENT_SEPERATOR] mutableCopy];
-            if ( [keyValue count] != 2 ){
-                NSString* description = [NSString stringWithFormat:@"Line <%i>: Too many <%@> symbols",
-                                                                   lineNumber,
-                                                                   SIMPLE_ASSIGNMENT_SEPERATOR];
-                [self makeError:err withDescription:description];
+            BOOL success = [self parseSimpleAssignmentForCfg:cfg fromLine:line lineNumber:lineNumber error:err];
+            if ( !success ){
                 return nil;
             }
-
-            NSString* key = [self trimWhiteSpace:[keyValue objectAtIndex:0]];
-            NSString* value = [self trimWhiteSpace:[keyValue objectAtIndex:1]];
-
-            if ( [key isEqualToString:@"t"] || [key isEqualToString:@"time"] ){
-                TimeSpan* ts = [[TimeSpan alloc] initFromSeconds:[value doubleValue]];
-                [cfg setTime:ts];
-                [ts release];
-            }else if ( [self isVariableMoleculeCount:key] ){
-                NSNumber* number = [NumericConversion intWithString:value];
-                if ( number == nil ){
-                    NSString* description = [NSString stringWithFormat:@"Line <%i>: Molecule count <%@> was not set to a value of a int",
-                                                                       lineNumber,
-                                                                       key];
-                    [self makeError:err withDescription:description];
-                    return nil;
-                }
-                if ( [number doubleValue] < 0 ){
-                    NSString* description = [NSString stringWithFormat:@"Line <%i>: Molecule count <%@> should not be less than 0",
-                                                                       lineNumber,
-                                                                       key];
-                    [self makeError:err withDescription:description];
-                    return nil;
-                }
-                BOOL moleculeSetCorrectly = [cfg addMoleculeCount:key count:[number intValue]];
-                if ( !moleculeSetCorrectly ){
-                    NSString* description = [NSString stringWithFormat:@"Line <%i>: Molecule <%@> was already set",
-                                                                       lineNumber,
-                                                                       key];
-                    [self makeError:err withDescription:description];
-                    return nil;
-                }
-            } else if ( [self isKineticConstant:key] ){
-                NSDecimalNumber* number = [NumericConversion decimalWithString:value];
-                if ( number == nil ){
-                    NSString* description = [NSString stringWithFormat:@"Line <%i>: Kinetic constant <%@> was not set to a value of a double",
-                                                                       lineNumber,
-                                                                       key];
-                    [self makeError:err withDescription:description];
-                    return nil;
-                }
-                if ( [number doubleValue] < 0 ){
-                    NSString* description = [NSString stringWithFormat:@"Line <%i>: Kinetic constant <%@> should not be less than 0",
-                                                                       lineNumber,
-                                                                       key];
-                    [self makeError:err withDescription:description];
-                    return nil;
-                }
-                KineticConstant* constant = [[KineticConstant alloc] initWithDouble:[number doubleValue] ];
-                BOOL kineticConstantSetCorrectly = [cfg addKineticConstant: key kineticConstant:constant];
-                [constant release];
-
-                if ( !kineticConstantSetCorrectly ){
-                    NSString* description = [NSString stringWithFormat:@"Line <%i>: Kinetic Constant <%@> was already set",
-                                                                       lineNumber,
-                                                                       key];
-                    [self makeError:err withDescription:description];
-                    return nil;
-                }
-            }else{
-                NSString* description = [NSString stringWithFormat:@"Line <%i>: Invalid identifier on the LHS",
-                                                                   lineNumber];
-                [self makeError:err withDescription:description];
-                return nil;
-            }
-            [keyValue release]; //todo I think this causes a leak when we get an error
-
         } else if ([line rangeOfString:EQUATION_SEPERATOR].location != NSNotFound ){
-            NSArray* reactionNameAndDef = [line componentsSeparatedByString: EQUATION_SEPERATOR];
-            NSString* reactionName = [reactionNameAndDef objectAtIndex:0];
-            reactionName = [self trimWhiteSpace:reactionName];
-
-            NSString* reactionComponentStr = [reactionNameAndDef objectAtIndex:1];
-
-            NSError* reactionError;
-            ReactionEquation* reactionEquation = [self parseReactionComponents:reactionComponentStr error:&reactionError];
-            if ( reactionEquation == nil ){
-                NSString* description = [NSString stringWithFormat:@"Line <%i>: %@",
-                                                                   lineNumber,
-                                                                   [reactionError localizedDescription]];
-
-                [self makeError:err withDescription:description];
-                return nil;
-            }
-
-            BOOL reactionSetCorrectly = [cfg addReactionEquation: reactionName reactionEquation:reactionEquation];
-            if ( !reactionSetCorrectly){
-                NSString* description = [NSString stringWithFormat:@"Line <%i>: Reaction Equation <%@> was already set",
-                                                                   lineNumber,
-                                                                   reactionName];
-                [self makeError:err withDescription:description];
+            BOOL success = [self parseEquationForCfg:cfg fromLine:line lineNumber:lineNumber error:err];
+            if ( !success ){
                 return nil;
             }
         } else {
@@ -185,10 +93,146 @@ static NSString* EQUATION_SEPERATOR = @":";
             [self makeError:err withDescription:description];
             return nil;
         }
-
     }
 
     return cfg;
+}
+
++ (BOOL)parseSimpleAssignmentForCfg:(SimulationConfiguration*)cfg
+                           fromLine:(NSString*)line 
+                         lineNumber:(int)lineNumber
+                              error:(NSError**)err{
+    NSMutableArray* keyValue = [[line componentsSeparatedByString:SIMPLE_ASSIGNMENT_SEPERATOR] mutableCopy];
+    if ( [keyValue count] != 2 ){
+        NSString* description = [NSString stringWithFormat:@"Line <%i>: Too many <%@> symbols",
+                                                           lineNumber,
+                                                           SIMPLE_ASSIGNMENT_SEPERATOR];
+        [self makeError:err withDescription:description];
+        [keyValue release];
+        return NO;
+    }
+
+    NSString* key = [self trimWhiteSpace:[keyValue objectAtIndex:0]];
+    NSString* value = [self trimWhiteSpace:[keyValue objectAtIndex:1]];
+    [keyValue release];
+
+    if ( [key isEqualToString:@"t"] || [key isEqualToString:@"time"] ){
+        TimeSpan* ts = [[TimeSpan alloc] initFromSeconds:[value doubleValue]];
+        [cfg setTime:ts];
+        [ts release];
+    }else if ( [self isVariableMoleculeCount:key] ){
+       if ( ![self parseMoleculeAssignmentForCfg:cfg key:key value:value lineNumber:lineNumber error:err] ){
+           return NO;
+       }
+    }else if ( [self isKineticConstant:key] ){
+       if ( ![self parseKineticConstantAssignmentForCfg:cfg key:key value:value lineNumber:lineNumber error:err] ){
+           return NO;
+       }
+    }else{
+        NSString* description = [NSString stringWithFormat:@"Line <%i>: Invalid identifier on the LHS",
+                                                           lineNumber];
+        [self makeError:err withDescription:description];
+        return NO;
+    }
+    return YES;
+}
+
++ (BOOL)parseMoleculeAssignmentForCfg:(SimulationConfiguration*)cfg
+                                  key:(NSString*)key
+                                value:(NSString*)value
+                           lineNumber:(int)lineNumber
+                                error:(NSError**)err{
+
+    NSNumber* number = [NumericConversion intWithString:value];
+    if ( number == nil ){
+        NSString* description = [NSString stringWithFormat:@"Line <%i>: Molecule count <%@> was not set to a value of a int",
+                                                           lineNumber,
+                                                           key];
+        [self makeError:err withDescription:description];
+        return NO;
+    }
+    if ( [number doubleValue] < 0 ){
+        NSString* description = [NSString stringWithFormat:@"Line <%i>: Molecule count <%@> should not be less than 0",
+                                                           lineNumber,
+                                                           key];
+        [self makeError:err withDescription:description];
+        return NO;
+    }
+    BOOL moleculeSetCorrectly = [cfg addMoleculeCount:key count:[number intValue]];
+    if ( !moleculeSetCorrectly ){
+        NSString* description = [NSString stringWithFormat:@"Line <%i>: Molecule <%@> was already set",
+                                                           lineNumber,
+                                                           key];
+        [self makeError:err withDescription:description];
+        return NO;
+    }
+    return YES;
+}
+
++ (BOOL)parseKineticConstantAssignmentForCfg:(SimulationConfiguration*)cfg
+                                  key:(NSString*)key
+                                value:(NSString*)value
+                           lineNumber:(int)lineNumber
+                                error:(NSError**)err{
+    NSDecimalNumber* number = [NumericConversion decimalWithString:value];
+    if ( number == nil ){
+        NSString* description = [NSString stringWithFormat:@"Line <%i>: Kinetic constant <%@> was not set to a value of a double",
+                                                           lineNumber,
+                                                           key];
+        [self makeError:err withDescription:description];
+        return NO;
+    }
+    if ( [number doubleValue] < 0 ){
+        NSString* description = [NSString stringWithFormat:@"Line <%i>: Kinetic constant <%@> should not be less than 0",
+                                                           lineNumber,
+                                                           key];
+        [self makeError:err withDescription:description];
+        return NO;
+    }
+    KineticConstant* constant = [[KineticConstant alloc] initWithDouble:[number doubleValue] ];
+    BOOL kineticConstantSetCorrectly = [cfg addKineticConstant:key kineticConstant:constant];
+    [constant release];
+
+    if ( !kineticConstantSetCorrectly ){
+        NSString* description = [NSString stringWithFormat:@"Line <%i>: Kinetic Constant <%@> was already set",
+                                                           lineNumber,
+                                                           key];
+        [self makeError:err withDescription:description];
+        return NO;
+    }
+    return YES;
+}
+
++ (BOOL)parseEquationForCfg:(SimulationConfiguration*)cfg
+                   fromLine:(NSString*)line
+                 lineNumber:(int)lineNumber
+                      error:(NSError**)err{
+    NSArray* reactionNameAndDef = [line componentsSeparatedByString: EQUATION_SEPERATOR];
+    NSString* reactionName = [reactionNameAndDef objectAtIndex:0];
+    reactionName = [self trimWhiteSpace:reactionName];
+
+    NSString* reactionComponentStr = [reactionNameAndDef objectAtIndex:1];
+
+    NSError* reactionError;
+    ReactionEquation* reactionEquation = [self parseEquationComponents:reactionComponentStr error:&reactionError];
+    if ( reactionEquation == nil ){
+        NSString* description = [NSString stringWithFormat:@"Line <%i>: %@",
+                                                           lineNumber,
+                                                           [reactionError localizedDescription]];
+
+        [self makeError:err withDescription:description];
+        return NO;
+    }
+
+    BOOL reactionSetCorrectly = [cfg addReactionEquation: reactionName reactionEquation:reactionEquation];
+    if ( !reactionSetCorrectly){
+        NSString* description = [NSString stringWithFormat:@"Line <%i>: Reaction Equation <%@> was already set",
+                                                           lineNumber,
+                                                           reactionName];
+        [self makeError:err withDescription:description];
+        return NO;
+    }
+    return YES;
 }
 
 + (NSString*)trimWhiteSpace:(NSString*)str{

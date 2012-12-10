@@ -61,11 +61,11 @@ void testDeserilize_WhenHasMoleculeCount_ParsesCorrectly(){
     PASS_INT_EQUAL([cfg moleculeCount:@"E"], 10, "Molecule count should be 10");
 }
 
-void testParseReactionComponents_WhenHasBasicReaction_ParsesCorrectly(){
+void testParseEquationComponents_WhenHasBasicReaction_ParsesCorrectly(){
     NSString* reactionString = @" A -> B";
 
     NSError* error;
-    ReactionEquation* equation = [ConfigurationTextSerilizer parseReactionComponents:reactionString error:&error];
+    ReactionEquation* equation = [ConfigurationTextSerilizer parseEquationComponents:reactionString error:&error];
 
     PASS_INT_EQUAL([[equation requirements] countForObject:@"A"], 1, "");
     PASS_INT_EQUAL([[equation requirements] count], 1, "");
@@ -74,10 +74,10 @@ void testParseReactionComponents_WhenHasBasicReaction_ParsesCorrectly(){
     PASS_INT_EQUAL([[equation result] count], 1, "");
 }
 
-void testParseReactionComponents_WhenHasDesctuctiveReaction_ParsesCorrectly(){
+void testParseEquationComponents_WhenHasDesctuctiveReaction_ParsesCorrectly(){
     NSString* reactionString = @" A -> ";
     NSError* error;
-    ReactionEquation* equation = [ConfigurationTextSerilizer parseReactionComponents:reactionString error:&error];
+    ReactionEquation* equation = [ConfigurationTextSerilizer parseEquationComponents:reactionString error:&error];
 
     PASS_INT_EQUAL([[equation requirements] countForObject:@"A"], 1, "");
     PASS_INT_EQUAL([[equation requirements] count], 1, "");
@@ -85,10 +85,10 @@ void testParseReactionComponents_WhenHasDesctuctiveReaction_ParsesCorrectly(){
     PASS_INT_EQUAL([[equation result] count], 0, "");
 }
 
-void testParseReactionComponents_WhenHasCreativeReaction_ParsesCorrectly(){
+void testParseEquationComponents_WhenHasCreativeReaction_ParsesCorrectly(){
     NSString* reactionString = @" -> A";
     NSError* error;
-    ReactionEquation* equation = [ConfigurationTextSerilizer parseReactionComponents:reactionString error:&error];
+    ReactionEquation* equation = [ConfigurationTextSerilizer parseEquationComponents:reactionString error:&error];
 
     PASS_INT_EQUAL([[equation requirements] count], 0, "");
 
@@ -96,10 +96,10 @@ void testParseReactionComponents_WhenHasCreativeReaction_ParsesCorrectly(){
     PASS_INT_EQUAL([[equation result] count], 1, "");
 }
 
-void testParseReactionComponents_WhenHasTwoRequirements_ParsesCorrectly(){
+void testParseEquationComponents_WhenHasTwoRequirements_ParsesCorrectly(){
     NSString* reactionString = @"A + B -> C";
     NSError* error;
-    ReactionEquation* equation = [ConfigurationTextSerilizer parseReactionComponents:reactionString error:&error];
+    ReactionEquation* equation = [ConfigurationTextSerilizer parseEquationComponents:reactionString error:&error];
 
     PASS_INT_EQUAL([[equation requirements] countForObject:@"A"], 1, "");
     PASS_INT_EQUAL([[equation requirements] countForObject:@"B"], 1, "");
@@ -181,11 +181,11 @@ int main()
 
         testDeserilize_WhenHasMoleculeCount_ParsesCorrectly();
 
-        testParseReactionComponents_WhenHasBasicReaction_ParsesCorrectly();
+        testParseEquationComponents_WhenHasBasicReaction_ParsesCorrectly();
 
-        testParseReactionComponents_WhenHasDesctuctiveReaction_ParsesCorrectly();
-        testParseReactionComponents_WhenHasCreativeReaction_ParsesCorrectly();
-        testParseReactionComponents_WhenHasTwoRequirements_ParsesCorrectly();
+        testParseEquationComponents_WhenHasDesctuctiveReaction_ParsesCorrectly();
+        testParseEquationComponents_WhenHasCreativeReaction_ParsesCorrectly();
+        testParseEquationComponents_WhenHasTwoRequirements_ParsesCorrectly();
 
 
         testDeserilize_WhenHasTwoEquals_Error();

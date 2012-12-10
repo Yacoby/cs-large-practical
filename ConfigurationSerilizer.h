@@ -26,12 +26,73 @@
  */
 + (SimulationConfiguration*)deserilize:(NSString*)input error:(NSError**)err;
 
+/**
+ * @brief Parses an assignment such as b = 5
+ * @param cfg The configuration to apply the parsed line to
+ * @param fromLine the line to parse. This must be an assignment
+ * @param lineNumber the line number to be used in error messages
+ * @param error the error to be filled with details if an error occurs
+ * @return YES on success NO otherwise
+ *
+ * @note This method is only meant to be called by deserilize:error:
+ */
++ (BOOL)parseSimpleAssignmentForCfg:(SimulationConfiguration*)cfg 
+                           fromLine:(NSString*)line 
+                         lineNumber:(int)lineNumber
+                              error:(NSError**)err;
 
+/**
+ * @brief parses a molecule assignment such as A = 60
+ * 
+ * @param cfg The configuration to apply the assignment to
+ * @param key The name (key) of the molecule
+ * @param value The value of the assignment. This should be an integer in string form
+ * @param lineNumber the line number to be used in error messages
+ * @param error the error to be filled with details if an error occurs
+ * @return YES on success NO otherwise
+ *
+ * @note this method is only meant to be called from parseSimpleAssignmentForCfg:fromLine:lineNumber:error
+ */
++ (BOOL)parseMoleculeAssignmentForCfg:(SimulationConfiguration*)cfg
+                                  key:(NSString*)key
+                                value:(NSString*)value
+                           lineNumber:(int)lineNumber
+                                error:(NSError**)err;
+
+/**
+ * @brief parses a kinetic constant assignment such as x = 10e-5
+ * @param cfg
+ * @param key The name (key) of the kinetic constant.
+ * @param value The value of the assignment. This should be a double in string form
+ * @param lineNumber the line number to be used in error messages
+ * @param error the error to be filled with details if an error occurs
+ * @return YES on success NO otherwise
+ *
+ * @note this method is only meant to be called from parseSimpleAssignmentForCfg:fromLine:lineNumber:error
+ */
++ (BOOL)parseKineticConstantAssignmentForCfg:(SimulationConfiguration*)cfg
+                                         key:(NSString*)key
+                                       value:(NSString*)value
+                                  lineNumber:(int)lineNumber
+                                       error:(NSError**)err;
+
+/**
+ * @brief parses an equation such as f : A -> B
+ * @param cfg The configuration to apply the parsed line to
+ * @param fromLine the line to parse. This must be an equation assignment
+ * @param lineNumber the line number to be used in error messages
+ * @param error the error to be filled with details if an error occurs
+ * @return YES on success NO otherwise
+ */
++ (BOOL)parseEquationForCfg:(SimulationConfiguration*)cfg
+                   fromLine:(NSString*)line
+                 lineNumber:(int)lineNumber
+                      error:(NSError**)err;
 /**
  * @brief Parses the reaction components. E.g: A + B -> C
  */
-+ (ReactionEquation*)parseReactionComponents: (NSString*) reaction error:(NSError**)err;
-+ (NSCountedSet*)parsePartOfReactionComponents:(NSString*) part error:(NSError**)err;
++ (ReactionEquation*)parseEquationComponents: (NSString*) reaction error:(NSError**)err;
++ (NSCountedSet*)parsePartOfEquationComponents:(NSString*) part error:(NSError**)err;
 
 /**
  * @brief Removes all white space from the lhs and rhs of a string

@@ -263,7 +263,8 @@ NSString* const COMMAND_LINE_SHORT_PREFIX = @"-";
 }
 
 - (NSString*)getKeyFromArgument:(NSString*)argument{
-    NSMutableDictionary* lookupDict = [argument hasPrefix:COMMAND_LINE_LONG_PREFIX] ? mLongArgumentNameToKey : mShortArgumentNameToKey;
+    NSMutableDictionary* lookupDict = [argument hasPrefix:COMMAND_LINE_LONG_PREFIX] ? mLongArgumentNameToKey :
+                                                                                      mShortArgumentNameToKey;
     NSString* key = [lookupDict objectForKey:argument];
     return key;
 }

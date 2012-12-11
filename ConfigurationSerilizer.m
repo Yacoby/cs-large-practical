@@ -99,7 +99,7 @@ static NSString* EQUATION_SEPERATOR = @":";
 }
 
 + (BOOL)parseSimpleAssignmentForCfg:(SimulationConfiguration*)cfg
-                           fromLine:(NSString*)line 
+                           fromLine:(NSString*)line
                          lineNumber:(int)lineNumber
                               error:(NSError**)err{
     NSMutableArray* keyValue = [[line componentsSeparatedByString:SIMPLE_ASSIGNMENT_SEPERATOR] mutableCopy];

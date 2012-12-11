@@ -3,6 +3,8 @@
 
 /**
  * @brief Holds the key/value pair of a command line option (the key) and the value it has been set to (the value)
+ *
+ * Used in argument parsing for the command line parser
  */
 @interface CommandLineKeyValue : NSObject{
     NSString* mKey;
@@ -213,6 +215,10 @@ extern NSString* const COMMAND_LINE_SHORT_PREFIX;
  * This should be called when parsing command line options and deals with calling the
  * subfunctions parse* (such as parseCommandLineArgumentFromStack). It first parses
  * the arguments and then provides validation of what was parsed.
+ *
+ * Parsing is done by passing the argments and data to pure (as in they don't
+ * alter any external state) methods that reduce the arguments passed in and return
+ * key value pairs that are then inserted into CommandLineOptions
  */
 - (CommandLineOptions*)parse:(NSArray*)arguments error:(NSError**)err;
 
@@ -227,25 +233,27 @@ extern NSString* const COMMAND_LINE_SHORT_PREFIX;
 - (NSMutableDictionary*)parseAllCommandLineArguments:(NSArray*)arguments error:(NSError**)err;
 
 /**
- * @brief parses a single command line argument from the stack of available arguments
- * @param argumentStack an ordered list of arguments yet to parse
- * @param remaingPositionalArgs the positional arguments that have yet to be parsed
+ * @brief parses a single command line argument from the stack of available arguments and pops it off the stack
+ * @param argumentStack an ordered list of arguments yet to parse, the parsed argument will be removed from this
+ * @param remaingPositionalArgs the positional arguments that have yet to be parsed, the method will alter this 
+ *                              so that if a positional argument is parsed then it will be removed from this array
  * @param err the variable that will be filled if an error occurs (ie if the method returns nil)
  * @return the parsed option, with the value converted to the appropriate type or nil if an error occurred
  *
- * @note this method is only called from parseAllCommandLineArguments:error: and is 
+ * @note this method is only called from parseAllCommandLineArguments:error: and is
  *       only intended to be used by that method
  */
 - (CommandLineKeyValue*)parseCommandLineArgumentFromStack:(NSMutableArray*)argumentStack
                              remainingPositionalArguments:(NSMutableArray*)remaingPositionalArgs
                                                     error:(NSError**)err;
 /**
- * @brief Parses an optional argument and alters the argumentStack
+ * @brief Parses an optional argument and pops everything parsed off the argumentStack
  * @param argument the first bit of the optional argument (--foo for example).
  * @param argumentStack the remaining argument stack, this is updated depending on argument
  *        (boolean arguments don't need to read any more information for the argumentStack).
  * @param err this is filled with error information if an error occurs
- * @return a parsed option or nil if there was an error. The option value will not have been converted from a NSString
+ * @return a parsed option or nil if there was an error. The option value will *not* have 
+ *         been converted from a NSString* at this point
  *
  * @note this method is called from parseCommandLineArgumentFromStack:remainingPositionalArguments:error:
  *       and so is only intended to be used by that method
@@ -304,11 +312,11 @@ extern NSString* const COMMAND_LINE_SHORT_PREFIX;
 - (id)convertString:(NSString*)str toType:(CommandLineType)type;
 
 /**
- * @param key The argument key to check
+ * @param key The argument key to check that it of the given type
  * @param type The type to compare the argument against
  * @return True if the the argument is of the given type
  *
- * @todo should we be uisng getArgumentType rather than this
+ * @todo deprecate in favour of getArgumentType
  */
 - (BOOL)isArgument:(NSString*)key ofType:(CommandLineType)type;
 
@@ -320,6 +328,7 @@ extern NSString* const COMMAND_LINE_SHORT_PREFIX;
 /**
  * @brief Checks if a string looks like an optional argument by looking at the strings
  *        leading characters 
+ * @param argument the argument to check for (such as --foo)
  *
  * @note This just does a string check and is used when working out what type of
  *      argument the programmer wants. @see addArgumentWithName:ofType:
@@ -329,6 +338,7 @@ extern NSString* const COMMAND_LINE_SHORT_PREFIX;
 /**
  * @brief checks that the string looks like a positional argument by looking at the strings
  *        leading characters
+ * @param name the argument to check for (such as --foo)
  */
 - (BOOL)isPositionalArgument:(NSString*)name;
 
@@ -353,7 +363,7 @@ extern NSString* const COMMAND_LINE_SHORT_PREFIX;
 
 /**
  * @brief Inserts entries for arguments that have a default value but have no user value set
- * @param args A dictionary of (ArgumentKey, ArgumentValue) that is altered
+ * @param args A dictionary of (ArgumentKey, ArgumentValue) that is altered to have the default values inserted
  */
 - (void)setDefaultValues:(NSMutableDictionary*)args;
 

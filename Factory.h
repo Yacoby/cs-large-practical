@@ -12,6 +12,7 @@
 
 /**
  * @brief creates a class such that the 
+ * @TODO docs
  */
 - (id)initFromProtocol:(Protocol*)protocol;
 

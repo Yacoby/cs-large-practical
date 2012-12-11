@@ -1,0 +1,5 @@
+t = 1
+
+#A and B have no counts
+#f has no kinetic constant
+f : A -> B

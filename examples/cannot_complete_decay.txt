@@ -1,0 +1,8 @@
+#in this example, A cannot decrease
+
+t = 200
+
+A = 1
+
+f = 1
+f : A + A ->

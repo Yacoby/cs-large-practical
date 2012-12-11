@@ -1,0 +1,4 @@
+t = 1
+
+#if run with --wall fails becuase no reaction mentions this
+A = 1

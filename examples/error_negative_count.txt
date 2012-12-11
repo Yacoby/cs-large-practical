@@ -1,0 +1,6 @@
+t = 1
+
+#fails on the parsing step due to a negative number
+N = -25
+
+f : -> N

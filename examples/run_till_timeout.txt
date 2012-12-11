@@ -1,0 +1,6 @@
+#this reaction will run till t is reached
+t = 200
+
+A = 0
+f = 1
+f : -> A + A

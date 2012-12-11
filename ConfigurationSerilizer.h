@@ -42,6 +42,18 @@
                               error:(NSError**)err;
 
 /**
+ * @brief parses a time assignment
+ * @param cfg The configuration to apply the parsed line to
+ * @param value the value to be assigned to the time
+ * @param lineNumber the line number to be used in error messages
+ * @param err the error to be filled with details if an error occurs
+ * @return YES on success NO otherwise
+ */
++ (BOOL)parseTimeForCfg:(SimulationConfiguration*)cfg
+                  value:(NSString*)value
+             lineNumber:(int)lineNumber
+                  error:(NSError**)err;
+/**
  * @brief parses a molecule assignment such as A = 60
  * 
  * @param cfg The configuration to apply the assignment to

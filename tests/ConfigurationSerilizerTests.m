@@ -169,8 +169,29 @@ void testDeserilize_WhenHasValidSFNumber_NoError(){
     PASS(cfg != nil, "Should not fail to parse");
 }
 
-int main()
-{
+void testDeserilize_WhenHasSFTime_NoError(){
+    NSString* cfgString = @"t = 1.5e2";
+
+    NSError* err;
+    SimulationConfiguration* cfg = [ConfigurationTextSerilizer deserilize:cfgString error:&err];
+    PASS(cfg != nil, "Should not fail to parse");
+    PASS_INT_EQUAL([[cfg time] totalSeconds], 150, "Time should be set from an sf number");
+}
+
+void testDeserilize_WhenHasNegativeTime_Error(){
+    NSString* cfgString = @"t = -5";
+
+    NSError* err;
+    SimulationConfiguration* cfg = [ConfigurationTextSerilizer deserilize:cfgString error:&err];
+    PASS(cfg == nil, "Should fail to parse, unexpected -");
+
+    NSString* reason = [err localizedDescription];
+    NSString* expectedReason = @"Line <1>: The time should not be less than 0";
+    NSRange search = [reason rangeOfString:expectedReason options:NSCaseInsensitiveSearch];
+    PASS(search.location != NSNotFound, "");
+}
+
+int main(){
     START_SET("ConfigurationTextSerilizer")
         testDeserilize_WhenHasTime_ParsesTimeCorrectly();
         testDeserilize_WhenHasComment_DoesNotAffectParsing();
@@ -194,6 +215,8 @@ int main()
         testDeserilize_WhenHasInvalidNumber_Error();
 
         testDeserilize_WhenHasValidSFNumber_NoError();
+        testDeserilize_WhenHasSFTime_NoError();
+        testDeserilize_WhenHasNegativeTime_Error();
     END_SET("ConfigurationTextSerilizer")
 
     return 0;

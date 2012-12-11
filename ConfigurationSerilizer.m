@@ -117,9 +117,9 @@ static NSString* EQUATION_SEPERATOR = @":";
     [keyValue release];
 
     if ( [key isEqualToString:@"t"] || [key isEqualToString:@"time"] ){
-        TimeSpan* ts = [[TimeSpan alloc] initFromSeconds:[value doubleValue]];
-        [cfg setTime:ts];
-        [ts release];
+        if ( ![self parseTimeForCfg:cfg value:value lineNumber:lineNumber error:err] ){
+            return NO;
+        }
     }else if ( [self isVariableMoleculeCount:key] ){
        if ( ![self parseMoleculeAssignmentForCfg:cfg key:key value:value lineNumber:lineNumber error:err] ){
            return NO;
@@ -134,6 +134,33 @@ static NSString* EQUATION_SEPERATOR = @":";
         [self makeError:err withDescription:description];
         return NO;
     }
+    return YES;
+}
+
++ (BOOL)parseTimeForCfg:(SimulationConfiguration*)cfg
+                  value:(NSString*)value
+             lineNumber:(int)lineNumber
+                  error:(NSError**)err{
+    NSNumber* number = [NumericConversion decimalWithString:value];
+    if ( number == nil ){
+        NSString* description = [NSString stringWithFormat:@"Line <%i>: The time was not a valid number",
+                                                           lineNumber];
+        [self makeError:err withDescription:description];
+        return NO;
+    }
+
+    double timeDoubleValue = [number doubleValue];
+    if ( timeDoubleValue < 0 ){
+        NSString* description = [NSString stringWithFormat:@"Line <%i>: The time should not be less than 0",
+                                                           lineNumber];
+        [self makeError:err withDescription:description];
+        return NO;
+    }
+
+    TimeSpan* ts = [[TimeSpan alloc] initFromSeconds:timeDoubleValue];
+    [cfg setTime:ts];
+    [ts release];
+
     return YES;
 }
 

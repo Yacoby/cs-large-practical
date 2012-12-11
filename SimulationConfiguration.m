@@ -240,7 +240,6 @@ int UNKNOWN_MOLECULE = -1;
 }
 
 - (NSSet*)moleculesNotUsedInReactions{
-    return [[[NSSet alloc] init] autorelease];
     NSMutableSet* moleculesUsedInReaction = [[NSMutableSet alloc] init];
     for ( NSString* reactionName in mReactionEquations ){
         ReactionEquation* reactionEquation = [mReactionEquations objectForKey:reactionName];
@@ -248,7 +247,7 @@ int UNKNOWN_MOLECULE = -1;
         [moleculesUsedInReaction unionSet:[reactionEquation requirements]];
     }
 
-    NSMutableSet* moleculesWithOnlyCounts = [[mMoleculeCounts mutableCopy] autorelease];
+    NSMutableSet* moleculesWithOnlyCounts = [NSMutableSet setWithArray:[mMoleculeCounts allKeys]];
     [moleculesWithOnlyCounts minusSet:moleculesUsedInReaction];
 
     [moleculesUsedInReaction release];

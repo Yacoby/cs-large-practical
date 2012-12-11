@@ -2,6 +2,8 @@
 #import "ReactionDefinition.h"
 #import <math.h>
 
+const int NO_REACTION = -1;
+
 @implementation Simulator
 - (id)initWithCfg:(SimulationConfiguration*)cfg randomGen:(id <Random>)random outputAggregator:(id <SimulationOutputAggregator>)aggregator{
     self = [super init];
@@ -45,13 +47,16 @@
     [mAggregator stateChangedTo:state];
 
     while ( true ){
+        NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
         BOOL hasHadReaction = [self runSimulationStep:state];
         if ( !hasHadReaction ||
             [[state timeSinceSimulationStart] totalSeconds] >= [stopTime totalSeconds] ){
+            [pool drain];
             break;
         }
 
         [mAggregator stateChangedTo:state];
+        [pool drain];
     }
     [mAggregator simulationEnded];
 
@@ -60,32 +65,32 @@
 }
 
 - (BOOL)runSimulationStep:(SimulationState*)state{
-    double a0 = 0;
+    double reactionRateSum = 0;
     for ( ReactionDefinition* reaction in mReactions ){
-        a0 += [reaction reactionRate:state];
+        reactionRateSum += [reaction reactionRate:state];
     }
     double r1 = [mRandom next];
-    double tau = (1/a0) * log(1/r1);
+    double tau = (1/reactionRateSum) * log(1/r1);
     TimeSpan* time = [state timeSinceSimulationStart];
     [time addSeconds:tau];
 
     double r2 = [mRandom next];
 
-    int reaction = -1;
+    int reactionToDoIdx = NO_REACTION;
     double rateSum = 0;
-    for (int i = 0; i < [mReactions count]; ++i) {
-        rateSum += [[mReactions objectAtIndex:i] reactionRate:state];
-        if ( rateSum > r2 * a0 ){
-            reaction = i;
+    for (int reactionIdx = 0; reactionIdx < [mReactions count]; ++reactionIdx) {
+        rateSum += [[mReactions objectAtIndex:reactionIdx] reactionRate:state];
+        if ( rateSum > r2 * reactionRateSum ){
+            reactionToDoIdx = reactionIdx;
             break;
         }
     }
-    if ( reaction == -1 ){
+    if ( reactionToDoIdx == NO_REACTION ){
         return NO;
     }
 
     NSMutableDictionary* counts = [state moleculeCounts];
-    [[mReactions objectAtIndex:reaction] applyReactionToCounts:counts];
+    [[mReactions objectAtIndex:reactionToDoIdx] applyReactionToCounts:counts];
 
     return YES;
 }

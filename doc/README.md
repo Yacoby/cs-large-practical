@@ -11,7 +11,7 @@ it is intergrated with doxygen and apears as the main page of the doxygen docume
 
 Building
 --------
-The program requires GNUstep and was built on Ubunut 12.10 and Arch Linux GNUstep.
+The program requires GNUstep and was built on Ubunut 12.10 and Arch Linux.
 
 Ensure you have run GNUstep.sh to setup your environmental variables.
 [See the GNUstep documentation for more details](http://www.gnustep.org/resources/documentation/User/GNUstep/gnustep-howto_4.html)
@@ -25,11 +25,20 @@ Documentation for the project can be built using `make docs`. This requires:
 * [gimli](https://github.com/walle/gimli)
 * `sed` and `rm` (Obviously should be installed)
 * [Doxygen](http://www.doxygen.org) 1.8 or greater
+* Graphviz
 * [md2man](https://github.com/sunaku/md2man)
 
 Due to these requirements, the documentation has been prebuilt
 
 (Note: There are a lot of warnings when building the doxygen documentation. This is because I didn't and don't intend to document everything. For example in most cases it should be clear what `-(void)dealloc;` does and documentation adds nothing).
+
+Documentation
+-------------
+Other than this document there is the man page. As this program lacks an installer (The
+current development system is not the same as the system that will mark it and packages are a different
+format) the man page is viewable via `man -l doc/CSLP.1`
+
+Documentation for the code (generated using doxygen) can be accessed from the [codedocs.html](codedocs.html) file found in the `doc` directory.
 
 Running the Application
 -----------------------
@@ -94,10 +103,6 @@ Logging can be enabled using command line paramters see Command Line Arguments f
 Note: Early startup errors such as incorrect command line paramters can only be logged to stderr
       as at this point no logs have been created.
 
-Code Documentation
-------------------
-Documentation for the code (generated using doxygen) can be accessed from the [codedocs.html](codedocs.html) file found in the `doc` directory.
-
 Running Tests
 -------------
 From the project root directory run `gnustep-tests`
@@ -108,37 +113,35 @@ tests/Testing.h is not my code and comes from gnustep. It is a set of macros tha
 provide helpers to test functionality (such as exceptions being raised).
 It is included as it doesn't seem to live in a GNUStep include directory.
 
-
 Commenting
 -----------
 My general view on code commenting is that if you have to comment the code *implementation*
-to explain what you did or why you did it then the code isn't good enough. There are a few exceptions such as:
+to explain what you did or why you did it then the code isn't good enough. Rather
+than adding a comment, it is better to fix the code. There are of course a few exceptions such as:
 
 * Optimized Code
 * Code working around bugs/problems
 
-Hence my code has very few comments in the implementation (.m files) but has a quite heavily commented
-header files. This comes from experience that despite best intentions comments drift out of sync with
-the code which means that you become unsure which is correct (Is comment right and the code wrong or the other way around?).
+There is also the problem with comments that in effect it leads to maintaining two
+impelementations. One being the comments and the other being the code itself. Even with the
+best of intentions comments will drift out of sync with the code and when that happens it
+leads to confusion (Which is correct? The comments or the code?).
 
 This partly stems out of having worked on a large project (averaging 8 developers)
  with [Skyscanner](http://www.skyscanner.net) that had almost no comments,
 and which tended to mean that developers couldn't write messy code and "fix" it 
 by adding a comment and the functions tended to be cleaner. E.g. You couldn't get away with writing:
 
-    int dooFoo(int time);
+    int doFoo(int time);
 
 As it isn't clear what it returns and you know that it takes a time, but is it hours? decades?
 So you would would write:
 
-    TimeSpan* dooFoo(TimeSpan* time)
+    TimeSpan* doFoo(TimeSpan* time)
 
 Which adds type safety and removes ambiguity from the arguments without having to resort to comments
 
 While I haven't gone to that extreme in this project, where I have thought that comments may
 be needed in the implementation I have instead re-factored the code to attempt to make it more
-readable.
-
-
-
-
+readable. I also tried to avoid using primative types where possible and instead used objects, for
+example TimeSpan.

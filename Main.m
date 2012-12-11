@@ -56,9 +56,6 @@ CommandLineOptionParser* getOptionsParser(){
     [cmdLineParser addArgumentWithName:@"--seed" andShortName:@"-s" ofType:Integer];
     [cmdLineParser setHelpStringForArgumentKey:@"seed" help:@"The seed to initialize the random number generator with."];
 
-    [cmdLineParser addArgumentWithName:@"--strict" andShortName:@"-s" ofType:Integer];
-    [cmdLineParser setHelpStringForArgumentKey:@"strict" help:@"The seed to initialize the random number generator with."];
-
     [cmdLineParser addArgumentWithName:@"--wall" ofType:Boolean];
     [cmdLineParser setHelpStringForArgumentKey:@"wall" help:@"Treats script warnings as errors"];
 

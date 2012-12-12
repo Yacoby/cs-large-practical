@@ -1,0 +1,5 @@
+<map id="ReactionWithRate" name="ReactionWithRate">
+<area shape="rect" id="node2" href="$interfaceReactionDefinition.html" title="Immutable description of a reaction containing the Kinetic Constant and Formula." alt="" coords="71,101,199,131"/>
+<area shape="rect" id="node4" href="$interfaceKineticConstant.html" title="Immutable KineticConstant, which is used in the simulation calculations." alt="" coords="5,5,120,35"/>
+<area shape="rect" id="node6" href="$interfaceReactionEquation.html" title="Represents the components that make up the reaction." alt="" coords="144,5,269,35"/>
+</map>

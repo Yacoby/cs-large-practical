@@ -1,0 +1,7 @@
+<map id="writeToStream_WhenHasOneItemOfHistory_WritesHeadersAndThatItem" name="writeToStream_WhenHasOneItemOfHistory_WritesHeadersAndThatItem">
+<area shape="rect" id="node3" href="$interfaceSimulationConfiguration.html#ab49039136f5f50730a0e5b5700b31738" title="adds a molecule count" alt="" coords="289,5,468,51"/>
+<area shape="rect" id="node5" href="$interfaceRfcCsvWriter.html#aa985f1ebf94adc2ad213bbee6e82619a" title="&#45;[RfcCsvWriter writeToStream:]" alt="" coords="276,75,481,104"/>
+<area shape="rect" id="node7" href="$interfaceSimulationState.html#a34112bf87bee2bd2f7ef2e4755274277" title="&#45;[SimulationState timeSince\lSimulationStart]" alt="" coords="531,5,715,51"/>
+<area shape="rect" id="node9" href="$interfaceTimeSpan.html#a322fce81a9b46fa090015b58e5c328a0" title="&#45;[TimeSpan totalSeconds]" alt="" coords="536,75,709,104"/>
+<area shape="rect" id="node11" href="$interfaceSimulationState.html#a59bd83c67fcb7d910c42bee95c7def7e" title="&#45;[SimulationState molecule\lCounts]" alt="" coords="533,127,712,174"/>
+</map>

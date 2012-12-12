@@ -1,0 +1,4 @@
+<map id="&#45;[RfcCsvWriter initWithStream:simulationConfiguration:]" name="&#45;[RfcCsvWriter initWithStream:simulationConfiguration:]">
+<area shape="rect" id="node3" href="$interfaceSimulationConfiguration.html#a6904674f0fde3525f491e5f0766954c9" title="returns a list of molecule names (NSString*)" alt="" coords="267,5,435,51"/>
+<area shape="rect" id="node5" href="$interfaceRfcCsvWriter.html#a528647cb287a45e8462f5d6f2b358f8d" title="writes the csv headers (column headings)" alt="" coords="253,75,448,104"/>
+</map>

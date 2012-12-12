@@ -1,0 +1,4 @@
+<map id="AssignmentCsvWriter" name="AssignmentCsvWriter">
+<area shape="rect" id="node2" href="$interfaceRfcCsvWriter.html" title="Writer that follows RFC 4180 to provide a standard CSV file." alt="" coords="85,83,187,112"/>
+<area shape="rect" id="node4" href="$protocolSimulationOutputWriter-p.html" title="This is a generic writer that allows writing of the simulation to a stream." alt="" coords="5,5,179,35"/>
+</map>

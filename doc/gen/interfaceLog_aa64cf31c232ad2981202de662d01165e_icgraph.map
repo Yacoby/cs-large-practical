@@ -1,0 +1,8 @@
+<map id="&#45;[Log logLevel:withFormat:arguments:]" name="&#45;[Log logLevel:withFormat:arguments:]">
+<area shape="rect" id="node3" href="$interfaceLogger.html#a71be94c3f0e52d39955b671c0b4e83a1" title="sends the message to all Logs" alt="" coords="232,5,341,35"/>
+<area shape="rect" id="node5" href="$interfaceLogger.html#a0dedd99023df22359630d29623817080" title="+[Logger warn:]" alt="" coords="231,59,343,88"/>
+<area shape="rect" id="node7" href="$interfaceLogger.html#aaa71c486be702d856d398a33b0090941" title="+[Logger info:]" alt="" coords="233,112,340,141"/>
+<area shape="rect" id="node13" href="$interfaceLogger.html#aecb84889785b843e334a53e06c5e5627" title="+[Logger debug:]" alt="" coords="227,165,347,195"/>
+<area shape="rect" id="node9" href="$Main_8m.html#a657980ef6d952408f40b4e22ee1def07" title="gets the simulation configuration based on the given options" alt="" coords="395,85,573,115"/>
+<area shape="rect" id="node11" href="$Main_8m.html#afa5b5ab88b4062391a51a2e296501eed" title="gets an output writer from the command line options and configuration" alt="" coords="427,139,541,168"/>
+</map>

@@ -1,0 +1,14 @@
+<map id="+[ConfigurationTextSerilizer deserilize:error:]" name="+[ConfigurationTextSerilizer deserilize:error:]">
+<area shape="rect" id="node3" href="$interfaceConfigurationTextSerilizer.html#aab3944caa4f935ad3bf17285fab11a1e" title="removes everything after the first # symbol (including the # symbol)" alt="" coords="245,5,432,51"/>
+<area shape="rect" id="node5" href="$interfaceConfigurationTextSerilizer.html#a10aa525f1623aa761de40edc6675ae42" title="Removes all white space from the lhs and rhs of a string." alt="" coords="1067,185,1251,231"/>
+<area shape="rect" id="node7" href="$interfaceConfigurationTextSerilizer.html#ac29756313095fc2d5c7b532b2e585e50" title="Parses an assignment such as b = 5." alt="" coords="803,125,1008,189"/>
+<area shape="rect" id="node9" href="$interfaceConfigurationTextSerilizer.html#aac75bf9d7f8e488d7afee7cf39dd53cb" title="makes an error object for the ConfigurationSerilizer." alt="" coords="1065,305,1252,351"/>
+<area shape="rect" id="node12" href="$interfaceConfigurationTextSerilizer.html#a801cbca7755625f15e0e136e452e01a5" title="parses an equation such as f : A &#45;&gt; B" alt="" coords="237,296,440,360"/>
+<area shape="rect" id="node15" href="$interfaceConfigurationTextSerilizer.html#a50519a4b8c5d0c0e19f7f9cbc383b762" title="Parses the reaction components. E.g: A + B &#45;&gt; C." alt="" coords="525,435,709,499"/>
+<area shape="rect" id="node31" href="$interfaceSimulationConfiguration.html#a2d02f059d6a944ff08cb41383ed07b98" title="adds the reaction with the given key to the list of reactions" alt="" coords="488,365,747,411"/>
+<area shape="rect" id="node18" href="$interfaceConfigurationTextSerilizer.html#a904d3006316de2d501a90465093dfae1" title="+[ConfigurationTextSerilizer\l parsePartOfEquationComponents\l:error:]" alt="" coords="795,365,1016,429"/>
+<area shape="rect" id="node22" href="$interfaceReactionEquation.html#a614d6fec321b7c754bb2deadd7818b9c" title="&#45;[ReactionEquation\l setRequirements:]" alt="" coords="839,573,972,619"/>
+<area shape="rect" id="node26" href="$interfaceReactionEquation.html#aa46180d0b95d15f7a8935a46f048f1ff" title="&#45;[ReactionEquation\l setResult:]" alt="" coords="839,503,972,550"/>
+<area shape="rect" id="node24" href="$interfaceReactionEquation.html#acbc23395ba28d2553bb0da44ceefe2d8" title="&#45;[ReactionEquation\l requirements]" alt="" coords="1092,573,1225,619"/>
+<area shape="rect" id="node28" href="$interfaceReactionEquation.html#a4d89cdca2acc566c27386855d666eb54" title="&#45;[ReactionEquation\l result]" alt="" coords="1092,503,1225,550"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="&#45;[CommandLineOptionParser getKeyFromArgument:]" name="&#45;[CommandLineOptionParser getKeyFromArgument:]">
+<area shape="rect" id="node3" href="$interfaceCommandLineOptionParser.html#a0721019c9ae09d6d0da2d18f389b6055" title="Parses an optional argument and alters the argumentStack." alt="" coords="247,5,436,69"/>
+<area shape="rect" id="node5" href="$interfaceCommandLineOptionParser.html#a1c23280b7cc58a38d4e7584e8c3ef2f7" title="parses a single command line argument from the stack of available arguments" alt="" coords="487,5,748,69"/>
+<area shape="rect" id="node7" href="$interfaceCommandLineOptionParser.html#acc02ea84b30934a4d381b6643797a3c2" title="Parses all the arguments given into a dictionary." alt="" coords="799,5,1017,69"/>
+<area shape="rect" id="node9" href="$interfaceCommandLineOptionParser.html#a09638d46ad8eb8285d1680618a08b41e" title="parses the command line arguments passed in an array" alt="" coords="1068,14,1257,61"/>
+<area shape="rect" id="node11" href="$interfaceCommandLineOptionParser.html#a38bee3c522ca6177fe684e90e4bd83b9" title="same as parse:error: but does not record the details of any error that occurs" alt="" coords="1308,14,1497,61"/>
+</map>

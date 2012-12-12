@@ -1,0 +1,3 @@
+<map id="PassthroughAggregator" name="PassthroughAggregator">
+<area shape="rect" id="node2" href="$protocolSimulationOutputAggregator-p.html" title="Allows the aggregation of state changes before those changes are sent to the writer." alt="" coords="5,5,205,35"/>
+</map>

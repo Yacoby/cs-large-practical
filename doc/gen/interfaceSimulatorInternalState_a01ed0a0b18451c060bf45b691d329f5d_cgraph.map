@@ -1,0 +1,6 @@
+<map id="&#45;[SimulatorInternalState reactionForValue:]" name="&#45;[SimulatorInternalState reactionForValue:]">
+<area shape="rect" id="node3" href="$interfaceSimulatorInternalState.html#a828f64e61acad53b9c7b50e71326ec10" title="&#45;[SimulatorInternalState\l findReactionIndex:]" alt="" coords="215,39,372,86"/>
+<area shape="rect" id="node9" href="$interfaceReactionWithRate.html#ae17e3583df68d7b3f91ac71830ab0e15" title="&#45;[ReactionWithRate\l reaction]" alt="" coords="225,109,361,155"/>
+<area shape="rect" id="node5" href="$interfaceSimulatorInternalState.html#a2700e827a63efed9d0aeeffa101c64dc" title="&#45;[SimulatorInternalState\l findReactionIndexWithBinarySearch:]" alt="" coords="423,5,665,51"/>
+<area shape="rect" id="node7" href="$interfaceSimulatorInternalState.html#a7a72e6c9a2b4de4f4a441bd5a7135147" title="&#45;[SimulatorInternalState\l findReactionIndexWithLinearSearch:]" alt="" coords="423,74,665,121"/>
+</map>

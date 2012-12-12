@@ -1,0 +1,4 @@
+<map id="ReactionDefinition" name="ReactionDefinition">
+<area shape="rect" id="node2" href="$interfaceKineticConstant.html" title="Immutable KineticConstant, which is used in the simulation calculations." alt="" coords="5,5,120,35"/>
+<area shape="rect" id="node4" href="$interfaceReactionEquation.html" title="Represents the components that make up the reaction." alt="" coords="144,5,269,35"/>
+</map>

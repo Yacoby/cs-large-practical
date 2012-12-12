@@ -1,0 +1,23 @@
+<map id="getSimulationConfiguration" name="getSimulationConfiguration">
+<area shape="rect" id="node3" href="$interfaceCommandLineOptions.html#a302bb219308fc7ce395f038c43046186" title="retrieves an option with the given argument key" alt="" coords="245,89,403,135"/>
+<area shape="rect" id="node5" href="$interfaceLogger.html#aaa71c486be702d856d398a33b0090941" title="+[Logger info:]" alt="" coords="271,159,377,188"/>
+<area shape="rect" id="node19" href="$interfaceConfigurationTextSerilizer.html#afa4fbade4909da0b4257eac5b730510d" title="+[ConfigurationTextSerilizer\l deserilize:error:]" alt="" coords="232,413,416,459"/>
+<area shape="rect" id="node7" href="$interfaceLogger.html#a9f9acae64a5f26267526d16196ea23c8" title="gets the sole instance of this class if it exists" alt="" coords="500,105,631,135"/>
+<area shape="rect" id="node9" href="$interfaceLogger.html#a60e1706d05c9d0ff5f0e31febe20d26a" title="gets the global log level" alt="" coords="484,159,647,188"/>
+<area shape="rect" id="node11" href="$interfaceLogger.html#a8d9661d0a2d2a0839a747a7d9620606e" title="&#45;[Logger logs]" alt="" coords="515,212,616,241"/>
+<area shape="rect" id="node13" href="$interfaceLog.html#aa64cf31c232ad2981202de662d01165e" title="Write to a log file. This calls logLevelImpl if the message should be written." alt="" coords="480,35,651,82"/>
+<area shape="rect" id="node15" href="$interfaceLog.html#a2a9ff96048338da2d688a4d7784ad34a" title="&#45;[Log logLevel]" alt="" coords="791,75,897,104"/>
+<area shape="rect" id="node17" href="$interfaceLog.html#a81540f30468c3944baa3ee34cfe23e99" title="function that does the work of logging. Should be overwritten by subclasses" alt="" coords="763,5,925,51"/>
+<area shape="rect" id="node21" href="$interfaceConfigurationTextSerilizer.html#aab3944caa4f935ad3bf17285fab11a1e" title="removes everything after the first # symbol (including the # symbol)" alt="" coords="472,833,659,879"/>
+<area shape="rect" id="node23" href="$interfaceConfigurationTextSerilizer.html#a10aa525f1623aa761de40edc6675ae42" title="Removes all white space from the lhs and rhs of a string." alt="" coords="1293,341,1477,387"/>
+<area shape="rect" id="node25" href="$interfaceConfigurationTextSerilizer.html#ac29756313095fc2d5c7b532b2e585e50" title="Parses an assignment such as b = 5." alt="" coords="1029,367,1235,431"/>
+<area shape="rect" id="node27" href="$interfaceConfigurationTextSerilizer.html#aac75bf9d7f8e488d7afee7cf39dd53cb" title="makes an error object for the ConfigurationSerilizer." alt="" coords="1292,533,1479,579"/>
+<area shape="rect" id="node30" href="$interfaceConfigurationTextSerilizer.html#a801cbca7755625f15e0e136e452e01a5" title="parses an equation such as f : A &#45;&gt; B" alt="" coords="464,511,667,575"/>
+<area shape="rect" id="node33" href="$interfaceConfigurationTextSerilizer.html#a50519a4b8c5d0c0e19f7f9cbc383b762" title="Parses the reaction components. E.g: A + B &#45;&gt; C." alt="" coords="752,649,936,713"/>
+<area shape="rect" id="node49" href="$interfaceSimulationConfiguration.html#a2d02f059d6a944ff08cb41383ed07b98" title="adds the reaction with the given key to the list of reactions" alt="" coords="715,579,973,626"/>
+<area shape="rect" id="node36" href="$interfaceConfigurationTextSerilizer.html#a904d3006316de2d501a90465093dfae1" title="+[ConfigurationTextSerilizer\l parsePartOfEquationComponents\l:error:]" alt="" coords="1021,455,1243,519"/>
+<area shape="rect" id="node40" href="$interfaceReactionEquation.html#a614d6fec321b7c754bb2deadd7818b9c" title="&#45;[ReactionEquation\l setRequirements:]" alt="" coords="1065,713,1199,759"/>
+<area shape="rect" id="node44" href="$interfaceReactionEquation.html#aa46180d0b95d15f7a8935a46f048f1ff" title="&#45;[ReactionEquation\l setResult:]" alt="" coords="1065,643,1199,690"/>
+<area shape="rect" id="node42" href="$interfaceReactionEquation.html#acbc23395ba28d2553bb0da44ceefe2d8" title="&#45;[ReactionEquation\l requirements]" alt="" coords="1319,713,1452,759"/>
+<area shape="rect" id="node46" href="$interfaceReactionEquation.html#a4d89cdca2acc566c27386855d666eb54" title="&#45;[ReactionEquation\l result]" alt="" coords="1319,643,1452,690"/>
+</map>

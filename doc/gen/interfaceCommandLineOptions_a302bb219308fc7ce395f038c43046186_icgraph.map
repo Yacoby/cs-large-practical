@@ -1,0 +1,7 @@
+<map id="&#45;[CommandLineOptions getOptionWithName:]" name="&#45;[CommandLineOptions getOptionWithName:]">
+<area shape="rect" id="node3" href="$Main_8m.html#a657980ef6d952408f40b4e22ee1def07" title="gets the simulation configuration based on the given options" alt="" coords="220,5,399,35"/>
+<area shape="rect" id="node5" href="$Main_8m.html#afa5b5ab88b4062391a51a2e296501eed" title="gets an output writer from the command line options and configuration" alt="" coords="252,59,367,88"/>
+<area shape="rect" id="node7" href="$Main_8m.html#a2ac205cdee8754ecb2e38db3281ddef5" title="builds an output aggregator" alt="" coords="239,112,380,141"/>
+<area shape="rect" id="node9" href="$Main_8m.html#ab22afe2d0c9f6ca7a6beb2f0a9eedb50" title="gets a random number generator" alt="" coords="213,165,405,195"/>
+<area shape="rect" id="node11" href="$Main_8m.html#a5bb13c29bf6a6f1d7e1548ac8a611439" title="builds loggers based on the settings passed in via the CommandLineOptions" alt="" coords="263,219,356,248"/>
+</map>

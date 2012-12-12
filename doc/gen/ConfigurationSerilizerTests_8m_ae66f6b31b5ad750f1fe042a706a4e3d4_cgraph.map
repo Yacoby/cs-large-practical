@@ -1,0 +1,34 @@
+<map id="main" name="main">
+<area shape="rect" id="node3" href="$ConfigurationSerilizerTests_8m.html#a2d1027bea985f2467897fe0fea28a02e" title="testDeserilize_WhenHasTime\l_ParsesTimeCorrectly" alt="" coords="127,532,321,579"/>
+<area shape="rect" id="node40" href="$ConfigurationSerilizerTests_8m.html#af2f51956a20705a436cf34c5d9f36227" title="testDeserilize_WhenHasComment\l_DoesNotAffectParsing" alt="" coords="112,601,336,648"/>
+<area shape="rect" id="node43" href="$ConfigurationSerilizerTests_8m.html#a95d42469124439bdab41492895b8fca5" title="testDeserilize_WhenHasTime\lAndKineticConstant_ParsesConstant\lCorrectly" alt="" coords="105,306,343,370"/>
+<area shape="rect" id="node49" href="$ConfigurationSerilizerTests_8m.html#a4379ae9473a36fde9f85fcc26b68fa48" title="testDeserilize_WhenHasBasic\lReaction_ParsesReactionCorrectly" alt="" coords="111,463,337,509"/>
+<area shape="rect" id="node53" href="$ConfigurationSerilizerTests_8m.html#aac3d3184ead805d5b06846554ac6d0d5" title="testDeserilize_WhenHasDestructive\lReaction_ParsesReactionCorrectly" alt="" coords="107,393,341,440"/>
+<area shape="rect" id="node57" href="$ConfigurationSerilizerTests_8m.html#a46fbea26f807ab68e28cb809c34e5599" title="testDeserilize_WhenHasMolecule\lCount_ParsesCorrectly" alt="" coords="115,671,333,717"/>
+<area shape="rect" id="node60" href="$ConfigurationSerilizerTests_8m.html#a78b1ee8f5e4ad1135b020202eb4a110a" title="testParseEquationComponents\l_WhenHasBasicReaction_ParsesCorrectly" alt="" coords="652,135,924,181"/>
+<area shape="rect" id="node63" href="$ConfigurationSerilizerTests_8m.html#ad17ff2051528bd62b26d14f570a4923e" title="testParseEquationComponents\l_WhenHasDesctuctiveReaction\l_ParsesCorrectly" alt="" coords="393,186,601,250"/>
+<area shape="rect" id="node66" href="$ConfigurationSerilizerTests_8m.html#ae05166e351633bb62512bba5c9bd000e" title="testParseEquationComponents\l_WhenHasCreativeReaction\l_ParsesCorrectly" alt="" coords="687,255,889,319"/>
+<area shape="rect" id="node69" href="$ConfigurationSerilizerTests_8m.html#af9815d4de5ac5315fe90895224051fe5" title="testParseEquationComponents\l_WhenHasTwoRequirements\l_ParsesCorrectly" alt="" coords="973,66,1176,130"/>
+<area shape="rect" id="node72" href="$ConfigurationSerilizerTests_8m.html#ab51fae76091db6d1d746d10ab0a1a48c" title="testDeserilize_WhenHasTwo\lEquals_Error" alt="" coords="401,1067,593,1113"/>
+<area shape="rect" id="node75" href="$ConfigurationSerilizerTests_8m.html#aa35f595e0005ae090252c378e6367f90" title="testDeserilize_WhenHasInvalid\lFunctionBody_Error" alt="" coords="395,675,600,721"/>
+<area shape="rect" id="node78" href="$ConfigurationSerilizerTests_8m.html#a4c72dddd6e30fc92e5da7f6bf4db2b3f" title="testDeserilize_WhenHasInvalid\lIdentifier_Error" alt="" coords="395,744,600,791"/>
+<area shape="rect" id="node81" href="$ConfigurationSerilizerTests_8m.html#aa21f8114406fd3864d3430af7141486b" title="testDeserilize_WhenHasInvalid\lNumber_Error" alt="" coords="395,813,600,860"/>
+<area shape="rect" id="node84" href="$ConfigurationSerilizerTests_8m.html#a4478c970ecae6e4dfffd039dd2158b70" title="testDeserilize_WhenHasValid\lSFNumber_NoError" alt="" coords="400,883,595,929"/>
+<area shape="rect" id="node87" href="$ConfigurationSerilizerTests_8m.html#a38342cd562ad79e19923d95930baee55" title="testDeserilize_WhenHasSFTime\l_NoError" alt="" coords="117,943,331,989"/>
+<area shape="rect" id="node90" href="$ConfigurationSerilizerTests_8m.html#a2e3da3e6dcad49ae3ffecb029416e997" title="testDeserilize_WhenHasNegative\lTime_Error" alt="" coords="115,1012,333,1059"/>
+<area shape="rect" id="node5" href="$interfaceConfigurationTextSerilizer.html#ad3ff0d39003c16fefb1b002801f1c7b1" title="+[ConfigurationTextSerilizer\l deserilize:]" alt="" coords="405,532,589,579"/>
+<area shape="rect" id="node7" href="$interfaceConfigurationTextSerilizer.html#afa4fbade4909da0b4257eac5b730510d" title="+[ConfigurationTextSerilizer\l deserilize:error:]" alt="" coords="696,740,880,787"/>
+<area shape="rect" id="node9" href="$interfaceConfigurationTextSerilizer.html#aab3944caa4f935ad3bf17285fab11a1e" title="removes everything after the first # symbol (including the # symbol)" alt="" coords="981,579,1168,625"/>
+<area shape="rect" id="node11" href="$interfaceConfigurationTextSerilizer.html#a10aa525f1623aa761de40edc6675ae42" title="Removes all white space from the lhs and rhs of a string." alt="" coords="1803,629,1987,676"/>
+<area shape="rect" id="node13" href="$interfaceConfigurationTextSerilizer.html#ac29756313095fc2d5c7b532b2e585e50" title="Parses an assignment such as b = 5." alt="" coords="1539,655,1744,719"/>
+<area shape="rect" id="node15" href="$interfaceConfigurationTextSerilizer.html#aac75bf9d7f8e488d7afee7cf39dd53cb" title="makes an error object for the ConfigurationSerilizer." alt="" coords="1801,493,1988,540"/>
+<area shape="rect" id="node18" href="$interfaceConfigurationTextSerilizer.html#a801cbca7755625f15e0e136e452e01a5" title="parses an equation such as f : A &#45;&gt; B" alt="" coords="973,485,1176,549"/>
+<area shape="rect" id="node21" href="$interfaceConfigurationTextSerilizer.html#a50519a4b8c5d0c0e19f7f9cbc383b762" title="Parses the reaction components. E.g: A + B &#45;&gt; C." alt="" coords="1261,255,1445,319"/>
+<area shape="rect" id="node37" href="$interfaceSimulationConfiguration.html#a2d02f059d6a944ff08cb41383ed07b98" title="adds the reaction with the given key to the list of reactions" alt="" coords="1224,389,1483,436"/>
+<area shape="rect" id="node24" href="$interfaceConfigurationTextSerilizer.html#a904d3006316de2d501a90465093dfae1" title="+[ConfigurationTextSerilizer\l parsePartOfEquationComponents\l:error:]" alt="" coords="1531,415,1752,479"/>
+<area shape="rect" id="node28" href="$interfaceReactionEquation.html#a614d6fec321b7c754bb2deadd7818b9c" title="&#45;[ReactionEquation\l setRequirements:]" alt="" coords="1575,269,1708,316"/>
+<area shape="rect" id="node32" href="$interfaceReactionEquation.html#aa46180d0b95d15f7a8935a46f048f1ff" title="&#45;[ReactionEquation\l setResult:]" alt="" coords="1575,200,1708,247"/>
+<area shape="rect" id="node30" href="$interfaceReactionEquation.html#acbc23395ba28d2553bb0da44ceefe2d8" title="&#45;[ReactionEquation\l requirements]" alt="" coords="1828,269,1961,316"/>
+<area shape="rect" id="node34" href="$interfaceReactionEquation.html#a4d89cdca2acc566c27386855d666eb54" title="&#45;[ReactionEquation\l result]" alt="" coords="1828,200,1961,247"/>
+<area shape="rect" id="node47" href="$interfaceSimulationConfiguration.html#a42c1962e5645882bf4a0b473adc28b57" title="generates a reaction with the given key." alt="" coords="413,393,581,440"/>
+</map>

@@ -1,0 +1,57 @@
+#A totally made up system that is slightly larger than everything else
+
+t = 200
+
+A = 100
+B = 100
+C = 0
+D = 0
+
+E = 0
+F = 100 
+
+G = 0
+H = 100
+I = 1000
+J = 0
+K = 0
+L = 0
+M = 0
+N = 0
+
+
+a = 1
+a : A + B -> C + D
+
+b = 1
+b : C + B -> D
+
+c = 1
+c : A -> B
+
+e = 1
+e : F -> A
+
+f = 1
+f : F -> B
+
+g = 0.01
+g : F -> G
+
+h = 0.01
+h : H -> G
+
+i = 1
+i : I -> J
+
+j = 1
+j : J -> K
+
+k = 1
+k : K -> L
+
+l = 1
+l : L -> M
+
+m = 1
+m : M -> N

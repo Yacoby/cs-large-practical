@@ -1,0 +1,19 @@
+<map id="main" name="main">
+<area shape="rect" id="node3" href="$LoggerTests_8m.html#ab9d7a8c70a38e62de116b9cc7ad7f242" title="warn_WhenCallsWarn\l_PassesMsgToLog" alt="" coords="148,53,300,99"/>
+<area shape="rect" id="node21" href="$LoggerTests_8m.html#aabe89587d9721bd394df65da0439c1a3" title="warn_WhenCallsWarnWithFromat\l_FormatsStringAndPassesMsgToLog" alt="" coords="105,122,343,169"/>
+<area shape="rect" id="node25" href="$LoggerTests_8m.html#a555ff8be0ebb49f9c87de66ef7c89456" title="warn_WhenHasGlobalLevelSet\lToError_DoesNothing" alt="" coords="123,191,325,238"/>
+<area shape="rect" id="node31" href="$LoggerTests_8m.html#a2e2c74d9cb95a1e8b01e84d2b2121794" title="instance_WhenHasNoInstance\l_ReturnsNil" alt="" coords="123,261,325,307"/>
+<area shape="rect" id="node33" href="$LoggerTests_8m.html#ab61e3a69b3a534adbd8f8b38c82c4fb6" title="instance_WhenLoggerCreated\l_ReturnsThatLogger" alt="" coords="125,330,323,377"/>
+<area shape="rect" id="node35" href="$LoggerTests_8m.html#a373ffa8a58b3b30c0ed09e4dd143ccf2" title="logLevelFromString\l_whenHasValidWarnString\l_ReturnsLLWARN" alt="" coords="135,400,313,464"/>
+<area shape="rect" id="node37" href="$LoggerTests_8m.html#abcc65a669ac1fbda51cd3191f80f64fa" title="logLevelFromString\l_whenHasValidWarnStringInOther\lCase_ReturnsLLWARN" alt="" coords="113,488,335,552"/>
+<area shape="rect" id="node39" href="$LoggerTests_8m.html#a95b92809ce3d61f62ca7af7023af506a" title="logLevelFromString\l_whenHasInvalidString\l_ReturnsLLUNKNOWN" alt="" coords="144,576,304,640"/>
+<area shape="rect" id="node5" href="$interfaceLogger.html#a3b08cc5aa34b19336c58dd012332196c" title="Adds a log output to the list of logs to receive log messages." alt="" coords="425,139,548,168"/>
+<area shape="rect" id="node7" href="$interfaceLogger.html#a0dedd99023df22359630d29623817080" title="+[Logger warn:]" alt="" coords="431,85,543,115"/>
+<area shape="rect" id="node9" href="$interfaceLogger.html#a9f9acae64a5f26267526d16196ea23c8" title="gets the sole instance of this class if it exists" alt="" coords="651,5,781,35"/>
+<area shape="rect" id="node11" href="$interfaceLogger.html#a60e1706d05c9d0ff5f0e31febe20d26a" title="gets the global log level" alt="" coords="635,59,797,88"/>
+<area shape="rect" id="node13" href="$interfaceLogger.html#a8d9661d0a2d2a0839a747a7d9620606e" title="&#45;[Logger logs]" alt="" coords="665,112,767,141"/>
+<area shape="rect" id="node15" href="$interfaceLog.html#aa64cf31c232ad2981202de662d01165e" title="Write to a log file. This calls logLevelImpl if the message should be written." alt="" coords="631,165,801,211"/>
+<area shape="rect" id="node17" href="$interfaceLog.html#a2a9ff96048338da2d688a4d7784ad34a" title="&#45;[Log logLevel]" alt="" coords="880,143,987,172"/>
+<area shape="rect" id="node19" href="$interfaceLog.html#a81540f30468c3944baa3ee34cfe23e99" title="function that does the work of logging. Should be overwritten by subclasses" alt="" coords="852,195,1015,242"/>
+<area shape="rect" id="node27" href="$interfaceLogger.html#abe9816aaea27d6dc7cee3cd0e0ee80f7" title="sets the global log level" alt="" coords="393,200,580,229"/>
+</map>

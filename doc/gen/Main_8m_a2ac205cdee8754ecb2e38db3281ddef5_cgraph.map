@@ -1,0 +1,6 @@
+<map id="getOutputAggregator" name="getOutputAggregator">
+<area shape="rect" id="node3" href="$interfaceFactory.html#a4f4379b4a67858c658d11b751633dcc7" title="get a class from a string if the class is valid" alt="" coords="197,23,371,70"/>
+<area shape="rect" id="node9" href="$interfaceCommandLineOptions.html#a302bb219308fc7ce395f038c43046186" title="retrieves an option with the given argument key" alt="" coords="205,93,363,139"/>
+<area shape="rect" id="node5" href="$interfaceFactory.html#a723702a4a7fd24a8d4136efca8d3c0e8" title="&#45;[Factory classFromString:]" alt="" coords="419,5,600,35"/>
+<area shape="rect" id="node7" href="$interfaceFactory.html#acea4494cb81c2ecc05fc23abf4536410" title="&#45;[Factory listClasses]" alt="" coords="436,59,583,88"/>
+</map>

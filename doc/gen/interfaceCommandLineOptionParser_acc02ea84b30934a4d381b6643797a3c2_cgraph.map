@@ -1,0 +1,11 @@
+<map id="&#45;[CommandLineOptionParser parseAllCommandLineArguments:error:]" name="&#45;[CommandLineOptionParser parseAllCommandLineArguments:error:]">
+<area shape="rect" id="node3" href="$interfaceCommandLineOptionParser.html#a1c23280b7cc58a38d4e7584e8c3ef2f7" title="parses a single command line argument from the stack of available arguments and pops it off the stack..." alt="" coords="276,275,537,339"/>
+<area shape="rect" id="node14" href="$interfaceCommandLineKeyValue.html#a9286d8f3922ce4762148051fd6e9ce76" title="&#45;[CommandLineKeyValue key]" alt="" coords="589,387,787,416"/>
+<area shape="rect" id="node16" href="$interfaceCommandLineKeyValue.html#ae080e8a2f1a713eecf9441bb55809b3f" title="&#45;[CommandLineKeyValue\l value]" alt="" coords="603,439,773,486"/>
+<area shape="rect" id="node5" href="$interfaceCommandLineOptionParser.html#a0721019c9ae09d6d0da2d18f389b6055" title="Parses an optional argument and pops everything parsed off the argumentStack." alt="" coords="593,75,783,139"/>
+<area shape="rect" id="node9" href="$interfaceCommandLineOptionParser.html#a66833ff60e65ebf4996f2af121016984" title="helper function to make a new NSError object with the given description" alt="" coords="839,179,1028,226"/>
+<area shape="rect" id="node11" href="$interfaceCommandLineOptionParser.html#ad13a033f092006571cacb2a39990a82c" title="Parses a positional argument and alters the remaingPositionalArgs." alt="" coords="587,162,789,243"/>
+<area shape="rect" id="node18" href="$interfaceCommandLineOptionParser.html#ad9cdeac489ce69631be37197c49d78d0" title="Converts the string str to the requested type." alt="" coords="593,317,783,363"/>
+<area shape="rect" id="node20" href="$interfaceCommandLineOptionParser.html#a73b5a6463dd8e71d6594341f68268bba" title="gets the type of the argument" alt="" coords="593,5,783,51"/>
+<area shape="rect" id="node7" href="$interfaceCommandLineOptionParser.html#a18758b9c9950532b340b908ef00117b5" title="Looks up the argument name in the relevant dictionary (based on the prefix) and returns the key..." alt="" coords="839,83,1028,130"/>
+</map>

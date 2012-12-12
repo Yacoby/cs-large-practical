@@ -1,0 +1,4 @@
+<map id="&#45;[CommandLineOptionParser parseOptionalArgument:withRemainingStack:error:]" name="&#45;[CommandLineOptionParser parseOptionalArgument:withRemainingStack:error:]">
+<area shape="rect" id="node3" href="$interfaceCommandLineOptionParser.html#a18758b9c9950532b340b908ef00117b5" title="Looks up the argument name in the relevant dictionary (based on the prefix) and returns the key..." alt="" coords="247,5,436,51"/>
+<area shape="rect" id="node5" href="$interfaceCommandLineOptionParser.html#a66833ff60e65ebf4996f2af121016984" title="helper function to make a new NSError object with the given description" alt="" coords="247,74,436,121"/>
+</map>

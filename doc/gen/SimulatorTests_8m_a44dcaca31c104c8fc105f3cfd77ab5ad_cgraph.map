@@ -1,0 +1,13 @@
+<map id="dirty_WhenHasTwoBasicReactions_SetsBothAsDirty" name="dirty_WhenHasTwoBasicReactions_SetsBothAsDirty">
+<area shape="rect" id="node3" href="$interfaceReactionEquation.html#a614d6fec321b7c754bb2deadd7818b9c" title="&#45;[ReactionEquation\l setRequirements:]" alt="" coords="303,5,436,51"/>
+<area shape="rect" id="node7" href="$interfaceReactionEquation.html#aa46180d0b95d15f7a8935a46f048f1ff" title="&#45;[ReactionEquation\l setResult:]" alt="" coords="303,74,436,121"/>
+<area shape="rect" id="node11" href="$interfaceSimulatorInternalState.html#ab1560989febc5f5f79def98f38c5d5fd" title="adds a reaction to the internal state" alt="" coords="291,143,448,190"/>
+<area shape="rect" id="node13" href="$interfaceSimulatorInternalState.html#ac2a4f3f610f6e10d69a416381b34d175" title="builds the graph of all the dependencies of the current reactions." alt="" coords="283,213,456,259"/>
+<area shape="rect" id="node17" href="$interfaceSimulatorInternalState.html#a09e93cdf6fbdaa55d480f620b8d7e71c" title="ensures all rates are up to date, using state to update them if required" alt="" coords="291,282,448,329"/>
+<area shape="rect" id="node24" href="$interfaceSimulatorInternalState.html#aef79550604af1477e214ed4f0b25f0a7" title="sets all Reaction that use this reaction as being &quot;dirty&quot; and needing updating" alt="" coords="291,351,448,398"/>
+<area shape="rect" id="node5" href="$interfaceReactionEquation.html#acbc23395ba28d2553bb0da44ceefe2d8" title="&#45;[ReactionEquation\l requirements]" alt="" coords="507,5,640,51"/>
+<area shape="rect" id="node9" href="$interfaceReactionEquation.html#a4d89cdca2acc566c27386855d666eb54" title="&#45;[ReactionEquation\l result]" alt="" coords="507,74,640,121"/>
+<area shape="rect" id="node15" href="$interfaceReactionWithRate.html#ae17e3583df68d7b3f91ac71830ab0e15" title="&#45;[ReactionWithRate\l reaction]" alt="" coords="505,213,641,259"/>
+<area shape="rect" id="node19" href="$interfaceReactionWithRate.html#a8da829f37d00ece86f481e8a45902c0f" title="&#45;[ReactionWithRate\l rate]" alt="" coords="692,309,828,355"/>
+<area shape="rect" id="node21" href="$interfaceReactionWithRate.html#a7a70d5afcf0bcd54d697e184b576ac74" title="&#45;[ReactionWithRate\l setPartialSum:]" alt="" coords="505,338,641,385"/>
+</map>

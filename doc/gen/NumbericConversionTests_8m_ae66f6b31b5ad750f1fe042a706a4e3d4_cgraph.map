@@ -1,0 +1,12 @@
+<map id="main" name="main">
+<area shape="rect" id="node3" href="$NumbericConversionTests_8m.html#a360f86391589eab7f8a87f72dcc92624" title="decimalWithString_WhenHas\lInvalidDecimal_ReturnsNil" alt="" coords="113,5,305,51"/>
+<area shape="rect" id="node5" href="$NumbericConversionTests_8m.html#af4cc8f748dc6679b41676d316331577e" title="decimalWithString_WhenHas\lPartInvalidDecimal_ReturnsNil" alt="" coords="109,74,309,121"/>
+<area shape="rect" id="node7" href="$NumbericConversionTests_8m.html#a3d81e3352db52a96d4cee1c625551789" title="decimalWithString_WhenHas\lSFNotation_Parses" alt="" coords="113,143,305,190"/>
+<area shape="rect" id="node11" href="$NumbericConversionTests_8m.html#aae8a57054797328a94a8c76c74314be9" title="decimalWithString_WhenHas\lNegativeNumber_Parses" alt="" coords="113,213,305,259"/>
+<area shape="rect" id="node14" href="$NumbericConversionTests_8m.html#a25cabe6c1f0ab20937b7b7622691fb07" title="intWithString_WhenHasBasic\lNumber_ShouldParse" alt="" coords="112,282,307,329"/>
+<area shape="rect" id="node18" href="$NumbericConversionTests_8m.html#abde0c84dce12716cca15c8e3ea570881" title="intWithString_WhenHasDecimal\lNumber_ReturnsNil" alt="" coords="104,351,315,398"/>
+<area shape="rect" id="node21" href="$NumbericConversionTests_8m.html#a18fe2f3cabe5c078fc86eed2641d6463" title="intWithString_WhenHasDecimal\lExpNumber_ReturnsNil" alt="" coords="104,421,315,467"/>
+<area shape="rect" id="node24" href="$NumbericConversionTests_8m.html#a62c76ae48f1a676dcff9e8d903cdf1d2" title="intWithString_WhenHasExp\lNumber_ReturnsNil" alt="" coords="117,490,301,537"/>
+<area shape="rect" id="node9" href="$interfaceNumericConversion.html#a5eadec17e4ed128c35ba79cabfd6c224" title="Parses a decimal from a string." alt="" coords="363,178,512,225"/>
+<area shape="rect" id="node16" href="$interfaceNumericConversion.html#a817f5f062e4e0581d534ebe431c57c43" title="Parses a integer from a string." alt="" coords="363,386,512,433"/>
+</map>

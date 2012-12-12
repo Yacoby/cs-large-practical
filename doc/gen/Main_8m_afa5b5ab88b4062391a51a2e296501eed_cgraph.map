@@ -1,0 +1,13 @@
+<map id="getOutputWriter" name="getOutputWriter">
+<area shape="rect" id="node3" href="$interfaceCommandLineOptions.html#a302bb219308fc7ce395f038c43046186" title="retrieves an option with the given argument key" alt="" coords="176,42,333,89"/>
+<area shape="rect" id="node5" href="$interfaceLogger.html#aaa71c486be702d856d398a33b0090941" title="+[Logger info:]" alt="" coords="201,112,308,141"/>
+<area shape="rect" id="node19" href="$interfaceFactory.html#a4f4379b4a67858c658d11b751633dcc7" title="get a class from a string if the class is valid" alt="" coords="168,226,341,273"/>
+<area shape="rect" id="node7" href="$interfaceLogger.html#a9f9acae64a5f26267526d16196ea23c8" title="gets the sole instance of this class if it exists" alt="" coords="415,5,545,35"/>
+<area shape="rect" id="node9" href="$interfaceLogger.html#a60e1706d05c9d0ff5f0e31febe20d26a" title="gets the global log level" alt="" coords="399,59,561,88"/>
+<area shape="rect" id="node11" href="$interfaceLogger.html#a8d9661d0a2d2a0839a747a7d9620606e" title="&#45;[Logger logs]" alt="" coords="429,112,531,141"/>
+<area shape="rect" id="node13" href="$interfaceLog.html#aa64cf31c232ad2981202de662d01165e" title="Write to a log file. This calls logLevelImpl if the message should be written." alt="" coords="395,165,565,211"/>
+<area shape="rect" id="node15" href="$interfaceLog.html#a2a9ff96048338da2d688a4d7784ad34a" title="&#45;[Log logLevel]" alt="" coords="648,143,755,172"/>
+<area shape="rect" id="node17" href="$interfaceLog.html#a81540f30468c3944baa3ee34cfe23e99" title="function that does the work of logging. Should be overwritten by subclasses" alt="" coords="620,195,783,242"/>
+<area shape="rect" id="node21" href="$interfaceFactory.html#a723702a4a7fd24a8d4136efca8d3c0e8" title="&#45;[Factory classFromString:]" alt="" coords="389,235,571,264"/>
+<area shape="rect" id="node23" href="$interfaceFactory.html#acea4494cb81c2ecc05fc23abf4536410" title="&#45;[Factory listClasses]" alt="" coords="407,288,553,317"/>
+</map>

@@ -1,0 +1,14 @@
+<map id="Simulator.m" name="Simulator.m">
+<area shape="rect" id="node3" href="$Simulator_8h.html" title="Simulator.h" alt="" coords="389,83,477,112"/>
+<area shape="rect" id="node12" href="$ReactionDefinition_8h.html" title="ReactionDefinition.h" alt="" coords="93,392,232,421"/>
+<area shape="rect" id="node41" href="$Logger_8h.html" title="Logger.h" alt="" coords="808,392,880,421"/>
+<area shape="rect" id="node5" href="$SimulationConfiguration_8h.html" title="SimulationConfiguration.h" alt="" coords="259,315,429,344"/>
+<area shape="rect" id="node15" href="$SimulationState_8h.html" title="SimulationState.h" alt="" coords="404,469,529,499"/>
+<area shape="rect" id="node24" href="$SimulationOutputAggregator_8h.html" title="SimulationOutputAggregator.h" alt="" coords="547,160,741,189"/>
+<area shape="rect" id="node36" href="$Random_8h.html" title="Random.h" alt="" coords="347,237,429,267"/>
+<area shape="rect" id="node9" href="$KineticConstant_8h.html" title="KineticConstant.h" alt="" coords="147,469,272,499"/>
+<area shape="rect" id="node17" href="$TimeSpan_8h.html" title="TimeSpan.h" alt="" coords="467,547,557,576"/>
+<area shape="rect" id="node26" href="$SimulationOutputWriter_8h.html" title="SimulationOutputWriter.h" alt="" coords="504,237,672,267"/>
+<area shape="rect" id="node30" href="$OutputStream_8h.html" title="OutputStream.h" alt="" coords="632,547,747,576"/>
+<area shape="rect" id="node44" href="$Log_8h.html" title="Log.h" alt="" coords="808,469,861,499"/>
+</map>

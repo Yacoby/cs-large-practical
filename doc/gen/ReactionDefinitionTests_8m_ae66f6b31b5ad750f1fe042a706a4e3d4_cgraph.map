@@ -1,0 +1,16 @@
+<map id="main" name="main">
+<area shape="rect" id="node3" href="$ReactionDefinitionTests_8m.html#a2c4888a604c7b43d0c40a99eab69eee4" title="reactionRate_WhenHasSingle\lReq_RateEqualsSimpleMult" alt="" coords="131,143,328,190"/>
+<area shape="rect" id="node13" href="$ReactionDefinitionTests_8m.html#a7ee277cd6e14476d4339ee059b486357" title="reactionRate_WhenHasNonDuplicate\l_RateEqualsSimpleMult" alt="" coords="109,5,349,51"/>
+<area shape="rect" id="node17" href="$ReactionDefinitionTests_8m.html#a2ec1202a1b1d6f043bd2fd9bc6c9ead2" title="reactionRate_WhenHasDuplicate\l_RateEqualsComplexMult" alt="" coords="121,74,337,121"/>
+<area shape="rect" id="node21" href="$ReactionDefinitionTests_8m.html#a00daa165cc2686f831dcb67cd896cefb" title="applyReactonToCounts\l_WhenHasDestructiveReaction\l_AltersCountsCorrectly" alt="" coords="127,213,332,277"/>
+<area shape="rect" id="node33" href="$ReactionDefinitionTests_8m.html#a4eefbb50c7b8250513e3beb1843d94e7" title="applyReactonToCounts\l_WhenHasReactionWithMultiple\lReqAndResults_AltersCountsCorrectly" alt="" coords="104,301,355,365"/>
+<area shape="rect" id="node38" href="$ReactionDefinitionTests_8m.html#a882c7d9bb124367fb422e8bb753e1fec" title="applyReactonToCounts\l_WhenHasCreativeReaction\l_AltersCountsCorrectly" alt="" coords="136,389,323,453"/>
+<area shape="rect" id="node43" href="$ReactionDefinitionTests_8m.html#abe1c7bbbff46fec7c6fd3e437c104312" title="applyReactonToCounts\l_WhenHasReactionWithDuplicates\l_AltersCountsCorrectly" alt="" coords="116,477,343,541"/>
+<area shape="rect" id="node5" href="$interfaceReactionEquation.html#a614d6fec321b7c754bb2deadd7818b9c" title="&#45;[ReactionEquation\l setRequirements:]" alt="" coords="424,251,557,298"/>
+<area shape="rect" id="node9" href="$interfaceReactionEquation.html#aa46180d0b95d15f7a8935a46f048f1ff" title="&#45;[ReactionEquation\l setResult:]" alt="" coords="424,182,557,229"/>
+<area shape="rect" id="node7" href="$interfaceReactionEquation.html#acbc23395ba28d2553bb0da44ceefe2d8" title="&#45;[ReactionEquation\l requirements]" alt="" coords="813,347,947,394"/>
+<area shape="rect" id="node11" href="$interfaceReactionEquation.html#a4d89cdca2acc566c27386855d666eb54" title="&#45;[ReactionEquation\l result]" alt="" coords="813,221,947,267"/>
+<area shape="rect" id="node25" href="$interfaceReactionDefinition.html#aa4745594030644d3d8254610c6404532" title="Applies the current reaction to the molecule counts, altering them." alt="" coords="404,369,577,415"/>
+<area shape="rect" id="node27" href="$interfaceReactionDefinition.html#a7701a8846f4738a9837699bb1c051426" title="&#45;[ReactionDefinition\l requirements]" alt="" coords="628,375,764,422"/>
+<area shape="rect" id="node30" href="$interfaceReactionDefinition.html#ab480e7140c29f45be1e04edb812e8e87" title="&#45;[ReactionDefinition\l result]" alt="" coords="628,306,764,353"/>
+</map>

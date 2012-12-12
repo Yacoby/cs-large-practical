@@ -1,0 +1,13 @@
+<map id="main" name="main">
+<area shape="rect" id="node3" href="$interfaceExactHundredMsTests.html#a9d3afa478a4b61d380570a715f1d0093" title="&#45;[ExactHundredMsTests\l setup]" alt="" coords="149,5,312,51"/>
+<area shape="rect" id="node5" href="$interfaceExactHundredMsTests.html#a119bf1b2428ceb716b970ed2b2d81e23" title="&#45;[ExactHundredMsTests\l exactMsStateChanged\l_WhenHasOneStateChange\l_WritesOneOutput]" alt="" coords="137,178,324,259"/>
+<area shape="rect" id="node22" href="$interfaceExactHundredMsTests.html#ac95d322b92d4221b9947fdb819b2ffe6" title="&#45;[ExactHundredMsTests\l exactMsStateChanged\l_WhenHasTwoStateChangesIn100ms\l_WritesTwoOutputs]" alt="" coords="108,282,353,363"/>
+<area shape="rect" id="node27" href="$interfaceExactHundredMsTests.html#ab6c35785e95d1a7964673572d1974120" title="&#45;[ExactHundredMsTests\l exactMsStateChanged\l_WhenHasThreeStateChangesIn100ms\l_WritesTwoOutputs]" alt="" coords="104,386,357,467"/>
+<area shape="rect" id="node32" href="$interfaceExactHundredMsTests.html#a52344730cc8ff15112e7a9c831eb6029" title="&#45;[ExactHundredMsTests\l exactMsStateChanged\l_WhenHasFourStateChanges\l_WritesThreeOutputs]" alt="" coords="133,74,328,155"/>
+<area shape="rect" id="node7" href="$interfaceExactHundredMsAggregator.html#aba3071cd90481d8550b8624489b3b118" title="writes the mLastState from mLastLogTime until the current state" alt="" coords="405,251,600,298"/>
+<area shape="rect" id="node15" href="$interfaceExactHundredMsAggregator.html#a2821d94afdbb46c95dfac72e9d5e4bb0" title="writes mLastState as it is currently unwritten" alt="" coords="405,182,600,229"/>
+<area shape="rect" id="node20" href="$interfaceWriterMock.html#a73544e47bdc78b1f19679da92d10f4bd" title="&#45;[WriterMock unexpected]" alt="" coords="417,321,588,351"/>
+<area shape="rect" id="node9" href="$interfaceSimulationState.html#a34112bf87bee2bd2f7ef2e4755274277" title="&#45;[SimulationState timeSince\lSimulationStart]" alt="" coords="653,151,837,198"/>
+<area shape="rect" id="node11" href="$interfaceSimulationState.html#a60bac921c80ab9989636212f96ca6eeb" title="&#45;[SimulationState setTime\lSinceSimulationStart:]" alt="" coords="659,221,832,267"/>
+<area shape="rect" id="node13" href="$interfaceTimeSpan.html#a0081332945ef00157b3a6a2e85f88e13" title="&#45;[TimeSpan addMilliseconds:]" alt="" coords="648,291,843,320"/>
+</map>

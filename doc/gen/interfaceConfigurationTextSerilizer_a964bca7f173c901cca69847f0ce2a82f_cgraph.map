@@ -1,0 +1,5 @@
+<map id="+[ConfigurationTextSerilizer parseKineticConstantAssignmentForCfg:key:value:lineNumber:error:]" name="+[ConfigurationTextSerilizer parseKineticConstantAssignmentForCfg:key:value:lineNumber:error:]">
+<area shape="rect" id="node3" href="$interfaceNumericConversion.html#a5eadec17e4ed128c35ba79cabfd6c224" title="Parses a decimal from a string." alt="" coords="340,5,489,51"/>
+<area shape="rect" id="node5" href="$interfaceConfigurationTextSerilizer.html#aac75bf9d7f8e488d7afee7cf39dd53cb" title="makes an error object for the ConfigurationSerilizer." alt="" coords="321,74,508,121"/>
+<area shape="rect" id="node7" href="$interfaceSimulationConfiguration.html#a4754e162441d1bbd27725e8dc0a68676" title="adds the kinetic constant for a reaction" alt="" coords="293,143,536,190"/>
+</map>

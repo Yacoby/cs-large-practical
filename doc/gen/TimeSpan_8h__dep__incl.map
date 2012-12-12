@@ -1,0 +1,24 @@
+<map id="TimeSpan.h" name="TimeSpan.h">
+<area shape="rect" id="node3" href="$SimulationState_8h.html" title="SimulationState.h" alt="" coords="451,83,576,112"/>
+<area shape="rect" id="node7" href="$SimulationConfiguration_8h.html" title="SimulationConfiguration.h" alt="" coords="788,247,959,276"/>
+<area shape="rect" id="node11" href="$ConfigurationSerilizer_8m.html" title="ConfigurationSerilizer.m" alt="" coords="640,439,800,468"/>
+<area shape="rect" id="node26" href="$SimulationOutputAggregator_8h.html" title="SimulationOutputAggregator.h" alt="" coords="1299,439,1493,468"/>
+<area shape="rect" id="node57" href="$TimeSpan_8m.html" title="TimeSpan.m" alt="" coords="1365,83,1461,112"/>
+<area shape="rect" id="node5" href="$ReactionDefinition_8h.html" title="ReactionDefinition.h" alt="" coords="444,160,583,189"/>
+<area shape="rect" id="node17" href="$Simulator_8h.html" title="Simulator.h" alt="" coords="364,535,452,564"/>
+<area shape="rect" id="node24" href="$SimulationOutputWriter_8h.html" title="SimulationOutputWriter.h" alt="" coords="1123,343,1291,372"/>
+<area shape="rect" id="node52" href="$SimulationState_8m.html" title="SimulationState.m" alt="" coords="5,160,133,189"/>
+<area shape="rect" id="node9" href="$ConfigurationSerilizer_8h.html" title="ConfigurationSerilizer.h" alt="" coords="376,343,533,372"/>
+<area shape="rect" id="node15" href="$ConfigurationSerilizerTests_8m.html" title="tests/ConfigurationSerilizer\lTests.m" alt="" coords="273,430,452,477"/>
+<area shape="rect" id="node20" href="$Simulator_8m.html" title="Simulator.m" alt="" coords="187,621,277,651"/>
+<area shape="rect" id="node44" href="$ReactionDefinition_8m.html" title="ReactionDefinition.m" alt="" coords="496,247,640,276"/>
+<area shape="rect" id="node48" href="$ReactionDefinitionTests_8m.html" title="tests/ReactionDefinition\lTests.m" alt="" coords="259,238,421,285"/>
+<area shape="rect" id="node36" href="$SimulationOutputWriterTests_8m.html" title="tests/SimulationOutputWriter\lTests.m" alt="" coords="840,430,1029,477"/>
+<area shape="rect" id="node38" href="$SimulationConfiguration_8m.html" title="SimulationConfiguration.m" alt="" coords="608,343,781,372"/>
+<area shape="rect" id="node40" href="$SimulationConfigurationTests_8m.html" title="tests/SimulationConfiguration\lTests.m" alt="" coords="805,334,997,381"/>
+<area shape="rect" id="node13" href="$Main_8m.html" title="Main.m" alt="" coords="488,621,552,651"/>
+<area shape="rect" id="node22" href="$SimulatorTests_8m.html" title="tests/SimulatorTests.m" alt="" coords="307,621,464,651"/>
+<area shape="rect" id="node34" href="$SimulationOutputWriter_8m.html" title="SimulationOutputWriter.m" alt="" coords="1104,439,1275,468"/>
+<area shape="rect" id="node29" href="$SimulationOutputAggregator_8m.html" title="SimulationOutputAggregator.m" alt="" coords="1200,535,1400,564"/>
+<area shape="rect" id="node31" href="$SimulationOutputAggregatorTests_8m.html" title="tests/SimulationOutputAggregator\lTests.m" alt="" coords="1424,526,1643,573"/>
+</map>

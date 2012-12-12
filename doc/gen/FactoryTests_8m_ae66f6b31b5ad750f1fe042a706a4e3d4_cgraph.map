@@ -1,0 +1,8 @@
+<map id="main" name="main">
+<area shape="rect" id="node3" href="$FactoryTests_8m.html#a06669428678e824a48da18e3942f1bf1" title="listClasses_WhenHasTwoClasses\l_ListsThem" alt="" coords="105,5,329,51"/>
+<area shape="rect" id="node7" href="$FactoryTests_8m.html#ab9b112218aae20f5716a13ceb57e5fa7" title="classFromString_WhenNotValid\lClass_ReturnNil" alt="" coords="113,74,321,121"/>
+<area shape="rect" id="node11" href="$FactoryTests_8m.html#adc11c8ebeebe0726bad42fece1a4c62b" title="classFromString_WhenValid\lClass_ReturnsCorrectClass" alt="" coords="124,143,311,190"/>
+<area shape="rect" id="node5" href="$interfaceFactory.html#acea4494cb81c2ecc05fc23abf4536410" title="&#45;[Factory listClasses]" alt="" coords="396,13,543,43"/>
+<area shape="rect" id="node9" href="$interfaceFactory.html#a723702a4a7fd24a8d4136efca8d3c0e8" title="&#45;[Factory classFromString:]" alt="" coords="379,91,560,120"/>
+<area shape="rect" id="node14" href="$interfaceFactoryClass2.html#a30b0f9b79cfbcfb42b0786d946deca35" title="&#45;[FactoryClass2 num]" alt="" coords="396,152,543,181"/>
+</map>

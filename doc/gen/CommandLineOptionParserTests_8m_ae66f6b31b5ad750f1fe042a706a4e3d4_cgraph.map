@@ -1,0 +1,40 @@
+<map id="main" name="main">
+<area shape="rect" id="node3" href="$CommandLineOptionParserTests_8m.html#a1425a59d778642d6e5626014aac0932a" title="get_WhenHasNoRulesAndGiven\lArgument_ReturnsNil" alt="" coords="435,933,648,979"/>
+<area shape="rect" id="node37" href="$CommandLineOptionParserTests_8m.html#afab73c866c6c42f5849b0b11d8c7391c" title="addParse_WhenHasShortArgument\lAndOption_ParsesCorrectly" alt="" coords="120,143,349,190"/>
+<area shape="rect" id="node58" href="$CommandLineOptionParserTests_8m.html#ad090a1a4533f76e9018cffd44ea377df" title="addParse_WhenHasOneArgument\lAndOption_ParsesCorrectly" alt="" coords="124,421,345,467"/>
+<area shape="rect" id="node67" href="$CommandLineOptionParserTests_8m.html#a1cc1b144ec4e9c4c72b6d86b42651496" title="addParse_WhenHasZeroArguments\l_ParsesAsBoolean" alt="" coords="120,74,349,121"/>
+<area shape="rect" id="node72" href="$CommandLineOptionParserTests_8m.html#a9bec91c1557c666667da8e0c0fa1ced6" title="addParse_WhenHasUnknownOption\lName_ReturnsError" alt="" coords="424,829,659,875"/>
+<area shape="rect" id="node75" href="$CommandLineOptionParserTests_8m.html#af4553e245dfc289bdca0f43ecbc637e9" title="addForKey_WhenAddingForKey\l_ResultIsStoredInThatKey" alt="" coords="131,5,339,51"/>
+<area shape="rect" id="node80" href="$CommandLineOptionParserTests_8m.html#a1004c817e5e45268704d0125c17ba6db" title="parse_WhenBooleanArgNotSet\l_IsFalse" alt="" coords="133,213,336,259"/>
+<area shape="rect" id="node85" href="$CommandLineOptionParserTests_8m.html#abb37e60d5843d77918a9292d5a7d2914" title="add_WhenSetsType_TypeMatches" alt="" coords="121,699,348,728"/>
+<area shape="rect" id="node89" href="$CommandLineOptionParserTests_8m.html#a04d08c702d6b10b20fac45164614b55c" title="getKeyFromArgument\l_WhenIsLongName_GetsNameCorrectly" alt="" coords="105,751,364,798"/>
+<area shape="rect" id="node93" href="$CommandLineOptionParserTests_8m.html#a00e2e173aa0a40e5225196b6ebacd99d" title="parse_WhenHasPositionalArg\lAndIsNotSet_ReturnsError" alt="" coords="137,629,332,675"/>
+<area shape="rect" id="node97" href="$CommandLineOptionParserTests_8m.html#a12e2d8b39a4438f6ecf9b6329008e921" title="parse_WhenHasPositionalArg\lThatIsNotRequired_DoesntReturnError" alt="" coords="111,351,359,398"/>
+<area shape="rect" id="node102" href="$CommandLineOptionParserTests_8m.html#abb80b3b230de08a44854dec8a9ce3169" title="parse_WhenOptionHasDefault\lArgument_IsSet" alt="" coords="136,282,333,329"/>
+<area shape="rect" id="node108" href="$CommandLineOptionParserTests_8m.html#a7b78c615584e3abe97777e58eced6cc3" title="setHelpStringForArgument\lKey_WhenSetsHelpTextForNotExist\lKey_Throws" alt="" coords="117,821,352,885"/>
+<area shape="rect" id="node110" href="$CommandLineOptionParserTests_8m.html#ab200a56a2d0dc2a98f590ae7d0d237d8" title="addArgumentWithName\l_WhenAddingTwice_Throws" alt="" coords="141,490,328,537"/>
+<area shape="rect" id="node113" href="$CommandLineOptionParserTests_8m.html#a2eaacc7a2e2a2a4bda470cbb7d54d5d2" title="parse_WhenHasArgumentOfIncorrect\lType_ReturnsError" alt="" coords="115,559,355,606"/>
+<area shape="rect" id="node5" href="$interfaceCommandLineOptionParser.html#a09638d46ad8eb8285d1680618a08b41e" title="parses the command line arguments passed in an array" alt="" coords="737,566,927,613"/>
+<area shape="rect" id="node7" href="$interfaceCommandLineOptionParser.html#acc02ea84b30934a4d381b6643797a3c2" title="Parses all the arguments given into a dictionary." alt="" coords="996,393,1215,457"/>
+<area shape="rect" id="node15" href="$interfaceCommandLineOptionParser.html#a66833ff60e65ebf4996f2af121016984" title="helper function to make a new NSError object with the given description" alt="" coords="1828,405,2017,451"/>
+<area shape="rect" id="node31" href="$interfaceCommandLineOptionParser.html#a18f35af73e5cb4cddcf1441daaafa9b4" title="generates help text from the arguments" alt="" coords="1011,509,1200,555"/>
+<area shape="rect" id="node35" href="$interfaceCommandLineOptionParser.html#ae9289ddc05cfe8ab526f341d0dff15ec" title="Inserts entries for arguments that have a default value but have no user value set." alt="" coords="1011,578,1200,625"/>
+<area shape="rect" id="node9" href="$interfaceCommandLineOptionParser.html#a1c23280b7cc58a38d4e7584e8c3ef2f7" title="parses a single command line argument from the stack of available arguments and pops it off the stack..." alt="" coords="1265,371,1527,435"/>
+<area shape="rect" id="node20" href="$interfaceCommandLineKeyValue.html#a9286d8f3922ce4762148051fd6e9ce76" title="&#45;[CommandLineKeyValue key]" alt="" coords="1579,532,1776,561"/>
+<area shape="rect" id="node22" href="$interfaceCommandLineKeyValue.html#ae080e8a2f1a713eecf9441bb55809b3f" title="&#45;[CommandLineKeyValue\l value]" alt="" coords="1592,150,1763,197"/>
+<area shape="rect" id="node11" href="$interfaceCommandLineOptionParser.html#a0721019c9ae09d6d0da2d18f389b6055" title="Parses an optional argument and pops everything parsed off the argumentStack." alt="" coords="1583,444,1772,508"/>
+<area shape="rect" id="node17" href="$interfaceCommandLineOptionParser.html#ad13a033f092006571cacb2a39990a82c" title="Parses a positional argument and alters the remaingPositionalArgs." alt="" coords="1576,339,1779,421"/>
+<area shape="rect" id="node24" href="$interfaceCommandLineOptionParser.html#ad9cdeac489ce69631be37197c49d78d0" title="Converts the string str to the requested type." alt="" coords="1583,270,1772,317"/>
+<area shape="rect" id="node26" href="$interfaceCommandLineOptionParser.html#a73b5a6463dd8e71d6594341f68268bba" title="gets the type of the argument" alt="" coords="1583,585,1772,631"/>
+<area shape="rect" id="node13" href="$interfaceCommandLineOptionParser.html#a18758b9c9950532b340b908ef00117b5" title="Looks up the argument name in the relevant dictionary (based on the prefix) and returns the key..." alt="" coords="1828,589,2017,635"/>
+<area shape="rect" id="node39" href="$interfaceCommandLineOptionParser.html#a1da13f38f54023335dde513252a816c8" title="&#45;[CommandLineOptionParser\l addArgumentWithName:andShortName\l:ofType:]" alt="" coords="413,65,669,129"/>
+<area shape="rect" id="node53" href="$interfaceCommandLineOptionParser.html#a38bee3c522ca6177fe684e90e4bd83b9" title="same as parse:error: but does not record the details of any error that occurs" alt="" coords="447,153,636,199"/>
+<area shape="rect" id="node56" href="$interfaceCommandLineOptions.html#a302bb219308fc7ce395f038c43046186" title="retrieves an option with the given argument key" alt="" coords="463,222,620,269"/>
+<area shape="rect" id="node41" href="$interfaceCommandLineOptionParser.html#a6cfc32d6be3d033d085f3d71d4b80023" title="Adds a positional argument for a given key." alt="" coords="729,303,935,367"/>
+<area shape="rect" id="node45" href="$interfaceCommandLineOptionParser.html#af2a8e62d9ed83d90ed09afe6fc39e24d" title="Converts an argument name in the form of &quot;&amp;ndash;name&quot; to &quot;name&quot;." alt="" coords="737,233,927,279"/>
+<area shape="rect" id="node47" href="$interfaceCommandLineOptionParser.html#a8205938fd86b0d9109ade844ae712c77" title="&#45;[CommandLineOptionParser\l addOptionalArgumentForKey\l:withName:andShortName:ofType:]" alt="" coords="719,87,945,151"/>
+<area shape="rect" id="node43" href="$interfaceCommandLineOptionParser.html#afe9fee77435a8a87bac3ee353fc2bdcb" title="Sets the argument to required/not required." alt="" coords="1008,304,1203,368"/>
+<area shape="rect" id="node49" href="$interfaceCommandLineOptionParser.html#a9931f75b03c7763b10be94798f244d92" title="Allows adding an optional argument while specifying a key." alt="" coords="1009,91,1201,155"/>
+<area shape="rect" id="node51" href="$interfaceCommandLineOptionParser.html#a0ebc26aeeb71a36a0ae45d3c3f3b0f41" title="Sets the default value for an argument." alt="" coords="1288,128,1504,192"/>
+<area shape="rect" id="node60" href="$interfaceCommandLineOptionParser.html#ae96f9ac910cda37c5689bd9996738dc9" title="adds an argument, with the type of argument depending on the name" alt="" coords="433,441,649,487"/>
+</map>

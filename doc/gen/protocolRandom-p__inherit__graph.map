@@ -1,0 +1,4 @@
+<map id="&lt;Random&gt;" name="&lt;Random&gt;">
+<area shape="rect" id="node3" href="$interfaceStaticRandom.html" title="designed to be used for testing, this provides a static random number" alt="" coords="5,83,109,112"/>
+<area shape="rect" id="node5" href="$interfaceUniformRandom.html" title="This provides a uniform random number generator that generates numbers based on the given seed..." alt="" coords="133,83,251,112"/>
+</map>

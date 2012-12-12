@@ -1,0 +1,5 @@
+<map id="ResultOnlyAggregator" name="ResultOnlyAggregator">
+<area shape="rect" id="node2" href="$protocolSimulationOutputAggregator-p.html" title="Allows the aggregation of state changes before those changes are sent to the writer." alt="" coords="5,101,205,131"/>
+<area shape="rect" id="node4" href="$interfaceSimulationState.html" title="Represents a state (molecule counts) at a spesific point in time from the start of the simulation..." alt="" coords="229,101,344,131"/>
+<area shape="rect" id="node6" href="$interfaceTimeSpan.html" title="Represents a time interval." alt="" coords="247,5,327,35"/>
+</map>

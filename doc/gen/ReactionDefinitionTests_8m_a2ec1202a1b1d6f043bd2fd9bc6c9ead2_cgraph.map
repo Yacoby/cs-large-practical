@@ -1,0 +1,6 @@
+<map id="reactionRate_WhenHasDuplicate_RateEqualsComplexMult" name="reactionRate_WhenHasDuplicate_RateEqualsComplexMult">
+<area shape="rect" id="node3" href="$interfaceReactionEquation.html#a614d6fec321b7c754bb2deadd7818b9c" title="&#45;[ReactionEquation\l setRequirements:]" alt="" coords="269,5,403,51"/>
+<area shape="rect" id="node7" href="$interfaceReactionEquation.html#aa46180d0b95d15f7a8935a46f048f1ff" title="&#45;[ReactionEquation\l setResult:]" alt="" coords="269,74,403,121"/>
+<area shape="rect" id="node5" href="$interfaceReactionEquation.html#acbc23395ba28d2553bb0da44ceefe2d8" title="&#45;[ReactionEquation\l requirements]" alt="" coords="451,5,584,51"/>
+<area shape="rect" id="node9" href="$interfaceReactionEquation.html#a4d89cdca2acc566c27386855d666eb54" title="&#45;[ReactionEquation\l result]" alt="" coords="451,74,584,121"/>
+</map>

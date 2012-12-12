@@ -1,0 +1,10 @@
+<map id="&#45;[CommandLineOptionParser init]" name="&#45;[CommandLineOptionParser init]">
+<area shape="rect" id="node3" href="$interfaceCommandLineOptionParser.html#a1da13f38f54023335dde513252a816c8" title="&#45;[CommandLineOptionParser\l addArgumentWithName:andShortName\l:ofType:]" alt="" coords="245,84,501,148"/>
+<area shape="rect" id="node17" href="$interfaceCommandLineOptionParser.html#ad9a8195ad20b01321b9c875b831051a5" title="Sets the help text for the argument." alt="" coords="255,171,492,218"/>
+<area shape="rect" id="node5" href="$interfaceCommandLineOptionParser.html#a6cfc32d6be3d033d085f3d71d4b80023" title="Adds a positional argument for a given key." alt="" coords="561,5,767,69"/>
+<area shape="rect" id="node9" href="$interfaceCommandLineOptionParser.html#af2a8e62d9ed83d90ed09afe6fc39e24d" title="Converts an argument name in the form of &quot;&amp;ndash;name&quot; to &quot;name&quot;." alt="" coords="569,93,759,139"/>
+<area shape="rect" id="node11" href="$interfaceCommandLineOptionParser.html#a8205938fd86b0d9109ade844ae712c77" title="&#45;[CommandLineOptionParser\l addOptionalArgumentForKey\l:withName:andShortName:ofType:]" alt="" coords="551,163,777,227"/>
+<area shape="rect" id="node7" href="$interfaceCommandLineOptionParser.html#afe9fee77435a8a87bac3ee353fc2bdcb" title="Sets the argument to required/not required." alt="" coords="827,5,1021,69"/>
+<area shape="rect" id="node13" href="$interfaceCommandLineOptionParser.html#a9931f75b03c7763b10be94798f244d92" title="Allows adding an optional argument while specifying a key." alt="" coords="828,163,1020,227"/>
+<area shape="rect" id="node15" href="$interfaceCommandLineOptionParser.html#a0ebc26aeeb71a36a0ae45d3c3f3b0f41" title="Sets the default value for an argument." alt="" coords="1071,163,1287,227"/>
+</map>

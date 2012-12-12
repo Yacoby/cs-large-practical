@@ -1,0 +1,7 @@
+<map id="&#45;[CommandLineOptionParser setDefaultValueForArgumentKey:value:]" name="&#45;[CommandLineOptionParser setDefaultValueForArgumentKey:value:]">
+<area shape="rect" id="node3" href="$interfaceCommandLineOptionParser.html#a9931f75b03c7763b10be94798f244d92" title="Allows adding an optional argument while specifying a key." alt="" coords="273,75,465,139"/>
+<area shape="rect" id="node7" href="$Main_8m.html#a2888e99e65ce06d333138106496da454" title="generates an option parser that has all the options for the program" alt="" coords="1096,92,1219,121"/>
+<area shape="rect" id="node5" href="$interfaceCommandLineOptionParser.html#ae96f9ac910cda37c5689bd9996738dc9" title="adds an argument, with the type of argument depending on the name" alt="" coords="812,5,1028,51"/>
+<area shape="rect" id="node9" href="$interfaceCommandLineOptionParser.html#a8205938fd86b0d9109ade844ae712c77" title="&#45;[CommandLineOptionParser\l addOptionalArgumentForKey\l:withName:andShortName:ofType:]" alt="" coords="516,75,743,139"/>
+<area shape="rect" id="node11" href="$interfaceCommandLineOptionParser.html#a1da13f38f54023335dde513252a816c8" title="&#45;[CommandLineOptionParser\l addArgumentWithName:andShortName\l:ofType:]" alt="" coords="792,75,1048,139"/>
+</map>

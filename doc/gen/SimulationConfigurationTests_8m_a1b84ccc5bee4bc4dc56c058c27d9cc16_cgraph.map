@@ -1,0 +1,17 @@
+<map id="validate_ReactionMentionsMoleculeThatDoesntExist_Fails" name="validate_ReactionMentionsMoleculeThatDoesntExist_Fails">
+<area shape="rect" id="node3" href="$interfaceSimulationConfiguration.html#a235e6bad2d7d8380c44addeb47ef2900" title="sets the time that the reaction should stop at" alt="" coords="307,5,475,51"/>
+<area shape="rect" id="node7" href="$interfaceSimulationConfiguration.html#a4754e162441d1bbd27725e8dc0a68676" title="adds the kinetic constant for a reaction" alt="" coords="269,74,512,121"/>
+<area shape="rect" id="node9" href="$interfaceSimulationConfiguration.html#a2d02f059d6a944ff08cb41383ed07b98" title="adds the reaction with the given key to the list of reactions" alt="" coords="261,143,520,190"/>
+<area shape="rect" id="node11" href="$interfaceReactionEquation.html#a614d6fec321b7c754bb2deadd7818b9c" title="&#45;[ReactionEquation\l setRequirements:]" alt="" coords="324,213,457,259"/>
+<area shape="rect" id="node15" href="$interfaceSimulationConfiguration.html#a66edd4e8463e2455820009efe443d692" title="&#45;[SimulationConfiguration\l validate]" alt="" coords="307,282,475,329"/>
+<area shape="rect" id="node34" href="$interfaceConfigurationValidation.html#a4141db08b025b4998466d1fc67cab8f6" title="gets all errors &#45; things which mean that the configuration is invalid" alt="" coords="309,351,472,398"/>
+<area shape="rect" id="node5" href="$interfaceSimulationConfiguration.html#a63f39bcce61a68c40382f090d3d4a4d2" title="&#45;[SimulationConfiguration\l time]" alt="" coords="604,5,772,51"/>
+<area shape="rect" id="node13" href="$interfaceReactionEquation.html#acbc23395ba28d2553bb0da44ceefe2d8" title="&#45;[ReactionEquation\l requirements]" alt="" coords="856,143,989,190"/>
+<area shape="rect" id="node17" href="$interfaceConfigurationValidation.html#a8e7b2509035abcf477019888055e0590" title="&#45;[ConfigurationValidation\l addError:]" alt="" coords="607,282,769,329"/>
+<area shape="rect" id="node19" href="$interfaceSimulationConfiguration.html#a09a3e7935cebf289b7360389091bf9f9" title="&#45;[SimulationConfiguration\l kineticConstantsWithoutReaction\lEquations]" alt="" coords="577,352,799,416"/>
+<area shape="rect" id="node21" href="$interfaceConfigurationValidation.html#afbbb172da00b65b86f4c277b95bd30a7" title="&#45;[ConfigurationValidation\l addWarning:]" alt="" coords="607,439,769,486"/>
+<area shape="rect" id="node23" href="$interfaceSimulationConfiguration.html#adcbabe47352ddf0a0c2aac21dd362f36" title="&#45;[SimulationConfiguration\l reactionEquationsWithoutKinetic\lConstants]" alt="" coords="581,509,795,573"/>
+<area shape="rect" id="node25" href="$interfaceSimulationConfiguration.html#aa36db482bc42448365f7d718a0a6b028" title="&#45;[SimulationConfiguration\l moleculesInReactionsWithNoCount]" alt="" coords="569,143,807,190"/>
+<area shape="rect" id="node30" href="$interfaceSimulationConfiguration.html#a390c1a23f1bf5de2b5e0052b6667fdf3" title="&#45;[SimulationConfiguration\l moleculesNotUsedInReactions]" alt="" coords="583,213,793,259"/>
+<area shape="rect" id="node28" href="$interfaceReactionEquation.html#a4d89cdca2acc566c27386855d666eb54" title="&#45;[ReactionEquation\l result]" alt="" coords="856,213,989,259"/>
+</map>

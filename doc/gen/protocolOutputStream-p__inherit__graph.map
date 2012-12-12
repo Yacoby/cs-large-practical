@@ -1,0 +1,5 @@
+<map id="&lt;OutputStream&gt;" name="&lt;OutputStream&gt;">
+<area shape="rect" id="node3" href="$interfaceFileHandleOutputStream.html" title="stream wrapper around file functions so that all messages are written via the given handle..." alt="" coords="5,83,171,112"/>
+<area shape="rect" id="node7" href="$interfaceMemoryOutputStream.html" title="Stores written data in memory where it can be retrieved." alt="" coords="195,83,344,112"/>
+<area shape="rect" id="node5" href="$interfaceFileOutputStream.html" title="convenience wrapper around FileHandleOutputStream to allow construction from a file" alt="" coords="27,160,149,189"/>
+</map>

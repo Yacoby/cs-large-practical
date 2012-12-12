@@ -1,0 +1,7 @@
+<map id="&#45;[Simulator initWithInternals:cfg:randomGen:outputAggregator:]" name="&#45;[Simulator initWithInternals:cfg:randomGen:outputAggregator:]">
+<area shape="rect" id="node3" href="$interfaceSimulationConfiguration.html#a4d2bcb808476e518a6da442f25477ab7" title="gets a list of all reactions that are valid" alt="" coords="283,5,451,51"/>
+<area shape="rect" id="node7" href="$interfaceSimulatorInternalState.html#ab1560989febc5f5f79def98f38c5d5fd" title="adds a reaction to the internal state" alt="" coords="288,74,445,121"/>
+<area shape="rect" id="node9" href="$interfaceSimulatorInternalState.html#ac2a4f3f610f6e10d69a416381b34d175" title="builds the graph of all the dependencies of the current reactions." alt="" coords="280,143,453,190"/>
+<area shape="rect" id="node5" href="$interfaceSimulationConfiguration.html#a42c1962e5645882bf4a0b473adc28b57" title="generates a reaction with the given key." alt="" coords="501,5,669,51"/>
+<area shape="rect" id="node11" href="$interfaceReactionWithRate.html#ae17e3583df68d7b3f91ac71830ab0e15" title="&#45;[ReactionWithRate\l reaction]" alt="" coords="517,143,653,190"/>
+</map>

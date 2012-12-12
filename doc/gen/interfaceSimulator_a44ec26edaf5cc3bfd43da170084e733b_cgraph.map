@@ -1,0 +1,5 @@
+<map id="&#45;[Simulator runSimulationStep:]" name="&#45;[Simulator runSimulationStep:]">
+<area shape="rect" id="node3" href="$interfaceSimulationState.html#a34112bf87bee2bd2f7ef2e4755274277" title="&#45;[SimulationState timeSince\lSimulationStart]" alt="" coords="221,5,405,51"/>
+<area shape="rect" id="node5" href="$interfaceTimeSpan.html#a211cbe687a950ec22493b17280ad34a6" title="adds a number of seconds to the TimeSpan" alt="" coords="227,75,400,104"/>
+<area shape="rect" id="node7" href="$interfaceSimulationState.html#a59bd83c67fcb7d910c42bee95c7def7e" title="&#45;[SimulationState molecule\lCounts]" alt="" coords="224,127,403,174"/>
+</map>

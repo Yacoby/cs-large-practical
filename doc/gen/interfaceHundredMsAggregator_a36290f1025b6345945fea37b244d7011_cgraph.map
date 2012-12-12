@@ -1,0 +1,7 @@
+<map id="&#45;[HundredMsAggregator stateChangedTo:]" name="&#45;[HundredMsAggregator stateChangedTo:]">
+<area shape="rect" id="node3" href="$interfaceSimulationState.html#a34112bf87bee2bd2f7ef2e4755274277" title="&#45;[SimulationState timeSince\lSimulationStart]" alt="" coords="232,5,416,51"/>
+<area shape="rect" id="node5" href="$interfaceTimeSpan.html#a15f10cbfe153df05dbcf0032a10add47" title="&#45;[TimeSpan totalMilliseconds]" alt="" coords="227,75,421,104"/>
+<area shape="rect" id="node9" href="$interfaceTimeSpan.html#ae97566ee95fcb491cecbf36fb111fb0f" title="sets the current timespan from the given number of milliseconds" alt="" coords="215,128,433,157"/>
+<area shape="rect" id="node7" href="$interfaceTimeSpan.html#a322fce81a9b46fa090015b58e5c328a0" title="&#45;[TimeSpan totalSeconds]" alt="" coords="496,75,669,104"/>
+<area shape="rect" id="node11" href="$interfaceTimeSpan.html#aff061a5cf4adc5665bf4c24ec2acdd7f" title="sets the current timespan from the given number of seconds" alt="" coords="484,128,681,157"/>
+</map>

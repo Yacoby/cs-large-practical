@@ -1,0 +1,4 @@
+<map id="orderedMolecules_WhenMoleculesAreAdded_ReturnsCorrectOrder" name="orderedMolecules_WhenMoleculesAreAdded_ReturnsCorrectOrder">
+<area shape="rect" id="node3" href="$interfaceSimulationConfiguration.html#ab49039136f5f50730a0e5b5700b31738" title="adds a molecule count" alt="" coords="277,5,456,51"/>
+<area shape="rect" id="node5" href="$interfaceSimulationConfiguration.html#a6904674f0fde3525f491e5f0766954c9" title="returns a list of molecule names (NSString*)" alt="" coords="283,74,451,121"/>
+</map>

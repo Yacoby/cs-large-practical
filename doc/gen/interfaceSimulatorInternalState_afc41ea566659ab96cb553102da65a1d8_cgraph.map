@@ -1,0 +1,5 @@
+<map id="&#45;[SimulatorInternalState reactionRate:]" name="&#45;[SimulatorInternalState reactionRate:]">
+<area shape="rect" id="node3" href="$interfaceSimulatorInternalState.html#a09e93cdf6fbdaa55d480f620b8d7e71c" title="&#45;[SimulatorInternalState\l updateRates:]" alt="" coords="215,23,372,70"/>
+<area shape="rect" id="node5" href="$interfaceReactionWithRate.html#a8da829f37d00ece86f481e8a45902c0f" title="&#45;[ReactionWithRate\l rate]" alt="" coords="609,23,745,70"/>
+<area shape="rect" id="node7" href="$interfaceReactionWithRate.html#a7a70d5afcf0bcd54d697e184b576ac74" title="&#45;[ReactionWithRate\l setPartialSum:]" alt="" coords="423,23,559,70"/>
+</map>

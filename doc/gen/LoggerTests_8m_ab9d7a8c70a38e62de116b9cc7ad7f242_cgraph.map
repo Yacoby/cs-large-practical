@@ -1,0 +1,10 @@
+<map id="warn_WhenCallsWarn_PassesMsgToLog" name="warn_WhenCallsWarn_PassesMsgToLog">
+<area shape="rect" id="node3" href="$interfaceLogger.html#a3b08cc5aa34b19336c58dd012332196c" title="Adds a log output to the list of logs to receive log messages." alt="" coords="205,32,328,61"/>
+<area shape="rect" id="node5" href="$interfaceLogger.html#a0dedd99023df22359630d29623817080" title="+[Logger warn:]" alt="" coords="211,85,323,115"/>
+<area shape="rect" id="node7" href="$interfaceLogger.html#a9f9acae64a5f26267526d16196ea23c8" title="gets the sole instance of this class if it exists" alt="" coords="397,5,528,35"/>
+<area shape="rect" id="node9" href="$interfaceLogger.html#a60e1706d05c9d0ff5f0e31febe20d26a" title="gets the global log level" alt="" coords="381,59,544,88"/>
+<area shape="rect" id="node11" href="$interfaceLogger.html#a8d9661d0a2d2a0839a747a7d9620606e" title="&#45;[Logger logs]" alt="" coords="412,112,513,141"/>
+<area shape="rect" id="node13" href="$interfaceLog.html#aa64cf31c232ad2981202de662d01165e" title="Write to a log file. This calls logLevelImpl if the message should be written." alt="" coords="377,165,548,211"/>
+<area shape="rect" id="node15" href="$interfaceLog.html#a2a9ff96048338da2d688a4d7784ad34a" title="&#45;[Log logLevel]" alt="" coords="627,143,733,172"/>
+<area shape="rect" id="node17" href="$interfaceLog.html#a81540f30468c3944baa3ee34cfe23e99" title="function that does the work of logging. Should be overwritten by subclasses" alt="" coords="599,195,761,242"/>
+</map>

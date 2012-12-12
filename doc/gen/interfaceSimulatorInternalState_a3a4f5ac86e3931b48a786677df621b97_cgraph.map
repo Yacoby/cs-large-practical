@@ -1,0 +1,6 @@
+<map id="&#45;[SimulatorInternalState reactionForBound:]" name="&#45;[SimulatorInternalState reactionForBound:]">
+<area shape="rect" id="node3" href="$interfaceSimulatorInternalState.html#a2eb2dc33db4018760a3960a961794816" title="returns the reaction index that such that it is the lowest index greater than the upper bound..." alt="" coords="215,39,372,86"/>
+<area shape="rect" id="node9" href="$interfaceReactionWithRate.html#ae17e3583df68d7b3f91ac71830ab0e15" title="&#45;[ReactionWithRate\l reaction]" alt="" coords="225,109,361,155"/>
+<area shape="rect" id="node5" href="$interfaceSimulatorInternalState.html#afabf7bd0d52abf6fe17527eadf7550f1" title="implementation of findReactionIndex, needs mUseLogrithmicDirectMethod to be enabled" alt="" coords="423,5,665,51"/>
+<area shape="rect" id="node7" href="$interfaceSimulatorInternalState.html#a081527207322db72e840078939d4e9b3" title="implementation of findReactionIndex" alt="" coords="423,74,665,121"/>
+</map>

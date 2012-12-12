@@ -1,0 +1,4 @@
+<map id="FileOutputStream" name="FileOutputStream">
+<area shape="rect" id="node2" href="$interfaceFileHandleOutputStream.html" title="stream wrapper around file functions so that all messages are written via the given handle..." alt="" coords="5,83,171,112"/>
+<area shape="rect" id="node4" href="$protocolOutputStream-p.html" title="This represents some form of string output to some stream location." alt="" coords="29,5,147,35"/>
+</map>

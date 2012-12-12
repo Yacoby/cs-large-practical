@@ -1,0 +1,6 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$protocolSimulationOutputWriter-p.html" title="This is a generic writer that allows writing of the simulation to a stream." alt="" coords="5,31,179,60"/>
+<area shape="rect" id="node3" href="$interfaceAssignmentCsvWriter.html" title="Writer that outputs in the format set out in the handout (headers prefixed by #)" alt="" coords="380,5,529,35"/>
+<area shape="rect" id="node5" href="$interfaceRfcCsvWriter.html" title="Writer that follows RFC 4180 to provide a standard CSV file." alt="" coords="228,31,329,60"/>
+<area shape="rect" id="node8" href="$interfaceWriterMock.html" title="WriterMock" alt="" coords="235,84,323,113"/>
+</map>

@@ -1,0 +1,23 @@
+# The simulation stop time (t) is 200 seconds
+t = 200
+
+# The kinetic real-number constants of the three reactions:
+# forward (f), backward (b) and produce (p)
+f = 1.0
+b = 0.5
+p = 0.01
+
+# The initial integer molecule counts of the four species,
+# Enzyme, Substrate, Compound and Product
+# (E, S, C, P) = (5, 5, 0, 0)
+E = 500
+S = 500
+C = 0
+P = 0
+
+# The three reactions.  The `forward' reaction (f) makes the compound C, and 
+# the `backward' reaction (b) breaks it apart.  The `produce' reaction (p) 
+# makes the product P and releases the enzyme E.
+f : E + S -> C
+b : C -> E + S
+p : C -> E + P

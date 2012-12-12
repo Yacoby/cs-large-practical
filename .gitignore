@@ -8,5 +8,3 @@ tests/GNUmakefile
 
 .*.un~
 .*.swp
-
-doc/gen/*

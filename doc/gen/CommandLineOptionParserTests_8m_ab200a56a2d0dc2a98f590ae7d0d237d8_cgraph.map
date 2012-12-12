@@ -1,0 +1,8 @@
+<map id="addArgumentWithName_WhenAddingTwice_Throws" name="addArgumentWithName_WhenAddingTwice_Throws">
+<area shape="rect" id="node3" href="$interfaceCommandLineOptionParser.html#ae96f9ac910cda37c5689bd9996738dc9" title="adds an argument, with the type of argument depending on the name" alt="" coords="244,93,460,139"/>
+<area shape="rect" id="node5" href="$interfaceCommandLineOptionParser.html#a6cfc32d6be3d033d085f3d71d4b80023" title="Adds a positional argument for a given key." alt="" coords="509,5,715,69"/>
+<area shape="rect" id="node9" href="$interfaceCommandLineOptionParser.html#af2a8e62d9ed83d90ed09afe6fc39e24d" title="Converts an argument name in the form of &quot;&amp;ndash;name&quot; to &quot;name&quot;." alt="" coords="517,93,707,139"/>
+<area shape="rect" id="node11" href="$interfaceCommandLineOptionParser.html#a9931f75b03c7763b10be94798f244d92" title="Allows adding an optional argument while specifying a key." alt="" coords="516,163,708,227"/>
+<area shape="rect" id="node7" href="$interfaceCommandLineOptionParser.html#afe9fee77435a8a87bac3ee353fc2bdcb" title="Sets the argument to required/not required." alt="" coords="775,5,969,69"/>
+<area shape="rect" id="node13" href="$interfaceCommandLineOptionParser.html#a0ebc26aeeb71a36a0ae45d3c3f3b0f41" title="Sets the default value for an argument." alt="" coords="764,163,980,227"/>
+</map>

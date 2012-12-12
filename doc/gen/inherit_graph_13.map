@@ -1,0 +1,4 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$interfaceLog.html" title="base class for logging classes to inherit from." alt="" coords="5,5,48,35"/>
+<area shape="rect" id="node3" href="$interfaceStreamLog.html" title="Writes log messages to an OutputStream." alt="" coords="96,5,181,35"/>
+</map>

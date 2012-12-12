@@ -1,0 +1,4 @@
+<map id="+[ConfigurationTextSerilizer parseSimpleAssignmentForCfg:fromLine:lineNumber:error:]" name="+[ConfigurationTextSerilizer parseSimpleAssignmentForCfg:fromLine:lineNumber:error:]">
+<area shape="rect" id="node3" href="$interfaceConfigurationTextSerilizer.html#aac75bf9d7f8e488d7afee7cf39dd53cb" title="makes an error object for the ConfigurationSerilizer." alt="" coords="263,5,449,51"/>
+<area shape="rect" id="node5" href="$interfaceConfigurationTextSerilizer.html#a10aa525f1623aa761de40edc6675ae42" title="Removes all white space from the lhs and rhs of a string." alt="" coords="264,74,448,121"/>
+</map>

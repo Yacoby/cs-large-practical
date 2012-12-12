@@ -1,0 +1,5 @@
+<map id="&#45;[RfcCsvWriter writeToStream:]" name="&#45;[RfcCsvWriter writeToStream:]">
+<area shape="rect" id="node3" href="$interfaceSimulationState.html#a34112bf87bee2bd2f7ef2e4755274277" title="&#45;[SimulationState timeSince\lSimulationStart]" alt="" coords="261,5,445,51"/>
+<area shape="rect" id="node5" href="$interfaceTimeSpan.html#a322fce81a9b46fa090015b58e5c328a0" title="&#45;[TimeSpan totalSeconds]" alt="" coords="267,75,440,104"/>
+<area shape="rect" id="node7" href="$interfaceSimulationState.html#a59bd83c67fcb7d910c42bee95c7def7e" title="&#45;[SimulationState molecule\lCounts]" alt="" coords="264,127,443,174"/>
+</map>

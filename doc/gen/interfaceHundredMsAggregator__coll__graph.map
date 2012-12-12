@@ -1,0 +1,4 @@
+<map id="HundredMsAggregator" name="HundredMsAggregator">
+<area shape="rect" id="node2" href="$protocolSimulationOutputAggregator-p.html" title="Allows the aggregation of state changes before those changes are sent to the writer." alt="" coords="5,5,205,35"/>
+<area shape="rect" id="node4" href="$interfaceTimeSpan.html" title="Represents a time interval." alt="" coords="229,5,309,35"/>
+</map>

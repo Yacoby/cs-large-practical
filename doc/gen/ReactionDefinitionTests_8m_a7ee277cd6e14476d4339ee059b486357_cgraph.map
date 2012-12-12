@@ -1,0 +1,6 @@
+<map id="reactionRate_WhenHasNonDuplicate_RateEqualsSimpleMult" name="reactionRate_WhenHasNonDuplicate_RateEqualsSimpleMult">
+<area shape="rect" id="node3" href="$interfaceReactionEquation.html#a614d6fec321b7c754bb2deadd7818b9c" title="&#45;[ReactionEquation\l setRequirements:]" alt="" coords="293,5,427,51"/>
+<area shape="rect" id="node7" href="$interfaceReactionEquation.html#aa46180d0b95d15f7a8935a46f048f1ff" title="&#45;[ReactionEquation\l setResult:]" alt="" coords="293,74,427,121"/>
+<area shape="rect" id="node5" href="$interfaceReactionEquation.html#acbc23395ba28d2553bb0da44ceefe2d8" title="&#45;[ReactionEquation\l requirements]" alt="" coords="475,5,608,51"/>
+<area shape="rect" id="node9" href="$interfaceReactionEquation.html#a4d89cdca2acc566c27386855d666eb54" title="&#45;[ReactionEquation\l result]" alt="" coords="475,74,608,121"/>
+</map>

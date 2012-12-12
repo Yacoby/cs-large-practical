@@ -1,0 +1,15 @@
+<map id="get_WhenHasNoRulesAndGivenArgument_ReturnsNil" name="get_WhenHasNoRulesAndGivenArgument_ReturnsNil">
+<area shape="rect" id="node3" href="$interfaceCommandLineOptionParser.html#a09638d46ad8eb8285d1680618a08b41e" title="parses the command line arguments passed in an array" alt="" coords="268,542,457,589"/>
+<area shape="rect" id="node5" href="$interfaceCommandLineOptionParser.html#acc02ea84b30934a4d381b6643797a3c2" title="Parses all the arguments given into a dictionary." alt="" coords="508,335,727,399"/>
+<area shape="rect" id="node13" href="$interfaceCommandLineOptionParser.html#a66833ff60e65ebf4996f2af121016984" title="helper function to make a new NSError object with the given description" alt="" coords="1340,330,1529,377"/>
+<area shape="rect" id="node29" href="$interfaceCommandLineOptionParser.html#a18f35af73e5cb4cddcf1441daaafa9b4" title="generates help text from the arguments" alt="" coords="523,583,712,630"/>
+<area shape="rect" id="node33" href="$interfaceCommandLineOptionParser.html#ae9289ddc05cfe8ab526f341d0dff15ec" title="Inserts entries for arguments that have a default value but have no user value set." alt="" coords="523,653,712,699"/>
+<area shape="rect" id="node7" href="$interfaceCommandLineOptionParser.html#a1c23280b7cc58a38d4e7584e8c3ef2f7" title="parses a single command line argument from the stack of available arguments and pops it off the stack..." alt="" coords="777,248,1039,312"/>
+<area shape="rect" id="node18" href="$interfaceCommandLineKeyValue.html#a9286d8f3922ce4762148051fd6e9ce76" title="&#45;[CommandLineKeyValue key]" alt="" coords="1091,456,1288,485"/>
+<area shape="rect" id="node20" href="$interfaceCommandLineKeyValue.html#ae080e8a2f1a713eecf9441bb55809b3f" title="&#45;[CommandLineKeyValue\l value]" alt="" coords="1104,5,1275,51"/>
+<area shape="rect" id="node9" href="$interfaceCommandLineOptionParser.html#a0721019c9ae09d6d0da2d18f389b6055" title="Parses an optional argument and pops everything parsed off the argumentStack." alt="" coords="1095,213,1284,277"/>
+<area shape="rect" id="node15" href="$interfaceCommandLineOptionParser.html#ad13a033f092006571cacb2a39990a82c" title="Parses a positional argument and alters the remaingPositionalArgs." alt="" coords="1088,351,1291,433"/>
+<area shape="rect" id="node22" href="$interfaceCommandLineOptionParser.html#ad9cdeac489ce69631be37197c49d78d0" title="Converts the string str to the requested type." alt="" coords="1095,74,1284,121"/>
+<area shape="rect" id="node24" href="$interfaceCommandLineOptionParser.html#a73b5a6463dd8e71d6594341f68268bba" title="gets the type of the argument" alt="" coords="1095,143,1284,190"/>
+<area shape="rect" id="node11" href="$interfaceCommandLineOptionParser.html#a18758b9c9950532b340b908ef00117b5" title="Looks up the argument name in the relevant dictionary (based on the prefix) and returns the key..." alt="" coords="1340,222,1529,269"/>
+</map>

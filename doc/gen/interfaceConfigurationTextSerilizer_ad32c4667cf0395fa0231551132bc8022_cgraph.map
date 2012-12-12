@@ -1,0 +1,6 @@
+<map id="+[ConfigurationTextSerilizer parseTimeForCfg:value:lineNumber:error:]" name="+[ConfigurationTextSerilizer parseTimeForCfg:value:lineNumber:error:]">
+<area shape="rect" id="node3" href="$interfaceNumericConversion.html#a5eadec17e4ed128c35ba79cabfd6c224" title="Parses a decimal from a string." alt="" coords="305,5,455,51"/>
+<area shape="rect" id="node5" href="$interfaceConfigurationTextSerilizer.html#aac75bf9d7f8e488d7afee7cf39dd53cb" title="makes an error object for the ConfigurationSerilizer." alt="" coords="287,74,473,121"/>
+<area shape="rect" id="node7" href="$interfaceSimulationConfiguration.html#a235e6bad2d7d8380c44addeb47ef2900" title="sets the time that the reaction should stop at" alt="" coords="296,143,464,190"/>
+<area shape="rect" id="node9" href="$interfaceSimulationConfiguration.html#a63f39bcce61a68c40382f090d3d4a4d2" title="&#45;[SimulationConfiguration\l time]" alt="" coords="523,143,691,190"/>
+</map>

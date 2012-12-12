@@ -1,0 +1,20 @@
+<map id="&#45;[Simulator runSimulationStep:stopTime:]" name="&#45;[Simulator runSimulationStep:stopTime:]">
+<area shape="rect" id="node3" href="$interfaceSimulatorInternalState.html#a83919db0dc8980e5f4ee9a02d035fd8f" title="gets the sum of all the reaction rates" alt="" coords="223,57,407,104"/>
+<area shape="rect" id="node13" href="$interfaceSimulationState.html#a34112bf87bee2bd2f7ef2e4755274277" title="&#45;[SimulationState timeSince\lSimulationStart]" alt="" coords="223,127,407,173"/>
+<area shape="rect" id="node15" href="$interfaceTimeSpan.html#a211cbe687a950ec22493b17280ad34a6" title="adds a number of seconds to the TimeSpan" alt="" coords="228,197,401,226"/>
+<area shape="rect" id="node17" href="$interfaceSimulatorInternalState.html#a3a4f5ac86e3931b48a786677df621b97" title="gets the reaction for the given lower bound" alt="" coords="236,249,393,296"/>
+<area shape="rect" id="node27" href="$interfaceSimulationState.html#a59bd83c67fcb7d910c42bee95c7def7e" title="&#45;[SimulationState molecule\lCounts]" alt="" coords="225,319,404,365"/>
+<area shape="rect" id="node29" href="$interfaceReactionDefinition.html#aa4745594030644d3d8254610c6404532" title="Applies the current reaction to the molecule counts, altering them." alt="" coords="228,388,401,435"/>
+<area shape="rect" id="node39" href="$interfaceSimulatorInternalState.html#aef79550604af1477e214ed4f0b25f0a7" title="sets all Reaction that use this reaction as being &quot;dirty&quot; and needing updating" alt="" coords="236,457,393,504"/>
+<area shape="rect" id="node5" href="$interfaceSimulatorInternalState.html#a09e93cdf6fbdaa55d480f620b8d7e71c" title="ensures all rates are up to date, using state to update them if required" alt="" coords="457,28,615,75"/>
+<area shape="rect" id="node7" href="$interfaceReactionWithRate.html#a8da829f37d00ece86f481e8a45902c0f" title="&#45;[ReactionWithRate\l rate]" alt="" coords="959,28,1095,75"/>
+<area shape="rect" id="node9" href="$interfaceReactionWithRate.html#a7a70d5afcf0bcd54d697e184b576ac74" title="&#45;[ReactionWithRate\l setPartialSum:]" alt="" coords="719,28,855,75"/>
+<area shape="rect" id="node19" href="$interfaceSimulatorInternalState.html#a2eb2dc33db4018760a3960a961794816" title="returns the reaction index that such that it is the lowest index greater than the upper bound..." alt="" coords="457,216,615,263"/>
+<area shape="rect" id="node25" href="$interfaceReactionWithRate.html#ae17e3583df68d7b3f91ac71830ab0e15" title="&#45;[ReactionWithRate\l reaction]" alt="" coords="468,285,604,332"/>
+<area shape="rect" id="node21" href="$interfaceSimulatorInternalState.html#afabf7bd0d52abf6fe17527eadf7550f1" title="implementation of findReactionIndex, needs mUseLogrithmicDirectMethod to be enabled" alt="" coords="665,181,908,228"/>
+<area shape="rect" id="node23" href="$interfaceSimulatorInternalState.html#a081527207322db72e840078939d4e9b3" title="implementation of findReactionIndex" alt="" coords="665,251,908,297"/>
+<area shape="rect" id="node31" href="$interfaceReactionDefinition.html#a7701a8846f4738a9837699bb1c051426" title="&#45;[ReactionDefinition\l requirements]" alt="" coords="468,355,604,401"/>
+<area shape="rect" id="node35" href="$interfaceReactionDefinition.html#ab480e7140c29f45be1e04edb812e8e87" title="&#45;[ReactionDefinition\l result]" alt="" coords="468,424,604,471"/>
+<area shape="rect" id="node33" href="$interfaceReactionEquation.html#acbc23395ba28d2553bb0da44ceefe2d8" title="&#45;[ReactionEquation\l requirements]" alt="" coords="720,355,853,401"/>
+<area shape="rect" id="node37" href="$interfaceReactionEquation.html#a4d89cdca2acc566c27386855d666eb54" title="&#45;[ReactionEquation\l result]" alt="" coords="720,424,853,471"/>
+</map>

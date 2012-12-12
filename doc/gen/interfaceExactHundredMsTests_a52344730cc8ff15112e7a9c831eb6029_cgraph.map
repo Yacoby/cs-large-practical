@@ -1,0 +1,8 @@
+<map id="&#45;[ExactHundredMsTests exactMsStateChanged_WhenHasFourStateChanges_WritesThreeOutputs]" name="&#45;[ExactHundredMsTests exactMsStateChanged_WhenHasFourStateChanges_WritesThreeOutputs]">
+<area shape="rect" id="node3" href="$interfaceExactHundredMsAggregator.html#aba3071cd90481d8550b8624489b3b118" title="writes the mLastState from mLastLogTime until the current state" alt="" coords="251,105,445,151"/>
+<area shape="rect" id="node11" href="$interfaceExactHundredMsAggregator.html#a2821d94afdbb46c95dfac72e9d5e4bb0" title="writes mLastState as it is currently unwritten" alt="" coords="251,35,445,82"/>
+<area shape="rect" id="node16" href="$interfaceWriterMock.html#a73544e47bdc78b1f19679da92d10f4bd" title="&#45;[WriterMock unexpected]" alt="" coords="263,175,433,204"/>
+<area shape="rect" id="node5" href="$interfaceSimulationState.html#a34112bf87bee2bd2f7ef2e4755274277" title="&#45;[SimulationState timeSince\lSimulationStart]" alt="" coords="499,5,683,51"/>
+<area shape="rect" id="node7" href="$interfaceSimulationState.html#a60bac921c80ab9989636212f96ca6eeb" title="&#45;[SimulationState setTime\lSinceSimulationStart:]" alt="" coords="504,74,677,121"/>
+<area shape="rect" id="node9" href="$interfaceTimeSpan.html#a0081332945ef00157b3a6a2e85f88e13" title="&#45;[TimeSpan addMilliseconds:]" alt="" coords="493,144,688,173"/>
+</map>

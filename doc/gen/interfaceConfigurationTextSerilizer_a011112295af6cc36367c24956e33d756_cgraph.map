@@ -1,0 +1,5 @@
+<map id="+[ConfigurationTextSerilizer parseMoleculeAssignmentForCfg:key:value:lineNumber:error:]" name="+[ConfigurationTextSerilizer parseMoleculeAssignmentForCfg:key:value:lineNumber:error:]">
+<area shape="rect" id="node3" href="$interfaceNumericConversion.html#a817f5f062e4e0581d534ebe431c57c43" title="Parses a integer from a string." alt="" coords="292,5,441,51"/>
+<area shape="rect" id="node5" href="$interfaceConfigurationTextSerilizer.html#aac75bf9d7f8e488d7afee7cf39dd53cb" title="makes an error object for the ConfigurationSerilizer." alt="" coords="273,74,460,121"/>
+<area shape="rect" id="node7" href="$interfaceSimulationConfiguration.html#ab49039136f5f50730a0e5b5700b31738" title="adds a molecule count" alt="" coords="277,143,456,190"/>
+</map>

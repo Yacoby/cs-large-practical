@@ -1,0 +1,5 @@
+<map id="&lt;SimulationOutputWriter&gt;" name="&lt;SimulationOutputWriter&gt;">
+<area shape="rect" id="node3" href="$interfaceAssignmentCsvWriter.html" title="Writer that outputs in the format set out in the handout (headers prefixed by #)" alt="" coords="5,160,155,189"/>
+<area shape="rect" id="node5" href="$interfaceRfcCsvWriter.html" title="Writer that follows RFC 4180 to provide a standard CSV file." alt="" coords="73,83,175,112"/>
+<area shape="rect" id="node8" href="$interfaceWriterMock.html" title="WriterMock" alt="" coords="199,83,287,112"/>
+</map>

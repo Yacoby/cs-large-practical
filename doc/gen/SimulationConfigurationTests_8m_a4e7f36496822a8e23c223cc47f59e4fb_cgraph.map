@@ -1,0 +1,9 @@
+<map id="addReaction_WhenAddsReaction_HasReactionForKey" name="addReaction_WhenAddsReaction_HasReactionForKey">
+<area shape="rect" id="node3" href="$interfaceReactionEquation.html#a614d6fec321b7c754bb2deadd7818b9c" title="&#45;[ReactionEquation\l setRequirements:]" alt="" coords="335,5,468,51"/>
+<area shape="rect" id="node7" href="$interfaceReactionEquation.html#aa46180d0b95d15f7a8935a46f048f1ff" title="&#45;[ReactionEquation\l setResult:]" alt="" coords="335,74,468,121"/>
+<area shape="rect" id="node11" href="$interfaceSimulationConfiguration.html#a2d02f059d6a944ff08cb41383ed07b98" title="adds the reaction with the given key to the list of reactions" alt="" coords="272,143,531,190"/>
+<area shape="rect" id="node13" href="$interfaceSimulationConfiguration.html#a4754e162441d1bbd27725e8dc0a68676" title="adds the kinetic constant for a reaction" alt="" coords="280,213,523,259"/>
+<area shape="rect" id="node15" href="$interfaceSimulationConfiguration.html#a42c1962e5645882bf4a0b473adc28b57" title="generates a reaction with the given key." alt="" coords="317,282,485,329"/>
+<area shape="rect" id="node5" href="$interfaceReactionEquation.html#acbc23395ba28d2553bb0da44ceefe2d8" title="&#45;[ReactionEquation\l requirements]" alt="" coords="579,5,712,51"/>
+<area shape="rect" id="node9" href="$interfaceReactionEquation.html#a4d89cdca2acc566c27386855d666eb54" title="&#45;[ReactionEquation\l result]" alt="" coords="579,74,712,121"/>
+</map>

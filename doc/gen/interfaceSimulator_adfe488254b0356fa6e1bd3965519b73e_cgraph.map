@@ -1,0 +1,31 @@
+<map id="&#45;[Simulator runSimulation]" name="&#45;[Simulator runSimulation]">
+<area shape="rect" id="node3" href="$interfaceLogger.html#aaa71c486be702d856d398a33b0090941" title="+[Logger info:]" alt="" coords="260,112,367,141"/>
+<area shape="rect" id="node17" href="$interfaceSimulationConfiguration.html#ac2ff4a83e5736859a4cf93a1c7dde771" title="gets all molecule counts" alt="" coords="229,257,397,303"/>
+<area shape="rect" id="node19" href="$interfaceSimulationConfiguration.html#a63f39bcce61a68c40382f090d3d4a4d2" title="&#45;[SimulationConfiguration\l time]" alt="" coords="229,326,397,373"/>
+<area shape="rect" id="node21" href="$interfaceSimulator.html#a120b0075ac32c69b4c0926edb8644ea3" title="runs a single simulation step" alt="" coords="229,395,397,442"/>
+<area shape="rect" id="node61" href="$interfaceTimeSpan.html#a322fce81a9b46fa090015b58e5c328a0" title="&#45;[TimeSpan totalSeconds]" alt="" coords="227,465,400,495"/>
+<area shape="rect" id="node5" href="$interfaceLogger.html#a9f9acae64a5f26267526d16196ea23c8" title="gets the sole instance of this class if it exists" alt="" coords="476,5,607,35"/>
+<area shape="rect" id="node7" href="$interfaceLogger.html#a60e1706d05c9d0ff5f0e31febe20d26a" title="gets the global log level" alt="" coords="460,59,623,88"/>
+<area shape="rect" id="node9" href="$interfaceLogger.html#a8d9661d0a2d2a0839a747a7d9620606e" title="&#45;[Logger logs]" alt="" coords="491,112,592,141"/>
+<area shape="rect" id="node11" href="$interfaceLog.html#aa64cf31c232ad2981202de662d01165e" title="Write to a log file. This calls logLevelImpl if the message should be written." alt="" coords="456,165,627,211"/>
+<area shape="rect" id="node13" href="$interfaceLog.html#a2a9ff96048338da2d688a4d7784ad34a" title="&#45;[Log logLevel]" alt="" coords="712,112,819,141"/>
+<area shape="rect" id="node15" href="$interfaceLog.html#a81540f30468c3944baa3ee34cfe23e99" title="function that does the work of logging. Should be overwritten by subclasses" alt="" coords="684,165,847,211"/>
+<area shape="rect" id="node23" href="$interfaceSimulatorInternalState.html#a83919db0dc8980e5f4ee9a02d035fd8f" title="gets the sum of all the reaction rates" alt="" coords="449,234,633,281"/>
+<area shape="rect" id="node33" href="$interfaceSimulationState.html#a34112bf87bee2bd2f7ef2e4755274277" title="&#45;[SimulationState timeSince\lSimulationStart]" alt="" coords="449,303,633,350"/>
+<area shape="rect" id="node35" href="$interfaceTimeSpan.html#a211cbe687a950ec22493b17280ad34a6" title="adds a number of seconds to the TimeSpan" alt="" coords="455,373,628,403"/>
+<area shape="rect" id="node37" href="$interfaceSimulatorInternalState.html#a3a4f5ac86e3931b48a786677df621b97" title="gets the reaction for the given lower bound" alt="" coords="463,426,620,473"/>
+<area shape="rect" id="node47" href="$interfaceSimulationState.html#a59bd83c67fcb7d910c42bee95c7def7e" title="&#45;[SimulationState molecule\lCounts]" alt="" coords="452,495,631,542"/>
+<area shape="rect" id="node49" href="$interfaceReactionDefinition.html#aa4745594030644d3d8254610c6404532" title="Applies the current reaction to the molecule counts, altering them." alt="" coords="455,565,628,611"/>
+<area shape="rect" id="node59" href="$interfaceSimulatorInternalState.html#aef79550604af1477e214ed4f0b25f0a7" title="sets all Reaction that use this reaction as being &quot;dirty&quot; and needing updating" alt="" coords="463,634,620,681"/>
+<area shape="rect" id="node25" href="$interfaceSimulatorInternalState.html#a09e93cdf6fbdaa55d480f620b8d7e71c" title="ensures all rates are up to date, using state to update them if required" alt="" coords="687,234,844,281"/>
+<area shape="rect" id="node27" href="$interfaceReactionWithRate.html#a8da829f37d00ece86f481e8a45902c0f" title="&#45;[ReactionWithRate\l rate]" alt="" coords="1191,234,1327,281"/>
+<area shape="rect" id="node29" href="$interfaceReactionWithRate.html#a7a70d5afcf0bcd54d697e184b576ac74" title="&#45;[ReactionWithRate\l setPartialSum:]" alt="" coords="951,234,1087,281"/>
+<area shape="rect" id="node39" href="$interfaceSimulatorInternalState.html#a2eb2dc33db4018760a3960a961794816" title="returns the reaction index that such that it is the lowest index greater than the upper bound..." alt="" coords="687,407,844,454"/>
+<area shape="rect" id="node45" href="$interfaceReactionWithRate.html#ae17e3583df68d7b3f91ac71830ab0e15" title="&#45;[ReactionWithRate\l reaction]" alt="" coords="697,477,833,523"/>
+<area shape="rect" id="node41" href="$interfaceSimulatorInternalState.html#afabf7bd0d52abf6fe17527eadf7550f1" title="implementation of findReactionIndex, needs mUseLogrithmicDirectMethod to be enabled" alt="" coords="897,373,1140,419"/>
+<area shape="rect" id="node43" href="$interfaceSimulatorInternalState.html#a081527207322db72e840078939d4e9b3" title="implementation of findReactionIndex" alt="" coords="897,442,1140,489"/>
+<area shape="rect" id="node51" href="$interfaceReactionDefinition.html#a7701a8846f4738a9837699bb1c051426" title="&#45;[ReactionDefinition\l requirements]" alt="" coords="697,546,833,593"/>
+<area shape="rect" id="node55" href="$interfaceReactionDefinition.html#ab480e7140c29f45be1e04edb812e8e87" title="&#45;[ReactionDefinition\l result]" alt="" coords="697,615,833,662"/>
+<area shape="rect" id="node53" href="$interfaceReactionEquation.html#acbc23395ba28d2553bb0da44ceefe2d8" title="&#45;[ReactionEquation\l requirements]" alt="" coords="952,546,1085,593"/>
+<area shape="rect" id="node57" href="$interfaceReactionEquation.html#a4d89cdca2acc566c27386855d666eb54" title="&#45;[ReactionEquation\l result]" alt="" coords="952,615,1085,662"/>
+</map>

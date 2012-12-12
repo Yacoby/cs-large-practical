@@ -1,0 +1,72 @@
+.TH CSLP 1 "DECEMBER 2012" Linux "User Manuals"
+.SH NAME
+.PP
+cslp \- An Exact Stochastic Simulator
+.SH SYNOPSIS
+.PP
+\fB\fCcslp\fR [options] [\fIinput\-script\fP]
+.SH DESCRIPTION
+.PP
+\fB\fCcslp\fR provides exact stochastic simulation of molecule reactions as defined in
+a script file and outputs the series of events
+.SH OPTIONS
+.PP
+\fB\fC--trackalloc\fR
+This allows tracking of object allocations. This isnt terribly useful as
+some objects are not released by the underlying gnustep library
+.PP
+\fB\fC--wall\fR
+Treat all configuration file warnings as errors
+.PP
+\fB\fC--aggregator\fR
+The aggregator can aggregate the state changes in the simulation before it is sent to the
+writer. Valid options are:
+.RS
+.IP \(bu 2
+\fB\fCPassthroughAggregator\fR All state changes are logged
+.IP \(bu 2
+\fB\fCHundredMsAggregator\fR At least a hundred ms needs to have passed for a state change to be logged
+.IP \(bu 2
+\fB\fCExactHundredMsAggregator\fR Writes the state exactly every hundred milliseconds. Possibly slightly slower than the other aggregator as it has to do more allocations
+.IP \(bu 2
+\fB\fCResultOnlyAggregator\fR Writes the last output only
+.RE
+.PP
+\fB\fC--writer\fR
+The writer defines how the state changes will be written. Valid options are
+.RS
+.IP \(bu 2
+\fB\fCAssignmentCsvWriter\fR Writes in the (invalid) Csv format specified by the assignment
+.IP \(bu 2
+\fB\fCRfcCsvWriter\fR Csv writer that conforms to RFC 4180
+.UR http://tools.ietf.org/html/rfc4180
+.UE
+.RE
+.PP
+\fB\fC--logfname\fR
+The file name to write the log to. If not specified then the log is not written to a fail.
+.PP
+\fB\fC--logflevel\fR
+The log level for the file log. If \fB\fC--logfname\fR is not set then this is ignored. This should by one of: debug, info, warn, error
+.PP
+\fB\fC--logstderrlevel\fR
+The log level for the stderr log. This should by one of: debug, info, warn, error
+.PP
+\fB\fC--seed\fR
+The seed of the random number generator used to run the simulation. If this is not specified then 
+.BR time (NULL) 
+is used.
+.PP
+\fB\fC--sdm\fR
+Enables sorting of reactions so that when working out which reaction occurred the ones more likely to occur are checked first
+.PP
+\fB\fC--ldm\fR
+Reactions are searched for using binary search. There is no point combining this with \fB\fC--sdm\fR as the search for reactions is no longer linear .
+.PP
+\fB\fC--dependency-graph\fR
+This only updates the reaction rates that will have change by maintaining a graph of how applying a reaction will effect the rates.
+.SH AUTHOR
+.PP
+Jacob Essex 
+.MT cslp@jacobessex.com
+.ME

@@ -1,0 +1,6 @@
+<map id="makeLogger" name="makeLogger">
+<area shape="rect" id="node3" href="$interfaceLogger.html#a3b08cc5aa34b19336c58dd012332196c" title="Adds a log output to the list of logs to receive log messages." alt="" coords="184,5,307,35"/>
+<area shape="rect" id="node5" href="$interfaceLogger.html#a141b634367af1142c125b45d38e2d431" title="Given a string log level such as &quot;WARN&quot; this converts it to the appropriate LogLevel." alt="" coords="147,59,344,88"/>
+<area shape="rect" id="node7" href="$interfaceCommandLineOptions.html#a302bb219308fc7ce395f038c43046186" title="retrieves an option with the given argument key" alt="" coords="167,111,324,158"/>
+<area shape="rect" id="node9" href="$interfaceLog.html#af993960f998bb9287198e2cfbe20b0a8" title="sets the level of the log. All messages equal to or above this level will be logged" alt="" coords="179,181,312,211"/>
+</map>

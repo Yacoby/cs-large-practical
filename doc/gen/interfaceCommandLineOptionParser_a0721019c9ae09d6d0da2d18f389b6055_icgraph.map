@@ -1,0 +1,6 @@
+<map id="&#45;[CommandLineOptionParser parseOptionalArgument:withRemainingStack:error:]" name="&#45;[CommandLineOptionParser parseOptionalArgument:withRemainingStack:error:]">
+<area shape="rect" id="node3" href="$interfaceCommandLineOptionParser.html#a1c23280b7cc58a38d4e7584e8c3ef2f7" title="parses a single command line argument from the stack of available arguments" alt="" coords="247,5,508,69"/>
+<area shape="rect" id="node5" href="$interfaceCommandLineOptionParser.html#acc02ea84b30934a4d381b6643797a3c2" title="Parses all the arguments given into a dictionary." alt="" coords="559,5,777,69"/>
+<area shape="rect" id="node7" href="$interfaceCommandLineOptionParser.html#a09638d46ad8eb8285d1680618a08b41e" title="parses the command line arguments passed in an array" alt="" coords="828,14,1017,61"/>
+<area shape="rect" id="node9" href="$interfaceCommandLineOptionParser.html#a38bee3c522ca6177fe684e90e4bd83b9" title="same as parse:error: but does not record the details of any error that occurs" alt="" coords="1068,14,1257,61"/>
+</map>

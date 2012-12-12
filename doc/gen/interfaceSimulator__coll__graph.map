@@ -1,0 +1,5 @@
+<map id="Simulator" name="Simulator">
+<area shape="rect" id="node2" href="$interfaceSimulationConfiguration.html" title="Holds a copy of the configuration, which may or may not be valid." alt="" coords="5,101,165,131"/>
+<area shape="rect" id="node4" href="$interfaceTimeSpan.html" title="Represents a time interval." alt="" coords="45,5,125,35"/>
+<area shape="rect" id="node6" href="$interfaceSimulatorInternalState.html" title="this holds the internal state of the simulator and is responsible for ensuring consistency" alt="" coords="189,101,339,131"/>
+</map>

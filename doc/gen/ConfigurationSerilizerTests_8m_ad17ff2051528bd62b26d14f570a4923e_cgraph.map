@@ -1,0 +1,10 @@
+<map id="testParseEquationComponents_WhenHasDesctuctiveReaction_ParsesCorrectly" name="testParseEquationComponents_WhenHasDesctuctiveReaction_ParsesCorrectly">
+<area shape="rect" id="node3" href="$interfaceConfigurationTextSerilizer.html#a50519a4b8c5d0c0e19f7f9cbc383b762" title="Parses the reaction components. E.g: A + B &#45;&gt; C." alt="" coords="264,105,448,169"/>
+<area shape="rect" id="node5" href="$interfaceConfigurationTextSerilizer.html#aac75bf9d7f8e488d7afee7cf39dd53cb" title="makes an error object for the ConfigurationSerilizer." alt="" coords="767,5,953,51"/>
+<area shape="rect" id="node7" href="$interfaceConfigurationTextSerilizer.html#a904d3006316de2d501a90465093dfae1" title="+[ConfigurationTextSerilizer\l parsePartOfEquationComponents\l:error:]" alt="" coords="496,65,717,129"/>
+<area shape="rect" id="node12" href="$interfaceReactionEquation.html#a614d6fec321b7c754bb2deadd7818b9c" title="&#45;[ReactionEquation\l setRequirements:]" alt="" coords="540,153,673,199"/>
+<area shape="rect" id="node16" href="$interfaceReactionEquation.html#aa46180d0b95d15f7a8935a46f048f1ff" title="&#45;[ReactionEquation\l setResult:]" alt="" coords="540,222,673,269"/>
+<area shape="rect" id="node9" href="$interfaceConfigurationTextSerilizer.html#a10aa525f1623aa761de40edc6675ae42" title="Removes all white space from the lhs and rhs of a string." alt="" coords="768,74,952,121"/>
+<area shape="rect" id="node14" href="$interfaceReactionEquation.html#acbc23395ba28d2553bb0da44ceefe2d8" title="&#45;[ReactionEquation\l requirements]" alt="" coords="793,153,927,199"/>
+<area shape="rect" id="node18" href="$interfaceReactionEquation.html#a4d89cdca2acc566c27386855d666eb54" title="&#45;[ReactionEquation\l result]" alt="" coords="793,222,927,269"/>
+</map>

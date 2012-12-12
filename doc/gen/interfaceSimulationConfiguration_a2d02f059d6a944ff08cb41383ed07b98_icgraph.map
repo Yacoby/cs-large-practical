@@ -1,0 +1,5 @@
+<map id="&#45;[SimulationConfiguration addReactionEquation:reactionEquation:]" name="&#45;[SimulationConfiguration addReactionEquation:reactionEquation:]">
+<area shape="rect" id="node3" href="$interfaceConfigurationTextSerilizer.html#a801cbca7755625f15e0e136e452e01a5" title="parses an equation such as f : A &#45;&gt; B" alt="" coords="312,5,515,69"/>
+<area shape="rect" id="node5" href="$interfaceConfigurationTextSerilizer.html#afa4fbade4909da0b4257eac5b730510d" title="+[ConfigurationTextSerilizer\l deserilize:error:]" alt="" coords="563,14,747,61"/>
+<area shape="rect" id="node7" href="$Main_8m.html#a657980ef6d952408f40b4e22ee1def07" title="gets the simulation configuration based on the given options" alt="" coords="795,23,973,52"/>
+</map>

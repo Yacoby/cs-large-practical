@@ -1,0 +1,51 @@
+<map id="main" name="main">
+<area shape="rect" id="node3" href="$Main_8m.html#a2888e99e65ce06d333138106496da454" title="generates an option parser that has all the options for the program" alt="" coords="139,233,261,263"/>
+<area shape="rect" id="node28" href="$interfaceCommandLineOptionParser.html#a09638d46ad8eb8285d1680618a08b41e" title="parses the command line arguments passed in an array" alt="" coords="105,634,295,681"/>
+<area shape="rect" id="node42" href="$interfaceCommandLineOptions.html#a302bb219308fc7ce395f038c43046186" title="retrieves an option with the given argument key" alt="" coords="393,933,551,979"/>
+<area shape="rect" id="node44" href="$Main_8m.html#a5bb13c29bf6a6f1d7e1548ac8a611439" title="builds loggers based on the settings passed in via the CommandLineOptions" alt="" coords="153,861,247,891"/>
+<area shape="rect" id="node53" href="$Main_8m.html#a657980ef6d952408f40b4e22ee1def07" title="gets the simulation configuration based on the given options" alt="" coords="111,1125,289,1155"/>
+<area shape="rect" id="node68" href="$interfaceLogger.html#a71be94c3f0e52d39955b671c0b4e83a1" title="sends the message to all Logs" alt="" coords="417,1248,527,1277"/>
+<area shape="rect" id="node74" href="$interfaceSimulationConfiguration.html#a66edd4e8463e2455820009efe443d692" title="&#45;[SimulationConfiguration\l validate]" alt="" coords="116,1597,284,1643"/>
+<area shape="rect" id="node88" href="$interfaceConfigurationValidation.html#a4141db08b025b4998466d1fc67cab8f6" title="gets all errors &#45; things which mean that the configuration is invalid" alt="" coords="119,1666,281,1713"/>
+<area shape="rect" id="node90" href="$interfaceConfigurationValidation.html#af99e28dbeee0416fe898c6d836471b1d" title="gets all warnings &#45; problems with the configuration that are not errors" alt="" coords="119,1735,281,1782"/>
+<area shape="rect" id="node92" href="$interfaceLogger.html#a0dedd99023df22359630d29623817080" title="+[Logger warn:]" alt="" coords="416,1195,528,1224"/>
+<area shape="rect" id="node98" href="$Main_8m.html#afa5b5ab88b4062391a51a2e296501eed" title="gets an output writer from the command line options and configuration" alt="" coords="143,1072,257,1101"/>
+<area shape="rect" id="node104" href="$Main_8m.html#a2ac205cdee8754ecb2e38db3281ddef5" title="builds an output aggregator" alt="" coords="129,1019,271,1048"/>
+<area shape="rect" id="node108" href="$Main_8m.html#ab22afe2d0c9f6ca7a6beb2f0a9eedb50" title="gets a random number generator" alt="" coords="104,915,296,944"/>
+<area shape="rect" id="node111" href="$interfaceSimulator.html#adfe488254b0356fa6e1bd3965519b73e" title="runs the simulation with the objects given on object initialization" alt="" coords="115,1344,285,1373"/>
+<area shape="rect" id="node122" href="$Main_8m.html#a58fa8da3ae03ead121bc4cd9df2014d7" title="Prints a list of allocated classes and their current allocation count to stdout." alt="" coords="125,1805,275,1835"/>
+<area shape="rect" id="node5" href="$interfaceCommandLineOptionParser.html#ae96f9ac910cda37c5689bd9996738dc9" title="adds an argument, with the type of argument depending on the name" alt="" coords="364,185,580,231"/>
+<area shape="rect" id="node9" href="$interfaceCommandLineOptionParser.html#afe9fee77435a8a87bac3ee353fc2bdcb" title="Sets the argument to required/not required." alt="" coords="960,116,1155,180"/>
+<area shape="rect" id="node15" href="$interfaceCommandLineOptionParser.html#a0ebc26aeeb71a36a0ae45d3c3f3b0f41" title="Sets the default value for an argument." alt="" coords="1204,368,1420,432"/>
+<area shape="rect" id="node17" href="$interfaceCommandLineOptionParser.html#ad9a8195ad20b01321b9c875b831051a5" title="Sets the help text for the argument." alt="" coords="353,5,591,51"/>
+<area shape="rect" id="node20" href="$interfaceCommandLineOptionParser.html#a1da13f38f54023335dde513252a816c8" title="&#45;[CommandLineOptionParser\l addArgumentWithName:andShortName\l:ofType:]" alt="" coords="344,255,600,319"/>
+<area shape="rect" id="node7" href="$interfaceCommandLineOptionParser.html#a6cfc32d6be3d033d085f3d71d4b80023" title="Adds a positional argument for a given key." alt="" coords="677,176,883,240"/>
+<area shape="rect" id="node11" href="$interfaceCommandLineOptionParser.html#af2a8e62d9ed83d90ed09afe6fc39e24d" title="Converts an argument name in the form of &quot;&amp;ndash;name&quot; to &quot;name&quot;." alt="" coords="685,263,875,310"/>
+<area shape="rect" id="node13" href="$interfaceCommandLineOptionParser.html#a9931f75b03c7763b10be94798f244d92" title="Allows adding an optional argument while specifying a key." alt="" coords="961,333,1153,397"/>
+<area shape="rect" id="node24" href="$interfaceCommandLineOptionParser.html#a8205938fd86b0d9109ade844ae712c77" title="&#45;[CommandLineOptionParser\l addOptionalArgumentForKey\l:withName:andShortName:ofType:]" alt="" coords="667,333,893,397"/>
+<area shape="rect" id="node30" href="$interfaceCommandLineOptionParser.html#acc02ea84b30934a4d381b6643797a3c2" title="Parses all the arguments given into a dictionary." alt="" coords="363,523,581,587"/>
+<area shape="rect" id="node34" href="$interfaceCommandLineOptionParser.html#a66833ff60e65ebf4996f2af121016984" title="helper function to make a new NSError object with the given description" alt="" coords="963,501,1152,547"/>
+<area shape="rect" id="node36" href="$interfaceCommandLineOptionParser.html#a18f35af73e5cb4cddcf1441daaafa9b4" title="generates help text from the arguments" alt="" coords="377,634,567,681"/>
+<area shape="rect" id="node40" href="$interfaceCommandLineOptionParser.html#ae9289ddc05cfe8ab526f341d0dff15ec" title="Inserts entries for arguments that have a default value but have no user value set." alt="" coords="377,703,567,750"/>
+<area shape="rect" id="node32" href="$interfaceCommandLineOptionParser.html#a1c23280b7cc58a38d4e7584e8c3ef2f7" title="parses a single command line argument from the stack of available arguments and pops it off the stack..." alt="" coords="649,523,911,587"/>
+<area shape="rect" id="node46" href="$interfaceLogger.html#a3b08cc5aa34b19336c58dd012332196c" title="Adds a log output to the list of logs to receive log messages." alt="" coords="411,880,533,909"/>
+<area shape="rect" id="node48" href="$interfaceLogger.html#a141b634367af1142c125b45d38e2d431" title="Given a string log level such as &quot;WARN&quot; this converts it to the appropriate LogLevel." alt="" coords="373,773,571,803"/>
+<area shape="rect" id="node51" href="$interfaceLog.html#af993960f998bb9287198e2cfbe20b0a8" title="sets the level of the log. All messages equal to or above this level will be logged" alt="" coords="405,827,539,856"/>
+<area shape="rect" id="node56" href="$interfaceLogger.html#aaa71c486be702d856d398a33b0090941" title="+[Logger info:]" alt="" coords="419,1072,525,1101"/>
+<area shape="rect" id="node66" href="$interfaceConfigurationTextSerilizer.html#afa4fbade4909da0b4257eac5b730510d" title="+[ConfigurationTextSerilizer\l deserilize:error:]" alt="" coords="380,1125,564,1171"/>
+<area shape="rect" id="node58" href="$interfaceLogger.html#a9f9acae64a5f26267526d16196ea23c8" title="gets the sole instance of this class if it exists" alt="" coords="715,1084,845,1113"/>
+<area shape="rect" id="node60" href="$interfaceLogger.html#a60e1706d05c9d0ff5f0e31febe20d26a" title="gets the global log level" alt="" coords="699,1137,861,1167"/>
+<area shape="rect" id="node62" href="$interfaceLogger.html#a8d9661d0a2d2a0839a747a7d9620606e" title="&#45;[Logger logs]" alt="" coords="729,1191,831,1220"/>
+<area shape="rect" id="node64" href="$interfaceLog.html#aa64cf31c232ad2981202de662d01165e" title="Write to a log file. This calls logLevelImpl if the message should be written." alt="" coords="695,1243,865,1290"/>
+<area shape="rect" id="node76" href="$interfaceConfigurationValidation.html#a8e7b2509035abcf477019888055e0590" title="&#45;[ConfigurationValidation\l addError:]" alt="" coords="391,1701,553,1747"/>
+<area shape="rect" id="node78" href="$interfaceSimulationConfiguration.html#a09a3e7935cebf289b7360389091bf9f9" title="&#45;[SimulationConfiguration\l kineticConstantsWithoutReaction\lEquations]" alt="" coords="361,1771,583,1835"/>
+<area shape="rect" id="node80" href="$interfaceConfigurationValidation.html#afbbb172da00b65b86f4c277b95bd30a7" title="&#45;[ConfigurationValidation\l addWarning:]" alt="" coords="391,1858,553,1905"/>
+<area shape="rect" id="node82" href="$interfaceSimulationConfiguration.html#adcbabe47352ddf0a0c2aac21dd362f36" title="&#45;[SimulationConfiguration\l reactionEquationsWithoutKinetic\lConstants]" alt="" coords="365,1928,579,1992"/>
+<area shape="rect" id="node84" href="$interfaceSimulationConfiguration.html#aa36db482bc42448365f7d718a0a6b028" title="&#45;[SimulationConfiguration\l moleculesInReactionsWithNoCount]" alt="" coords="353,1562,591,1609"/>
+<area shape="rect" id="node86" href="$interfaceSimulationConfiguration.html#a390c1a23f1bf5de2b5e0052b6667fdf3" title="&#45;[SimulationConfiguration\l moleculesNotUsedInReactions]" alt="" coords="367,1631,577,1678"/>
+<area shape="rect" id="node102" href="$interfaceFactory.html#a4f4379b4a67858c658d11b751633dcc7" title="get a class from a string if the class is valid" alt="" coords="385,1002,559,1049"/>
+<area shape="rect" id="node114" href="$interfaceSimulationConfiguration.html#ac2ff4a83e5736859a4cf93a1c7dde771" title="gets all molecule counts" alt="" coords="388,1301,556,1347"/>
+<area shape="rect" id="node116" href="$interfaceSimulationConfiguration.html#a63f39bcce61a68c40382f090d3d4a4d2" title="&#45;[SimulationConfiguration\l time]" alt="" coords="388,1370,556,1417"/>
+<area shape="rect" id="node118" href="$interfaceSimulator.html#a120b0075ac32c69b4c0926edb8644ea3" title="runs a single simulation step" alt="" coords="388,1439,556,1486"/>
+<area shape="rect" id="node120" href="$interfaceTimeSpan.html#a322fce81a9b46fa090015b58e5c328a0" title="&#45;[TimeSpan totalSeconds]" alt="" coords="385,1509,559,1539"/>
+</map>

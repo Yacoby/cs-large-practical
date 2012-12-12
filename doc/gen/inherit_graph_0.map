@@ -1,0 +1,4 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$protocolConfigurationSerilizer-p.html" title="Protocol defines the deserilization of anything into a SimulationConfiguration*." alt="" coords="5,5,168,35"/>
+<area shape="rect" id="node3" href="$interfaceConfigurationTextSerilizer.html" title="Parses the script configuration as defined in the handout." alt="" coords="217,5,388,35"/>
+</map>

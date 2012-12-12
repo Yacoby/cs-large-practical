@@ -4,6 +4,18 @@
 #import "SimulationOutputAggregator.h"
 #import "Random.h"
 
+@interface ReactionWithRate : NSObject{
+    ReactionDefinition* mReaction;
+    double mRate;
+}
+- (id)initWithReaction:(ReactionDefinition*)reaction rate:(double)rate;
+- (void)dealloc;
+
+- (ReactionDefinition*)reaction;
+- (double)rate;
+- (void)setRate:(double)rate;
+@end
+
 /**
  * @brief this holds the internal state of the simulator and is responsible for ensuring consistency
  * 
@@ -15,21 +27,16 @@
  */
 @interface SimulatorInternalState : NSObject{
     /**
-     * @brief an array of NSNumber that holds the rate for each reaction
-     */
-    NSMutableArray* mReactionRates;
-
-    /**
-     * @brief An array of all reactions. 
-     *
-     * This is stored in the same order as mReactionRates.
+     * @brief An array of all reactions and rates, held in ReactionWithRate
      */
     NSMutableArray* mReactions;
 
     /**
      * @brief a set of reactions that do not have a valid rate
+     *
+     * These are all of type ReactionWithRate
      */
-    NSMutableSet*   mDirtyReactions;
+    NSMutableSet* mDirtyReactions;
 
     /**
      * @brief A graph with ReactionDefinition as nodes, and edges for reaction rate dependency.
@@ -42,11 +49,6 @@
      * with keys as a NSValue pointer to the reaction and values as a set of dependant reactions
      */
     NSMutableDictionary* mReactionRateDepencies;
-
-    /**
-     * @brief dictionary of a pointer to a reaction to the current index in mReactions
-     */
-    NSMutableDictionary* mReactionToIdx;
 
     BOOL mUseSortedDirectMethod;
     BOOL mUseDependencyGraph;

@@ -33,6 +33,7 @@ writer. Valid options are:
 * `PassthroughAggregator` All state changes are logged
 * `HundredMsAggregator` At least a hundred ms needs to have passed for a state change to be logged
 * `ExactHundredMsAggregator` Writes the state exactly every hundred milliseconds. Possibly slightly slower than the other aggregator as it has to do more allocations
+* `ResultOnlyAggregator` Writes the last output only
 
 `--writer`
 The writer defines how the state changes will be written. Valid options are

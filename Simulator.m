@@ -3,6 +3,35 @@
 #import "Logger.h"
 #import <math.h>
 
+@implementation ReactionWithRate
+
+- (id)initWithReaction:(ReactionDefinition*)reaction rate:(double)rate{
+    self = [super init];
+    if ( self ){
+        [reaction retain];
+        mReaction = reaction;
+
+        mRate = rate;
+    }
+    return self;
+}
+- (void)dealloc{
+    [super dealloc];
+    [mReaction release];
+}
+
+- (ReactionDefinition*)reaction{
+    return mReaction;
+}
+- (double)rate{
+    return mRate;
+}
+- (void)setRate:(double)rate{
+    mRate = rate;
+}
+
+@end
+
 @implementation SimulatorInternalState
 - (id)init{
     return [self initWithSMO:YES dependencyGraph:YES];
@@ -14,36 +43,32 @@
         mUseSortedDirectMethod = smo;
         mUseDependencyGraph = graph;
         mReactions      = [[NSMutableArray alloc] init];
-        mReactionRates  = [[NSMutableArray alloc] init];
         mDirtyReactions = [[NSMutableSet alloc] init];
         mReactionRateDepencies = [[NSMutableDictionary alloc] init];
-        mReactionToIdx = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
 
 - (void)dealloc{
     [mReactions release];
-    [mReactionRates release];
     [mDirtyReactions release];
-    [mReactionToIdx release];
     [mReactionRateDepencies release];
     [super dealloc];
 }
 
 - (void)addReaction:(ReactionDefinition*)reaction{
-    int newIdx = [mReactions count];
-    [mReactions addObject:reaction];
-    [mReactionRates addObject:[NSNumber numberWithInt:0]];
-    [mDirtyReactions addObject:reaction];
-    [mReactionToIdx setObject:[NSNumber numberWithInt:newIdx] forKey:[NSValue valueWithPointer:reaction]];
+    ReactionWithRate* reactionAndRate = [[ReactionWithRate alloc] initWithReaction:reaction
+                                                                  rate:0];
+    [mReactions addObject:reactionAndRate];
+    [mDirtyReactions addObject:reactionAndRate];
 }
 
 - (void)buildRequirementsGraph{
     //build a dictionary of all molecule to all reactions that have the molecule in thier
     //requirements
     NSMutableDictionary* moleculeToRequireReaction = [[NSMutableDictionary alloc] init];
-    for ( ReactionDefinition* reaction in mReactions ){
+    for ( ReactionWithRate* reactionAndRate in mReactions ){
+        ReactionDefinition* reaction = [reactionAndRate reaction];
         for ( NSString* moleculeRequirement in [reaction requirements] ){
             NSMutableSet* set = [moleculeToRequireReaction objectForKey:moleculeRequirement];
             if ( set == nil ){
@@ -51,15 +76,18 @@
                 [moleculeToRequireReaction setObject:set forKey:moleculeRequirement];
                 [set release];
             }
-            [set addObject:reaction];
+            [set addObject:reactionAndRate];
         }
     }
 
     //Covert the above into a graph with edges for reaction depenecies
-    for ( ReactionDefinition* reaction in mReactions ){
+    for ( ReactionWithRate* reactionAndRate in mReactions ){
+        ReactionDefinition* reaction = [reactionAndRate reaction];
+
         NSMutableSet* set = [[NSMutableSet alloc] init];
         [mReactionRateDepencies setObject:set forKey:[NSValue valueWithPointer:reaction]];
         [set release];
+
         for ( NSString* molecule in [reaction alteredMolecules] ){
             [set unionSet:[moleculeToRequireReaction objectForKey:molecule]];
         }
@@ -68,10 +96,9 @@
 }
 
 - (void)updateDirty:(SimulationState*)state{
-    for ( ReactionDefinition* reaction in mDirtyReactions ){
-        int rdIdx = [[mReactionToIdx objectForKey:[NSValue valueWithPointer:reaction]] intValue];
-        double reactionRate = [reaction reactionRate:state];
-        [mReactionRates replaceObjectAtIndex:rdIdx withObject:[NSNumber numberWithDouble:reactionRate]];
+    for ( ReactionWithRate* reactionWithRate in mDirtyReactions ){
+        double reactionRate = [[reactionWithRate reaction] reactionRate:state];
+        [reactionWithRate setRate:reactionRate];
     }
     [mDirtyReactions removeAllObjects];
 }
@@ -82,12 +109,12 @@
     if ( mUseDependencyGraph ){
         [self updateDirty:state];
 
-        for ( NSNumber* rateNumber in mReactionRates ){
-            reactionRateSum += [rateNumber doubleValue];
+        for ( ReactionWithRate* reactionAndRate in mReactions ){
+            reactionRateSum += [reactionAndRate rate];
         }
     }else{
-        for ( ReactionDefinition* reaction in mReactions ){
-            reactionRateSum += [reaction reactionRate:state];
+        for ( ReactionWithRate* reactionAndRate in mReactions ){
+            reactionRateSum += [[reactionAndRate reaction] reactionRate:state];
         }
     }
 
@@ -101,28 +128,23 @@
     double rateSum = 0;
     for (int reactionIdx = 0; reactionIdx < [mReactions count]; ++reactionIdx) {
         if ( mUseDependencyGraph ){
-            rateSum += [[mReactionRates objectAtIndex:reactionIdx] doubleValue];
+            rateSum += [[mReactions objectAtIndex:reactionIdx] rate];
         }else{
-            rateSum += [[mReactions objectAtIndex:reactionIdx] reactionRate:state];
+            rateSum += [[[mReactions objectAtIndex:reactionIdx] reaction] reactionRate:state];
         }
         if ( rateSum > upperBound ){
-            ReactionDefinition* reactionToReturn = [mReactions objectAtIndex:reactionIdx];
+            ReactionWithRate* reactionToReturn = [mReactions objectAtIndex:reactionIdx];
 
             //slowly move reactions that happen alot to the start of the array to search
             //sorted direct method
             if ( mUseSortedDirectMethod && reactionIdx != 0 ){
                 const int newCurrentReactionIdx = reactionIdx - 1;
-                const ReactionEquation* const higherPriorityReaction = [mReactions objectAtIndex:newCurrentReactionIdx];
+                const ReactionWithRate* const higherPriorityReaction = [mReactions objectAtIndex:newCurrentReactionIdx];
 
                 [mReactions replaceObjectAtIndex:newCurrentReactionIdx withObject:reactionToReturn];
-                [mReactionToIdx setObject:[NSNumber numberWithInt:newCurrentReactionIdx]
-                                   forKey:[NSValue valueWithPointer:reactionToReturn]];
-
                 [mReactions replaceObjectAtIndex:reactionIdx withObject:higherPriorityReaction];
-                [mReactionToIdx setObject:[NSNumber numberWithInt:reactionIdx]
-                                   forKey:[NSValue valueWithPointer:higherPriorityReaction]];
             }
-            return reactionToReturn;
+            return [reactionToReturn reaction];
         }
     }
     return nil;

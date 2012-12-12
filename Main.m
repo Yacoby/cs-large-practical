@@ -63,6 +63,10 @@ CommandLineOptionParser* getOptionsParser(){
     [cmdLineParser setHelpStringForArgumentKey:@"input" help:@"The path to the input script. If not set the input will be read from stdin"];
     [cmdLineParser setRequiredForArgumentKey:@"input" required:NO];
 
+    [cmdLineParser addArgumentWithName:@"--output" ofType:String];
+    [cmdLineParser setHelpStringForArgumentKey:@"output" help:@"The path to the ouptut script. If not set the output will be written to stdout"];
+    [cmdLineParser setRequiredForArgumentKey:@"output" required:NO];
+
     [cmdLineParser addArgumentWithName:@"--writer" ofType:String];
     [cmdLineParser setHelpStringForArgumentKey:@"writer" help:@"The output writer that defines the format"];
     [cmdLineParser setDefaultValueForArgumentKey:@"writer" value:@"AssignmentCsvWriter"];

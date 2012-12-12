@@ -3,11 +3,11 @@ Computer Science Large Practical
 
 Introduction
 ------------
-This is the program for 2012 Computer Science Large Practical as setout in the [Handout](http://www.inf.ed.ac.uk/teaching/courses/cslp/coursework/CSLP-2012.pdf)
+This is the program for 2012 Computer Science Large Practical as set out in the [Handout](http://www.inf.ed.ac.uk/teaching/courses/cslp/coursework/CSLP-2012.pdf)
 
 This file is written using [Markdown](http://daringfireball.net/projects/markdown/).
 While you can convert it to html using [Markdown.pl](http://daringfireball.net/projects/markdown/) or any other converter
-it is intergrated with doxygen and apears as the main page of the doxygen documentation and also bundled as a pdf
+it is integrated with doxygen and appears as the main page of the doxygen documentation and also bundled as a pdf
 
 Building
 --------
@@ -59,7 +59,6 @@ Command Line Arguments
 -----------------------
 Run `./Cslp.app/Cslp --help` to see an up to date list of command line options
 
-
 Configuration Script
 --------------------
 The configuration script is the same as described in the Handout, but with the
@@ -84,7 +83,7 @@ which can group up simulator state changes. Valid options for this are:
 * `ExactHundredMsAggregator` - Writes the state exactly every hundred milliseconds. Possibly slightly slower than the other aggregator as it has to do more allocations
 * `ResultOnlyAggregator` Writes the last output only
 
-The second option that can effec the output is the writer itself (`--writer`). Valid options are
+The second option that can effect the output is the writer itself (`--writer`). Valid options are
 
 * `AssignmentCsvWriter` - Writes in the (invalid) Csv format specified by the assignment
 * `RfcCsvWriter` - Csv writer that conforms to [RFC 4180](http://tools.ietf.org/html/rfc4180)
@@ -99,9 +98,9 @@ As I didn't want to add huge amounts of requirements for something that would be
 (i.e. I didn't want the marker to have to spend 4+ hours setting up an environment to
 build the application) I wrote a very basic logging library that does what I need.
 
-Logging can be enabled using command line paramters see Command Line Arguments for more details.
+Logging can be enabled using command line parameters see Command Line Arguments for more details.
 
-Note: Early startup errors such as incorrect command line paramters can only be logged to stderr
+Note: Early startup errors such as incorrect command line parameters can only be logged to stderr
       as at this point no logs have been created.
 
 Running Tests
@@ -122,18 +121,48 @@ via `--sdm`, `--ldm` and `--dependency-graph`. These adversely effect performanc
 * LDM (Logarithmic Direct Method) preforms a binary search against the list of reactions rather than a linear search. This makes SDM useless but will probably only have a noticeable impact on performance for very large numbers of reactions
 * Dependency Graph maintains a dependency graph of what applying a reaction will effect. It uses this to minimize the number of calculations needed.
 
+I did not build a big enough system to find where one where using logarithmic search made a significant performance gain and I would suspect 
+
 Although (I would assume) outside the scope of this project would be
 to write the file as binary, which would avoid the string concatenation
 problems (but the data would be in a less useful format).  It would also be possible 
 (on a multicore machine) to write on one thread and do the simulation on another thread,
 although care would have to be taken with the cost of synchronization overhead.
 
+While it is (compared to the performance problem of the output) fairly minor,
+it would be advantageous to write the Simulator in C. This is because when using
+Objective C it is hard to avoid heap allocations in the simulator main loop as
+the Objective C container types (NSArray, NSSet etc) cannot store primitive types so
+have to be wrapped (for example having to create a NSValue to do a pointer lookup).
+Given that the assignment wanted the code to be Objective C, I didn't experiment
+with writing a version of the simulator in C.
 
 Other code
 -----------
 tests/Testing.h is not my code and comes from gnustep. It is a set of macros that
 provide helpers to test functionality (such as exceptions being raised).
 It is included as it doesn't seem to live in a GNUStep include directory.
+
+Coding Style
+------------
+Where possible I have tried to stick to a idiomatic Objective C coding style. There is one
+noticeable area where I haven't done so and that is with pointer variable declarations. It
+seems that the standard way of doing things is to declare them like so (note the position
+of the asterisk):
+
+    MyClass *myVariable;
+
+This is a follow on from C, which for some reason that when declaring several variables 
+of the same type on the same line, you must do so like this (note the second asterisk).
+
+    MyClass *myVariable, *myOtherVariable
+
+However, it is my opinion that the `*` is part of the type, not of the name and so
+should live with the type information such as:
+
+    MyClass* myVariable;
+
+I simply avoid declaring the multiple variables of the same type on the same line.
 
 Commenting
 -----------
@@ -145,7 +174,7 @@ than adding a comment, it is better to fix the code. There are of course a few e
 * Code working around bugs/problems
 
 There is also the problem with comments that in effect it leads to maintaining two
-impelementations. One being the comments and the other being the code itself. Even with the
+implementations. One being the comments and the other being the code itself. Even with the
 best of intentions comments will drift out of sync with the code and when that happens it
 leads to confusion (Which is correct? The comments or the code?).
 
@@ -165,5 +194,5 @@ Which adds type safety and removes ambiguity from the arguments without having t
 
 While I haven't gone to that extreme in this project, where I have thought that comments may
 be needed in the implementation I have instead re-factored the code to attempt to make it more
-readable. I also tried to avoid using primative types where possible and instead used objects, for
+readable. I also tried to avoid using primitive types where possible and instead used objects, for
 example TimeSpan.

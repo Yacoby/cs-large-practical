@@ -116,7 +116,7 @@ as the slowest part of the system is writing the output (It isn't just the IO, s
 concatnation is also slow).
 
 There are several performance enhancements that work well with larger systems. They can be enabled
-via `--smo` and `--dependency-graph`. These allow 
+via `--smo` and `--dependency-graph`.
 
 
 Other code

@@ -53,6 +53,11 @@ The log level for the stderr log. This should by one of: debug, info, warn, erro
 `--seed`
 The seed of the random number generator used to run the simulation. If this is not specified then time(NULL) is used.
 
+`--smo`
+Enables sorting of reactions so that when working out which reaction occurred the ones more likely to occur are checked first
+
+`--dependency-graph`
+This only updates the reaction rates that will have change by maintaining a graph of how applying a reaction will effect the rates.
 
 AUTHOR
 ------

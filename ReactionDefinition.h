@@ -36,6 +36,7 @@
 - (KineticConstant*)kineticConstant;
 - (NSCountedSet*)requirements;
 - (NSCountedSet*)result;
+- (NSSet*)alteredMolecules;
 
 /**
  * @brief given a state (containing molecule counts) this gets the reaction rate

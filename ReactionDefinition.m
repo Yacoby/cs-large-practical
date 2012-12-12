@@ -58,6 +58,12 @@
 - (NSCountedSet*)result{
     return [mEquation result];
 }
+- (NSSet*)alteredMolecules{
+    NSMutableSet* result = [[[NSMutableSet alloc] init] autorelease];
+    [result unionSet:[self result]];
+    [result unionSet:[self requirements]];
+    return result;
+}
 
 - (double)reactionRate:(SimulationState*)state{
     NSCountedSet* req = [self requirements];

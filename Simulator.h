@@ -5,11 +5,69 @@
 #import "Random.h"
 
 /**
+ * @brief this holds the internal state of the simulator and is responsible for ensuring consistency
+ * 
+ * As the algorithm got more complex, we needed to be able to provide a simpler interface
+ * that guaranteed state consistency
+ *
+ * Internally this implements Sorted Direct Method and has a dependency graph to
+ * minimize propensity updates.
+ */
+@interface SimulatorInternalState : NSObject{
+    /**
+     * @brief an array of NSNumber that holds the rate for each reaction
+     */
+    NSMutableArray* mReactionRates;
+
+    /**
+     * @brief An array of all reactions. 
+     *
+     * This is stored in the same order as mReactionRates.
+     */
+    NSMutableArray* mReactions;
+
+    /**
+     * @brief a set of reactions that do not have a valid rate
+     */
+    NSMutableSet*   mDirtyReactions;
+
+    /**
+     * @brief A graph with ReactionDefinition as nodes, and edges for reaction rate dependency.
+     *
+     * This graph allows easy working out of what rate need to be updated when
+     * the reaction is applied. If a reaction is applied then we need to update all
+     * nodes of path length 1 away from the current reaction node
+     * 
+     * Using an adjacency list this is incredibly fast, so this is a dictionary
+     * with keys as a NSValue pointer to the reaction and values as a set of dependant reactions
+     */
+    NSMutableDictionary* mReactionRateDepencies;
+
+    /**
+     * @brief dictionary of a pointer to a reaction to the current index in mReactions
+     */
+    NSMutableDictionary* mReactionToIdx;
+}
+- (id)init;
+- (void)dealloc;
+
+- (void)setDirty:(ReactionDefinition*)reaction;
+- (BOOL)isDirty:(ReactionDefinition*)reaction;
+- (void)updateDirty:(SimulationState*)state;
+
+- (void)addReaction:(ReactionDefinition*)reaction;
+- (void)buildRequirementsGraph;
+
+- (double)reactionRate:(SimulationState*)state;
+- (ReactionDefinition*)reactionForValue:(double)upperBound;
+@end
+
+/**
  * @brief the simulator that runs the simulation on the given input
  */
 @interface Simulator : NSObject {
+    SimulatorInternalState* mInternalState;
     SimulationConfiguration* mCfg;
-    NSMutableArray* mReactions;
     id <SimulationOutputAggregator> mAggregator;
     id <Random> mRandom;
 }

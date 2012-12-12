@@ -30,18 +30,26 @@
     mRate = rate;
 }
 
+- (double)partialSum{
+    return mPartialRate;
+}
+- (void)setPartialSum:(double)rate{
+    mPartialRate = rate;
+}
 @end
 
 @implementation SimulatorInternalState
 - (id)init{
-    return [self initWithSMO:YES dependencyGraph:YES];
+    return [self initWithSDM:NO ldm:NO dependencyGraph:NO];
 }
 
-- (id)initWithSMO:(BOOL)smo dependencyGraph:(BOOL)graph{
+- (id)initWithSDM:(BOOL)sdm ldm:(BOOL)ldm dependencyGraph:(BOOL)graph{
     self = [super init];
     if ( self ){
-        mUseSortedDirectMethod = smo;
+        mUseSortedDirectMethod = sdm;
         mUseDependencyGraph = graph;
+        mUseLogrithmicDirectMethod = ldm;
+
         mReactions      = [[NSMutableArray alloc] init];
         mDirtyReactions = [[NSMutableSet alloc] init];
         mReactionRateDepencies = [[NSMutableDictionary alloc] init];
@@ -95,57 +103,87 @@
     [moleculeToRequireReaction release];
 }
 
-- (void)updateDirty:(SimulationState*)state{
-    for ( ReactionWithRate* reactionWithRate in mDirtyReactions ){
-        double reactionRate = [[reactionWithRate reaction] reactionRate:state];
-        [reactionWithRate setRate:reactionRate];
+- (void)updateRates:(SimulationState*)state{
+    if ( mUseDependencyGraph ){
+        for ( ReactionWithRate* reactionWithRate in mDirtyReactions ){
+            double reactionRate = [[reactionWithRate reaction] reactionRate:state];
+            [reactionWithRate setRate:reactionRate];
+        }
+        [mDirtyReactions removeAllObjects];
+    }else{
+        for ( ReactionWithRate* reactionWithRate in mReactions ){
+            double reactionRate = [[reactionWithRate reaction] reactionRate:state];
+            [reactionWithRate setRate:reactionRate];
+        }
     }
-    [mDirtyReactions removeAllObjects];
+
+    if ( mUseLogrithmicDirectMethod ){
+        double sum = 0;
+        for (int reactionIdx = 0; reactionIdx < [mReactions count]; ++reactionIdx) {
+            ReactionWithRate* reactionAndRate = [mReactions objectAtIndex:reactionIdx];
+            sum += [reactionAndRate rate];
+            [reactionAndRate setPartialSum:sum];
+        }
+    }
 }
 
 - (double)reactionRate:(SimulationState*)state{
-    double reactionRateSum = 0;
+    [self updateRates:state];
 
-    if ( mUseDependencyGraph ){
-        [self updateDirty:state];
-
+    if ( mUseLogrithmicDirectMethod ){
+        return [[mReactions lastObject] partialSum];
+    }else{
+        double reactionRateSum = 0;
         for ( ReactionWithRate* reactionAndRate in mReactions ){
             reactionRateSum += [reactionAndRate rate];
         }
+        return reactionRateSum;
+    }
+}
+
+- (int)findReactionIndex:(double)upperBound{
+    if ( mUseLogrithmicDirectMethod ){
+        int min = 0;
+        int max = [mReactions count] - 1;
+        while ( min <= max ){
+            int mid = (min + max)/2;
+            if ( upperBound < [[mReactions objectAtIndex:mid] partialSum] ){
+                max = mid - 1;
+            }else{
+                min = mid + 1;
+            }
+        }
+        return min;
     }else{
-        for ( ReactionWithRate* reactionAndRate in mReactions ){
-            reactionRateSum += [[reactionAndRate reaction] reactionRate:state];
+        double rateSum = 0;
+        for (int reactionIdx = 0; reactionIdx < [mReactions count]; ++reactionIdx) {
+            rateSum += [[mReactions objectAtIndex:reactionIdx] rate];
+            if ( rateSum > upperBound ){
+                return reactionIdx;
+            }
         }
     }
-
-    return reactionRateSum;
+    return -1;
 }
 
 - (ReactionDefinition*)reactionForValue:(double)upperBound simulationState:(SimulationState*)state{
     assert( mUseDependencyGraph == false ||
            ([mDirtyReactions count] == 0 && "Must be empty otherwise calculations will be wrong"));
 
-    double rateSum = 0;
-    for (int reactionIdx = 0; reactionIdx < [mReactions count]; ++reactionIdx) {
-        if ( mUseDependencyGraph ){
-            rateSum += [[mReactions objectAtIndex:reactionIdx] rate];
-        }else{
-            rateSum += [[[mReactions objectAtIndex:reactionIdx] reaction] reactionRate:state];
-        }
-        if ( rateSum > upperBound ){
-            ReactionWithRate* reactionToReturn = [mReactions objectAtIndex:reactionIdx];
+    int reactionIdx = [self findReactionIndex:upperBound];
+    if ( reactionIdx != -1 ){
+        ReactionWithRate* reactionToReturn = [mReactions objectAtIndex:reactionIdx];
 
-            //slowly move reactions that happen alot to the start of the array to search
-            //sorted direct method
-            if ( mUseSortedDirectMethod && reactionIdx != 0 ){
-                const int newCurrentReactionIdx = reactionIdx - 1;
-                const ReactionWithRate* const higherPriorityReaction = [mReactions objectAtIndex:newCurrentReactionIdx];
+        //slowly move reactions that happen alot to the start of the array to search
+        //sorted direct method
+        if ( mUseSortedDirectMethod && reactionIdx > 0 ){
+            const int newCurrentReactionIdx = reactionIdx - 1;
+            const ReactionWithRate* const higherPriorityReaction = [mReactions objectAtIndex:newCurrentReactionIdx];
 
-                [mReactions replaceObjectAtIndex:newCurrentReactionIdx withObject:reactionToReturn];
-                [mReactions replaceObjectAtIndex:reactionIdx withObject:higherPriorityReaction];
-            }
-            return [reactionToReturn reaction];
+            [mReactions replaceObjectAtIndex:newCurrentReactionIdx withObject:reactionToReturn];
+            [mReactions replaceObjectAtIndex:reactionIdx withObject:higherPriorityReaction];
         }
+        return [reactionToReturn reaction];
     }
     return nil;
 }
@@ -158,7 +196,12 @@
 }
 
 - (BOOL)isDirty:(ReactionDefinition*)reaction{
-    return [mDirtyReactions member:reaction] != nil;
+    for ( ReactionWithRate* reactionAndRate in mDirtyReactions ){
+        if ( [reactionAndRate reaction] == reaction ){
+            return YES;
+        }
+    }
+    return NO;
 }
 
 @end

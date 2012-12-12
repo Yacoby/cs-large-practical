@@ -4,9 +4,16 @@
 #import "SimulationOutputAggregator.h"
 #import "Random.h"
 
+/**
+ * @brief hold a reaction and its assoicated rate
+ *
+ * This is used to avoid having to maintian two NSMutable arrays for the reaction
+ * and the rate which vaslty increasses the possibility for bugs
+ */
 @interface ReactionWithRate : NSObject{
     ReactionDefinition* mReaction;
     double mRate;
+    double mPartialRate;
 }
 - (id)initWithReaction:(ReactionDefinition*)reaction rate:(double)rate;
 - (void)dealloc;
@@ -14,6 +21,9 @@
 - (ReactionDefinition*)reaction;
 - (double)rate;
 - (void)setRate:(double)rate;
+
+- (double)partialSum;
+- (void)setPartialSum:(double)rate;
 @end
 
 /**
@@ -52,14 +62,15 @@
 
     BOOL mUseSortedDirectMethod;
     BOOL mUseDependencyGraph;
+    BOOL mUseLogrithmicDirectMethod;
 }
 - (id)init;
-- (id)initWithSMO:(BOOL)smo dependencyGraph:(BOOL)graph;
+- (id)initWithSDM:(BOOL)sdm ldm:(BOOL)ldm dependencyGraph:(BOOL)graph;
 - (void)dealloc;
 
 - (void)setDirty:(ReactionDefinition*)reaction;
 - (BOOL)isDirty:(ReactionDefinition*)reaction;
-- (void)updateDirty:(SimulationState*)state;
+- (void)updateRates:(SimulationState*)state;
 
 - (void)addReaction:(ReactionDefinition*)reaction;
 - (void)buildRequirementsGraph;

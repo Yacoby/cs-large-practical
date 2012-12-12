@@ -25,11 +25,13 @@ void dirty_WhenHasBasicReaction_SetsSelfAsDirty(){
                                                 initWithTime:time moleculeCount:counts]
                                                 autorelease];
 
-    SimulatorInternalState* underTest = [[[SimulatorInternalState alloc] init] autorelease];
+    SimulatorInternalState* underTest = [[[SimulatorInternalState alloc]
+                                                                  initWithSDM:NO ldm:NO dependencyGraph:YES]
+                                                                  autorelease];
     [underTest addReaction:reaction];
     [underTest buildRequirementsGraph];
 
-    [underTest updateDirty:state];
+    [underTest updateRates:state];
     PASS([underTest isDirty:reaction] == NO, "Nothing should be dirty at this point");
     [underTest setDirty:reaction];
     PASS([underTest isDirty:reaction], "The reaction alters A and requires A, so it should be dirty");
@@ -74,12 +76,14 @@ void dirty_WhenHasTwoBasicReactions_SetsBothAsDirty(){
                                                 initWithTime:time moleculeCount:counts]
                                                 autorelease];
 
-    SimulatorInternalState* underTest = [[[SimulatorInternalState alloc] init] autorelease];
+    SimulatorInternalState* underTest = [[[SimulatorInternalState alloc]
+                                                                  initWithSDM:NO ldm:NO dependencyGraph:YES]
+                                                                  autorelease];
     [underTest addReaction:reaction1];
     [underTest addReaction:reaction2];
     [underTest buildRequirementsGraph];
 
-    [underTest updateDirty:state];
+    [underTest updateRates:state];
 
     PASS([underTest isDirty:reaction1] == NO && [underTest isDirty:reaction2] == NO, "Nothing should be dirty at this point");
 
@@ -87,7 +91,7 @@ void dirty_WhenHasTwoBasicReactions_SetsBothAsDirty(){
     PASS([underTest isDirty:reaction1], "The reaction alters A and B and requires A, so it should be dirty");
     PASS([underTest isDirty:reaction2], "The reaction alters A and B and reaction2 requires B, so it should be dirty");
 
-    [underTest updateDirty:state];
+    [underTest updateRates:state];
     PASS([underTest isDirty:reaction1] == NO && [underTest isDirty:reaction2] == NO, "Nothing should be dirty at this point");
 
     [underTest setDirty:reaction2];

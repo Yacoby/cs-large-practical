@@ -42,8 +42,11 @@ CommandLineOptionParser* getOptionsParser(){
     [cmdLineParser addArgumentWithName:@"--trackalloc" ofType:Boolean];
     [cmdLineParser setHelpStringForArgumentKey:@"trackalloc" help:@"Tracks object allocations"];
 
-    [cmdLineParser addArgumentWithName:@"--smo" ofType:Boolean];
-    [cmdLineParser setHelpStringForArgumentKey:@"smo" help:@"Use Sorted Direct Method in the simulation"];
+    [cmdLineParser addArgumentWithName:@"--sdm" ofType:Boolean];
+    [cmdLineParser setHelpStringForArgumentKey:@"sdm" help:@"Use Sorted Direct Method in the simulation"];
+
+    [cmdLineParser addArgumentWithName:@"--ldm" ofType:Boolean];
+    [cmdLineParser setHelpStringForArgumentKey:@"ldm" help:@"Use Logrithmic Direct Method in the simulation"];
 
     [cmdLineParser addArgumentWithName:@"--dependency-graph" ofType:Boolean];
     [cmdLineParser setHelpStringForArgumentKey:@"dependency-graph" help:@"Use a dependency graph for updating rates"];
@@ -289,10 +292,12 @@ int main(void){
     }
     UniformRandom* random = getRandomNumberGenerator(options);
 
-    BOOL useSMO = [[options getOptionWithName:@"smo"] boolValue];
+    BOOL useSDM = [[options getOptionWithName:@"sdm"] boolValue];
+    BOOL useLDM = [[options getOptionWithName:@"ldm"] boolValue];
     BOOL useDependencyGraph = [[options getOptionWithName:@"dependency-graph"] boolValue];
 
-    SimulatorInternalState* internals = [[[SimulatorInternalState alloc] initWithSMO:useSMO
+    SimulatorInternalState* internals = [[[SimulatorInternalState alloc] initWithSDM:useSDM
+                                                                                 ldm:useLDM
                                                                      dependencyGraph:useDependencyGraph] autorelease];
     Simulator* simulator = [[[Simulator alloc] initWithInternals:internals
                                                              cfg:cfg

@@ -96,8 +96,8 @@
 /**
  * @brief runs a single simulation step
  * @param state this is the state of the simulation before the call. This parameter will be updated to the current simulation state
- * @return false if there was no reaction that it was possible to run
+ * @return false if there was no reaction that it was possible to run or if the next reaction would exceed the stop time
  */
-- (BOOL)runSimulationStep:(SimulationState*)state;
+- (BOOL)runSimulationStep:(SimulationState*)state stopTime:(TimeSpan*)stopTime;
 @end
 

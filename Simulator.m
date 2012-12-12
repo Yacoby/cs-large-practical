@@ -191,9 +191,8 @@
 
     while ( true ){
         NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-        BOOL hasHadReaction = [self runSimulationStep:state];
-        if ( !hasHadReaction ||
-            [[state timeSinceSimulationStart] totalSeconds] >= [stopTime totalSeconds] ){
+        BOOL shouldContinue = [self runSimulationStep:state stopTime:stopTime];
+        if ( !shouldContinue ){
             [Logger info:@"Simulation stopped at time <%f>", [stopTime totalSeconds]];
             [pool drain];
             break;
@@ -208,13 +207,18 @@
     [initialState release];
 }
 
-- (BOOL)runSimulationStep:(SimulationState*)state{
+- (BOOL)runSimulationStep:(SimulationState*)state stopTime:(TimeSpan*)stopTime{
     double reactionRateSum = [mInternalState reactionRate:state];
 
     //calculate the time that the next reaction will occur
     const double r1 = [mRandom next];
     const double tau = (1/reactionRateSum) * log(1/r1);
     TimeSpan* time = [state timeSinceSimulationStart];
+
+    if ( [time totalSeconds] + tau > [stopTime totalSeconds] ){
+        return NO;
+    }
+
     [time addSeconds:tau];
 
     //calculcate which reaction will happen next

@@ -42,6 +42,12 @@ CommandLineOptionParser* getOptionsParser(){
     [cmdLineParser addArgumentWithName:@"--trackalloc" ofType:Boolean];
     [cmdLineParser setHelpStringForArgumentKey:@"trackalloc" help:@"Tracks object allocations"];
 
+    [cmdLineParser addArgumentWithName:@"--smo" ofType:Boolean];
+    [cmdLineParser setHelpStringForArgumentKey:@"smo" help:@"Use Sorted Direct Method in the simulation"];
+
+    [cmdLineParser addArgumentWithName:@"--dependency-graph" ofType:Boolean];
+    [cmdLineParser setHelpStringForArgumentKey:@"dependency-graph" help:@"Use a dependency graph for updating rates"];
+
     [cmdLineParser addArgumentWithName:@"--logfname" ofType:String];
     [cmdLineParser setHelpStringForArgumentKey:@"logfname" help:@"The file name to log to"];
 
@@ -283,7 +289,15 @@ int main(void){
     }
     UniformRandom* random = getRandomNumberGenerator(options);
 
-    Simulator* simulator = [[[Simulator alloc] initWithCfg:cfg randomGen:random outputAggregator:aggregator] autorelease];
+    BOOL useSMO = [[options getOptionWithName:@"smo"] boolValue];
+    BOOL useDependencyGraph = [[options getOptionWithName:@"dependency-graph"] boolValue];
+
+    SimulatorInternalState* internals = [[[SimulatorInternalState alloc] initWithSMO:useSMO
+                                                                     dependencyGraph:useDependencyGraph] autorelease];
+    Simulator* simulator = [[[Simulator alloc] initWithInternals:internals
+                                                             cfg:cfg
+                                                       randomGen:random
+                                                outputAggregator:aggregator] autorelease];
     [simulator runSimulation];
 
     [pool drain];

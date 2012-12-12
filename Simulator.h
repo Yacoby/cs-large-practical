@@ -47,8 +47,12 @@
      * @brief dictionary of a pointer to a reaction to the current index in mReactions
      */
     NSMutableDictionary* mReactionToIdx;
+
+    BOOL mUseSortedDirectMethod;
+    BOOL mUseDependencyGraph;
 }
 - (id)init;
+- (id)initWithSMO:(BOOL)smo dependencyGraph:(BOOL)graph;
 - (void)dealloc;
 
 - (void)setDirty:(ReactionDefinition*)reaction;
@@ -59,7 +63,7 @@
 - (void)buildRequirementsGraph;
 
 - (double)reactionRate:(SimulationState*)state;
-- (ReactionDefinition*)reactionForValue:(double)upperBound;
+- (ReactionDefinition*)reactionForValue:(double)upperBound simulationState:(SimulationState*)state;
 @end
 
 /**
@@ -76,9 +80,10 @@
  * @param random The random number generator to be used by the simulation
  * @param aggregator The aggregator where the state changes are sent
  */
-- (id)initWithCfg:(SimulationConfiguration*)cfg
-        randomGen:(id <Random>)random
- outputAggregator:(id <SimulationOutputAggregator>)aggregator;
+- (id)initWithInternals:(SimulatorInternalState*)internals
+                    cfg:(SimulationConfiguration*)cfg
+              randomGen:(id <Random>)random
+       outputAggregator:(id <SimulationOutputAggregator>)aggregator;
 - (void)dealloc;
 
 /**

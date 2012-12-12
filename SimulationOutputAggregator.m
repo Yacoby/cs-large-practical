@@ -112,3 +112,29 @@ const double EPSILON = 0.01;
     [lastStateTimePastNextLogTime release];
 }
 @end
+
+@implementation ResultOnlyAggregator
+- (id)initWithWriter:(id<SimulationOutputWriter>)writer{
+    self = [super init];
+    if ( self ){
+        [writer retain];
+        mWriter = writer;
+    }
+    return self;
+}
+-(void)dealloc{
+    [mWriter release];
+    [mLastState release];
+    [super dealloc];
+}
+
+- (void)stateChangedTo:(SimulationState*)state{
+    [mLastState release];
+    mLastState = state;
+    [mLastState retain];
+}
+
+- (void)simulationEnded{
+    [mWriter writeToStream:mLastState];
+}
+@end

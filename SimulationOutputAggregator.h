@@ -93,3 +93,13 @@
  */
 - (void)simulationEnded;
 @end
+
+@interface ResultOnlyAggregator : NSObject<SimulationOutputAggregator>{
+    SimulationState* mLastState;
+    id<SimulationOutputWriter> mWriter;
+}
+- (id)initWithWriter:(id<SimulationOutputWriter>)writer;
+- (void)stateChangedTo:(SimulationState*)state;
+- (void)simulationEnded;
+- (void)dealloc;
+@end

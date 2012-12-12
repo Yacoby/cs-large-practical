@@ -5,8 +5,14 @@
 
 @implementation SimulatorInternalState
 - (id)init{
+    return [self initWithSMO:YES dependencyGraph:YES];
+}
+
+- (id)initWithSMO:(BOOL)smo dependencyGraph:(BOOL)graph{
     self = [super init];
     if ( self ){
+        mUseSortedDirectMethod = smo;
+        mUseDependencyGraph = graph;
         mReactions      = [[NSMutableArray alloc] init];
         mReactionRates  = [[NSMutableArray alloc] init];
         mDirtyReactions = [[NSMutableSet alloc] init];
@@ -15,6 +21,7 @@
     }
     return self;
 }
+
 - (void)dealloc{
     [mReactions release];
     [mReactionRates release];
@@ -70,27 +77,40 @@
 }
 
 - (double)reactionRate:(SimulationState*)state{
-    [self updateDirty:state];
-
     double reactionRateSum = 0;
-    for ( NSNumber* rateNumber in mReactionRates ){
-        reactionRateSum += [rateNumber doubleValue];
+
+    if ( mUseDependencyGraph ){
+        [self updateDirty:state];
+
+        for ( NSNumber* rateNumber in mReactionRates ){
+            reactionRateSum += [rateNumber doubleValue];
+        }
+    }else{
+        for ( ReactionDefinition* reaction in mReactions ){
+            reactionRateSum += [reaction reactionRate:state];
+        }
     }
+
     return reactionRateSum;
 }
 
-- (ReactionDefinition*)reactionForValue:(double)upperBound{
-    assert([mDirtyReactions count] == 0 && "Must be empty otherwise calculations will be wrong");
+- (ReactionDefinition*)reactionForValue:(double)upperBound simulationState:(SimulationState*)state{
+    assert( mUseDependencyGraph == false ||
+           ([mDirtyReactions count] == 0 && "Must be empty otherwise calculations will be wrong"));
 
     double rateSum = 0;
     for (int reactionIdx = 0; reactionIdx < [mReactions count]; ++reactionIdx) {
-        rateSum += [[mReactionRates objectAtIndex:reactionIdx] doubleValue];
+        if ( mUseDependencyGraph ){
+            rateSum += [[mReactionRates objectAtIndex:reactionIdx] doubleValue];
+        }else{
+            rateSum += [[mReactions objectAtIndex:reactionIdx] reactionRate:state];
+        }
         if ( rateSum > upperBound ){
             ReactionDefinition* reactionToReturn = [mReactions objectAtIndex:reactionIdx];
 
             //slowly move reactions that happen alot to the start of the array to search
             //sorted direct method
-            if ( reactionIdx != 0 ){
+            if ( mUseSortedDirectMethod && reactionIdx != 0 ){
                 const int newCurrentReactionIdx = reactionIdx - 1;
                 const ReactionEquation* const higherPriorityReaction = [mReactions objectAtIndex:newCurrentReactionIdx];
 
@@ -109,8 +129,10 @@
 }
 
 - (void)setDirty:(ReactionDefinition*)reaction{
-    NSValue* pointerToReaction = [NSValue valueWithPointer:reaction];
-    [mDirtyReactions unionSet:[mReactionRateDepencies objectForKey:pointerToReaction]];
+    if ( mUseDependencyGraph ){
+        NSValue* pointerToReaction = [NSValue valueWithPointer:reaction];
+        [mDirtyReactions unionSet:[mReactionRateDepencies objectForKey:pointerToReaction]];
+    }
 }
 
 - (BOOL)isDirty:(ReactionDefinition*)reaction{
@@ -120,9 +142,10 @@
 @end
 
 @implementation Simulator
-- (id)initWithCfg:(SimulationConfiguration*)cfg
-        randomGen:(id<Random>)random
- outputAggregator:(id<SimulationOutputAggregator>)aggregator{
+- (id)initWithInternals:(SimulatorInternalState*)internals
+                    cfg:(SimulationConfiguration*)cfg
+              randomGen:(id<Random>)random
+       outputAggregator:(id<SimulationOutputAggregator>)aggregator{
     self = [super init];
     if ( self != nil ){
         [cfg retain];
@@ -134,7 +157,8 @@
         [random retain];
         mRandom = random;
 
-        mInternalState = [[SimulatorInternalState alloc] init];
+        [internals retain];
+        mInternalState = internals;
 
         NSDictionary* reactions = [cfg reactions];
         for ( NSString* reactionName in reactions ){
@@ -147,6 +171,7 @@
 }
 
 - (void)dealloc{
+    [mInternalState release];
     [mAggregator release];
     [mCfg release];
     [mRandom release];
@@ -194,7 +219,7 @@
 
     //calculcate which reaction will happen next
     const double r2 = [mRandom next];
-    ReactionDefinition* reaction = [mInternalState reactionForValue:r2*reactionRateSum];
+    ReactionDefinition* reaction = [mInternalState reactionForValue:r2*reactionRateSum simulationState:state];
     if ( reaction == nil){
         return NO;
     }

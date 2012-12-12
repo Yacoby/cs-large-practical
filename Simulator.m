@@ -1,11 +1,14 @@
 #import "Simulator.h"
 #import "ReactionDefinition.h"
+#import "Logger.h"
 #import <math.h>
 
 const int NO_REACTION = -1;
 
 @implementation Simulator
-- (id)initWithCfg:(SimulationConfiguration*)cfg randomGen:(id <Random>)random outputAggregator:(id <SimulationOutputAggregator>)aggregator{
+- (id)initWithCfg:(SimulationConfiguration*)cfg
+        randomGen:(id<Random>)random
+ outputAggregator:(id<SimulationOutputAggregator>)aggregator{
     self = [super init];
     if ( self != nil ){
         [cfg retain];
@@ -37,6 +40,7 @@ const int NO_REACTION = -1;
 }
 
 - (void)runSimulation{
+    [Logger info:@"Starting simulation"];
     TimeSpan* startTime = [[TimeSpan alloc] initFromSeconds:0];
     NSMutableDictionary* initialCounts = [[[mCfg moleculeCounts] mutableCopy] autorelease];
     SimulationState* initialState = [[SimulationState alloc] initWithTime:startTime moleculeCount:initialCounts];
@@ -51,6 +55,7 @@ const int NO_REACTION = -1;
         BOOL hasHadReaction = [self runSimulationStep:state];
         if ( !hasHadReaction ||
             [[state timeSinceSimulationStart] totalSeconds] >= [stopTime totalSeconds] ){
+            [Logger info:@"Simulation stopped at time <%f>", [stopTime totalSeconds]];
             [pool drain];
             break;
         }
@@ -69,18 +74,23 @@ const int NO_REACTION = -1;
     for ( ReactionDefinition* reaction in mReactions ){
         reactionRateSum += [reaction reactionRate:state];
     }
-    double r1 = [mRandom next];
-    double tau = (1/reactionRateSum) * log(1/r1);
+
+
+
+    //calculate the time that the next reaction will occur
+    const double r1 = [mRandom next];
+    const double tau = (1/reactionRateSum) * log(1/r1);
     TimeSpan* time = [state timeSinceSimulationStart];
     [time addSeconds:tau];
 
-    double r2 = [mRandom next];
-
+    //calculcate which reaction will happen next
+    const double r2 = [mRandom next];
     int reactionToDoIdx = NO_REACTION;
     double rateSum = 0;
     for (int reactionIdx = 0; reactionIdx < [mReactions count]; ++reactionIdx) {
         rateSum += [[mReactions objectAtIndex:reactionIdx] reactionRate:state];
         if ( rateSum > r2 * reactionRateSum ){
+            [Logger debug:@"Reaction at index <%d> occured", reactionIdx];
             reactionToDoIdx = reactionIdx;
             break;
         }
@@ -91,6 +101,16 @@ const int NO_REACTION = -1;
 
     NSMutableDictionary* counts = [state moleculeCounts];
     [[mReactions objectAtIndex:reactionToDoIdx] applyReactionToCounts:counts];
+
+    //slowly move reactions that happen alot to the start of the array to search
+    //sorted direct method
+    if ( reactionToDoIdx != 0 ){
+        const int newCurrentReactionIdx = reactionToDoIdx - 1;
+        const ReactionEquation* const higherPriorityReaction = [mReactions objectAtIndex:newCurrentReactionIdx];
+        const ReactionEquation* const currentReaction        = [mReactions objectAtIndex:reactionToDoIdx];
+        [mReactions replaceObjectAtIndex:newCurrentReactionIdx withObject:currentReaction];
+        [mReactions replaceObjectAtIndex:reactionToDoIdx withObject:higherPriorityReaction];
+    }
 
     return YES;
 }

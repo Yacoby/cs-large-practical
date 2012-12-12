@@ -9,6 +9,10 @@
  *
  * This is used to avoid having to maintian two NSMutable arrays for the reaction
  * and the rate which vaslty increasses the possibility for bugs
+ *
+ * The partial sum is used for holding the sum of rates up to the point where
+ * this reaction has been considered. As such it is only really useful when
+ * in an array.
  */
 @interface ReactionWithRate : NSObject{
     ReactionDefinition* mReaction;
@@ -30,10 +34,10 @@
  * @brief this holds the internal state of the simulator and is responsible for ensuring consistency
  * 
  * As the algorithm got more complex, we needed to be able to provide a simpler interface
- * that guaranteed state consistency
+ * that guaranteed state consistency. 
  *
- * Internally this implements Sorted Direct Method and has a dependency graph to
- * minimize propensity updates.
+ * Internally this impelements SDM, LDM and DependencyGraph as methods of increasing
+ * performance with larger systems.
  */
 @interface SimulatorInternalState : NSObject{
     /**
@@ -44,7 +48,7 @@
     /**
      * @brief a set of reactions that do not have a valid rate
      *
-     * These are all of type ReactionWithRate
+     * These are all of type ReactionWithRate*
      */
     NSMutableSet* mDirtyReactions;
 
@@ -65,18 +69,80 @@
     BOOL mUseLogrithmicDirectMethod;
 }
 - (id)init;
+/**
+ * @param sdm use Simple Direct Method to improve the performance of larger systems
+ * @param ldm use Logrithmic Direct Method to improve the performance of very large systems by 
+ *          performing binary search when finding what reaction to apply
+ * @param dependencyGraph avoid updating reaction rates that haven't changed
+ */
 - (id)initWithSDM:(BOOL)sdm ldm:(BOOL)ldm dependencyGraph:(BOOL)graph;
 - (void)dealloc;
 
+/**
+ * @brief sets all Reaction that use this reaction as being "dirty" and needing updating
+ */
 - (void)setDirty:(ReactionDefinition*)reaction;
+/**
+ * @return returns YES if the reaction is in the list of reactions with rates that need updating
+ * @note this is only used for testing and so is a very slow function
+ */
 - (BOOL)isDirty:(ReactionDefinition*)reaction;
+
+/**
+ * @brief ensures all rates are up to date, using state to update them if required
+ *
+ * Depending on the settings used, this may not update all states, but the post condition
+ * that all states are as they should be will hold
+ */
 - (void)updateRates:(SimulationState*)state;
 
+/**
+ * @brief adds a reaction to the internal state
+ * @param reaction the reaction to add
+ * 
+ * This should be done intitially as adding reactions when the state is
+ * anything but the start state is undefined
+ */
 - (void)addReaction:(ReactionDefinition*)reaction;
+/**
+ * @brief builds the graph of all the dependencies of the current reactions.
+ * 
+ * This should be called after all the reactions have been added to the object
+ * if dependency-graph is enabled.
+ */
 - (void)buildRequirementsGraph;
 
-- (double)reactionRate:(SimulationState*)state;
-- (ReactionDefinition*)reactionForValue:(double)upperBound simulationState:(SimulationState*)state;
+/**
+ * @brief gets the sum of all the reaction rates
+ * @param state the current state of the system
+ */
+- (double)reactionRateSumForState:(SimulationState*)state;
+
+/**
+ * @brief gets the reaction for the given lower bound
+ * @param lowerBound the value to get the reaction for
+ */
+- (ReactionDefinition*)reactionForBound:(double)lowerBound;
+
+/**
+ * @brief returns the reaction index that such that it is the lowest index greater than the upper bound
+ * @param lowerBound the bound of the rate
+ */
+- (int)findReactionIndex:(double)lowerBound;
+/**
+ * @brief implementation of findReactionIndex
+ * 
+ * Preforms a linear search on the rates
+ */
+- (int)findReactionIndexWithLinearSearch:(double)lowerBound;
+/**
+ * @brief implementation of findReactionIndex, needs mUseLogrithmicDirectMethod to be enabled
+ *
+ * mUseLogrithmicDirectMethod ensures we have set the partial sums which allows
+ * us to use a binary search. (The parital sums are guarentted to be increasing as the
+ * rate is always positive)
+ */
+- (int)findReactionIndexWithBinarySearch:(double)lowerBound;
 @end
 
 /**

@@ -3,6 +3,8 @@
 #import "Logger.h"
 #import <math.h>
 
+const int NO_REACTION = -1;
+
 @implementation ReactionWithRate
 
 - (id)initWithReaction:(ReactionDefinition*)reaction rate:(double)rate{
@@ -127,7 +129,7 @@
     }
 }
 
-- (double)reactionRate:(SimulationState*)state{
+- (double)reactionRateSumForState:(SimulationState*)state{
     [self updateRates:state];
 
     if ( mUseLogrithmicDirectMethod ){
@@ -141,37 +143,48 @@
     }
 }
 
-- (int)findReactionIndex:(double)upperBound{
+- (int)findReactionIndex:(double)lowerBound{
     if ( mUseLogrithmicDirectMethod ){
-        int min = 0;
-        int max = [mReactions count] - 1;
-        while ( min <= max ){
-            int mid = (min + max)/2;
-            if ( upperBound < [[mReactions objectAtIndex:mid] partialSum] ){
-                max = mid - 1;
-            }else{
-                min = mid + 1;
-            }
-        }
-        return min;
-    }else{
-        double rateSum = 0;
-        for (int reactionIdx = 0; reactionIdx < [mReactions count]; ++reactionIdx) {
-            rateSum += [[mReactions objectAtIndex:reactionIdx] rate];
-            if ( rateSum > upperBound ){
-                return reactionIdx;
-            }
-        }
+        return [self findReactionIndexWithBinarySearch:lowerBound];
     }
-    return -1;
+    return [self findReactionIndexWithLinearSearch:lowerBound];
 }
 
-- (ReactionDefinition*)reactionForValue:(double)upperBound simulationState:(SimulationState*)state{
+- (int)findReactionIndexWithLinearSearch:(double)lowerBound{
+    double rateSum = 0;
+    for (int reactionIdx = 0; reactionIdx < [mReactions count]; ++reactionIdx) {
+        rateSum += [[mReactions objectAtIndex:reactionIdx] rate];
+        if ( rateSum > lowerBound ){
+            return reactionIdx;
+        }
+    }
+    return NO_REACTION;
+}
+
+- (int)findReactionIndexWithBinarySearch:(double)lowerBound{
+    assert(mUseLogrithmicDirectMethod && "Otherwise the partial sums won't be set");
+    int min = 0;
+    int max = [mReactions count] - 1;
+    while ( min <= max ){
+        int mid = (min + max)/2;
+        if ( [[mReactions objectAtIndex:mid] partialSum] >= lowerBound ){
+            max = mid - 1;
+        }else{
+            min = mid + 1;
+        }
+    }
+
+    assert("Basic post condition" && [[mReactions objectAtIndex:min] partialSum] > lowerBound);
+    assert("Basic post condition" && (min < 2 || [[mReactions objectAtIndex:min-1] partialSum] <= lowerBound));
+    return min;
+}
+
+- (ReactionDefinition*)reactionForBound:(double)lowerBound{
     assert( mUseDependencyGraph == false ||
            ([mDirtyReactions count] == 0 && "Must be empty otherwise calculations will be wrong"));
 
-    int reactionIdx = [self findReactionIndex:upperBound];
-    if ( reactionIdx != -1 ){
+    int reactionIdx = [self findReactionIndex:lowerBound];
+    if ( reactionIdx != NO_REACTION ){
         ReactionWithRate* reactionToReturn = [mReactions objectAtIndex:reactionIdx];
 
         //slowly move reactions that happen alot to the start of the array to search
@@ -203,7 +216,6 @@
     }
     return NO;
 }
-
 @end
 
 @implementation Simulator
@@ -273,7 +285,7 @@
 }
 
 - (BOOL)runSimulationStep:(SimulationState*)state stopTime:(TimeSpan*)stopTime{
-    double reactionRateSum = [mInternalState reactionRate:state];
+    double reactionRateSum = [mInternalState reactionRateSumForState:state];
 
     //calculate the time that the next reaction will occur
     const double r1 = [mRandom next];
@@ -288,7 +300,7 @@
 
     //calculcate which reaction will happen next
     const double r2 = [mRandom next];
-    ReactionDefinition* reaction = [mInternalState reactionForValue:r2*reactionRateSum simulationState:state];
+    ReactionDefinition* reaction = [mInternalState reactionForBound:r2*reactionRateSum];
     if ( reaction == nil){
         return NO;
     }

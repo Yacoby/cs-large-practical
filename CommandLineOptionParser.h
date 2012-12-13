@@ -315,8 +315,6 @@ extern NSString* const COMMAND_LINE_SHORT_PREFIX;
  * @param key The argument key to check that it of the given type
  * @param type The type to compare the argument against
  * @return True if the the argument is of the given type
- *
- * @todo deprecate in favour of getArgumentType
  */
 - (BOOL)isArgument:(NSString*)key ofType:(CommandLineType)type;
 

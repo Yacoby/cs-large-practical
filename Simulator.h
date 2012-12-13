@@ -28,7 +28,7 @@
 - (void)setRate:(double)rate;
 
 /**
- * @brief sets the rate that has been calculated up to the point where this reaction is considered
+ * @brief gets the rate that has been calculated up to the point where this reaction is considered
  */
 - (double)partialSum;
 - (void)setPartialSum:(double)rate;
@@ -40,8 +40,26 @@
  * As the algorithm got more complex, we needed to be able to provide a simpler interface
  * that guaranteed state consistency. 
  *
- * Internally this impelements SDM, LDM and DependencyGraph as methods of increasing
+ * Internally this implements SDM, LDM and DependencyGraph as methods of increasing
  * performance with larger systems.
+ *
+ * SDM alters the order in which reactions are considered. When a reaction is selected
+ * it moves up in the order which reactions are examined. This means that reactions that
+ * occur a lot will end up being considered first (so avoiding doing a lot of calculations)
+ * but it will adapt to changes so that if the reaction currently being considered first no
+ * longer occurs then it will be bubbled to the bottom
+ *
+ * LDM is an alternative to SDM. Rather than doing a linear search on the rates, it
+ * preforms a binary search. This reduces the runtime of that part of the algorithm
+ * from O(n) to O(lg n) which is advantageous for large n. It preforms this binary
+ * search by maintain a list of partial rate sums and preforming a binary search on
+ * them. This of course makes SDM irrelevant.
+ *
+ * DependencyGraph builds a dependency graph of what reaction rates will be invalidated
+ * (or made "dirty") when a reaction is applied. There are edges between reactions
+ * when a reaction alters a molecule that another reaction has in its requirement.
+ * Knowing this avoids recalculating all the reaction rates, but only the ones that
+ * will have changed.
  */
 @interface SimulatorInternalState : NSObject{
     /**
@@ -72,7 +90,11 @@
     BOOL mUseDependencyGraph;
     BOOL mUseLogrithmicDirectMethod;
 }
+/**
+ * @brief creates the object will all optional extras disabled
+ */
 - (id)init;
+
 /**
  * @param sdm use Simple Direct Method to improve the performance of larger systems
  * @param ldm use Logrithmic Direct Method to improve the performance of very large systems by 
@@ -83,9 +105,10 @@
 - (void)dealloc;
 
 /**
- * @brief sets all Reaction that use this reaction as being "dirty" and needing updating
+ * @brief sets all Reaction that use this reaction as being "dirty" and having invalid rates
  */
-- (void)setDirty:(ReactionDefinition*)reaction;
+- (void)setDependentReactionsDirty:(ReactionDefinition*)reaction;
+
 /**
  * @return returns YES if the reaction is in the list of reactions with rates that need updating
  * @note this is only used for testing and so is a very slow function
@@ -104,13 +127,15 @@
  * @brief adds a reaction to the internal state
  * @param reaction the reaction to add
  * 
- * This should be done intitially as adding reactions when the state is
+ * This should be done initially as adding reactions when the state is
  * anything but the start state is undefined
  */
+
 - (void)addReaction:(ReactionDefinition*)reaction;
+
 /**
  * @brief builds the graph of all the dependencies of the current reactions.
- * 
+ *
  * This should be called after all the reactions have been added to the object
  * if dependency-graph is enabled.
  */
@@ -133,17 +158,18 @@
  * @param lowerBound the bound of the rate
  */
 - (int)findReactionIndex:(double)lowerBound;
+
 /**
  * @brief implementation of findReactionIndex
  * 
- * Preforms a linear search on the rates
+ * Preforms a linear search on the rates to find the reaction index.
  */
 - (int)findReactionIndexWithLinearSearch:(double)lowerBound;
 /**
  * @brief implementation of findReactionIndex, needs mUseLogrithmicDirectMethod to be enabled
  *
  * mUseLogrithmicDirectMethod ensures we have set the partial sums which allows
- * us to use a binary search. (The parital sums are guarentted to be increasing as the
+ * us to use a binary search. (The partial sums are guaranteed to be increasing as the
  * rate is always positive)
  */
 - (int)findReactionIndexWithBinarySearch:(double)lowerBound;
@@ -151,6 +177,14 @@
 
 /**
  * @brief the simulator that runs the simulation on the given input
+ *
+ * This is responsible for running steps of the algorithm until it should
+ * halt. It takes a internal state which provides the core implementation of the
+ * algorithm and allows seamless changing between implementations.
+ *
+ * Updates are sent to the aggregator. For performance reasons the simulation
+ * state is mutated rather than new ones created. This means that it is up to
+ * the aggregator to copy the data if it needs to retain it.
  */
 @interface Simulator : NSObject {
     SimulatorInternalState* mInternalState;
@@ -159,6 +193,7 @@
     id <Random> mRandom;
 }
 /**
+ * @param internals provides the core functionality of the algorithm
  * @param cfg the simulation configuration file
  * @param random The random number generator to be used by the simulation
  * @param aggregator The aggregator where the state changes are sent
@@ -167,6 +202,7 @@
                     cfg:(SimulationConfiguration*)cfg
               randomGen:(id <Random>)random
        outputAggregator:(id <SimulationOutputAggregator>)aggregator;
+
 - (void)dealloc;
 
 /**
@@ -178,8 +214,9 @@
 
 /**
  * @brief runs a single simulation step
- * @param state this is the state of the simulation before the call. This parameter will be updated to the current simulation state
- * @return false if there was no reaction that it was possible to run or if the next reaction would exceed the stop time
+ * @param state this is the state of the simulation before the call.
+                 This parameter will be updated to the current simulation state
+ * @return NO if there was no reaction that it was possible to run or if the next reaction would exceed the stop time
  */
 - (BOOL)runSimulationStep:(SimulationState*)state stopTime:(TimeSpan*)stopTime;
 @end

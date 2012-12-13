@@ -53,7 +53,7 @@ const int NO_REACTION = -1;
         mUseDependencyGraph        = graph;
 
         [Logger info:@"Using standard internal state"];
-        [Logger info:@"SDM:<%c> LDM:<%c> Graph:<%c>", sdm, ldm, graph];
+        [Logger info:@"\tSDM:<%d> LDM:<%d> Graph:<%d>", sdm, ldm, graph];
 
         mReactions      = [[NSMutableArray alloc] init];
         mDirtyReactions = [[NSMutableSet alloc] init];
@@ -77,7 +77,7 @@ const int NO_REACTION = -1;
 }
 
 - (void)buildRequirementsGraph{
-    //build a dictionary of all molecule to all reactions that have the molecule in thier
+    //build a dictionary of molecules to all reactions that have the molecule in thier
     //requirements
     NSMutableDictionary* moleculeToRequireReaction = [[NSMutableDictionary alloc] init];
     for ( ReactionWithRate* reactionAndRate in mReactions ){
@@ -111,13 +111,13 @@ const int NO_REACTION = -1;
 - (void)updateRates:(SimulationState*)state{
     if ( mUseDependencyGraph ){
         for ( ReactionWithRate* reactionWithRate in mDirtyReactions ){
-            double reactionRate = [[reactionWithRate reaction] reactionRate:state];
+            const double reactionRate = [[reactionWithRate reaction] reactionRate:state];
             [reactionWithRate setRate:reactionRate];
         }
         [mDirtyReactions removeAllObjects];
     }else{
         for ( ReactionWithRate* reactionWithRate in mReactions ){
-            double reactionRate = [[reactionWithRate reaction] reactionRate:state];
+            const double reactionRate = [[reactionWithRate reaction] reactionRate:state];
             [reactionWithRate setRate:reactionRate];
         }
     }
@@ -169,7 +169,7 @@ const int NO_REACTION = -1;
     int min = 0;
     int max = [mReactions count] - 1;
     while ( min <= max ){
-        int mid = (min + max)/2;
+        const int mid = (min + max)/2;
         if ( [[mReactions objectAtIndex:mid] partialSum] >= lowerBound ){
             max = mid - 1;
         }else{
@@ -186,9 +186,9 @@ const int NO_REACTION = -1;
     assert( mUseDependencyGraph == false ||
            ([mDirtyReactions count] == 0 && "Must be empty otherwise calculations will be wrong"));
 
-    int reactionIdx = [self findReactionIndex:lowerBound];
+    const int reactionIdx = [self findReactionIndex:lowerBound];
     if ( reactionIdx != NO_REACTION ){
-        ReactionWithRate* reactionToReturn = [mReactions objectAtIndex:reactionIdx];
+        ReactionWithRate* const reactionToReturn = [mReactions objectAtIndex:reactionIdx];
 
         //slowly move reactions that happen alot to the start of the array to search
         //sorted direct method
@@ -204,7 +204,7 @@ const int NO_REACTION = -1;
     return nil;
 }
 
-- (void)setDirty:(ReactionDefinition*)reaction{
+- (void)setDependentReactionsDirty:(ReactionDefinition*)reaction{
     if ( mUseDependencyGraph ){
         NSValue* const pointerToReaction = [NSValue valueWithPointer:reaction];
         [mDirtyReactions unionSet:[mReactionRateDepencies objectForKey:pointerToReaction]];
@@ -288,32 +288,35 @@ const int NO_REACTION = -1;
 }
 
 - (BOOL)runSimulationStep:(SimulationState*)state stopTime:(TimeSpan*)stopTime{
-    double reactionRateSum = [mInternalState reactionRateSumForState:state];
+    const double reactionRateSum = [mInternalState reactionRateSumForState:state];
 
-    //calculate the time that the next reaction will occur
     const double r1 = [mRandom next];
-    const double tau = (1/reactionRateSum) * log(1/r1);
-    TimeSpan* time = [state timeSinceSimulationStart];
+    const double nextReactionFromNow = (1/reactionRateSum) * log(1/r1);
+    TimeSpan* const time = [state timeSinceSimulationStart];
 
-    if ( [time totalSeconds] + tau > [stopTime totalSeconds] ){
+    if ( [time totalSeconds] + nextReactionFromNow > [stopTime totalSeconds] ){
         [Logger info:@"Simulation greater time is greater than stop time"];
         return NO;
     }
 
-    [time addSeconds:tau];
+    [time addSeconds:nextReactionFromNow];
 
-    //calculcate which reaction will happen next
     const double r2 = [mRandom next];
-    ReactionDefinition* reaction = [mInternalState reactionForBound:r2*reactionRateSum];
+    ReactionDefinition* const reaction = [mInternalState reactionForBound:r2*reactionRateSum];
     if ( reaction == nil){
         [Logger info:@"No reaction for simulation to do"];
         return NO;
     }
+    [Logger debug:@"ReactionRateSum:<%f>\tR1:<%f>\tTau:<%f>\tR2:<%f>",
+                  reactionRateSum,
+                  r1,
+                  nextReactionFromNow,
+                  r2];
 
-    NSMutableDictionary* counts = [state moleculeCounts];
+    NSMutableDictionary* const counts = [state moleculeCounts];
     [reaction applyReactionToCounts:counts];
 
-    [mInternalState setDirty:reaction];
+    [mInternalState setDependentReactionsDirty:reaction];
 
     return YES;
 }

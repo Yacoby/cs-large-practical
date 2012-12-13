@@ -1,5 +1,5 @@
 <map id="&#45;[ReactionDefinition reactionRate:]" name="&#45;[ReactionDefinition reactionRate:]">
-<area shape="rect" id="node3" href="$interfaceReactionDefinition.html#a7701a8846f4738a9837699bb1c051426" title="&#45;[ReactionDefinition\l requirements]" alt="" coords="213,5,349,51"/>
+<area shape="rect" id="node3" href="$interfaceReactionDefinition.html#a7701a8846f4738a9837699bb1c051426" title="simple helper function to get the requirements for the reaction to take place" alt="" coords="213,5,349,51"/>
 <area shape="rect" id="node7" href="$interfaceKineticConstant.html#a11000afb8a659995b9256652b8d72928" title="&#45;[KineticConstant double\lValue]" alt="" coords="199,74,364,121"/>
 <area shape="rect" id="node9" href="$interfaceSimulationState.html#ac5ded0c1af28f5b17d0db8fdae01b994" title="&#45;[SimulationState molecule\lCount:]" alt="" coords="192,143,371,190"/>
 <area shape="rect" id="node5" href="$interfaceReactionEquation.html#acbc23395ba28d2553bb0da44ceefe2d8" title="&#45;[ReactionEquation\l requirements]" alt="" coords="419,5,552,51"/>

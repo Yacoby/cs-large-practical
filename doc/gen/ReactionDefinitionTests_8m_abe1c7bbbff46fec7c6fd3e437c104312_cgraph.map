@@ -4,6 +4,6 @@
 <area shape="rect" id="node11" href="$interfaceReactionDefinition.html#aa4745594030644d3d8254610c6404532" title="Applies the current reaction to the molecule counts, altering them." alt="" coords="284,90,457,137"/>
 <area shape="rect" id="node5" href="$interfaceReactionEquation.html#acbc23395ba28d2553bb0da44ceefe2d8" title="&#45;[ReactionEquation\l requirements]" alt="" coords="693,59,827,106"/>
 <area shape="rect" id="node9" href="$interfaceReactionEquation.html#a4d89cdca2acc566c27386855d666eb54" title="&#45;[ReactionEquation\l result]" alt="" coords="693,158,827,205"/>
-<area shape="rect" id="node13" href="$interfaceReactionDefinition.html#a7701a8846f4738a9837699bb1c051426" title="&#45;[ReactionDefinition\l requirements]" alt="" coords="508,74,644,121"/>
-<area shape="rect" id="node16" href="$interfaceReactionDefinition.html#ab480e7140c29f45be1e04edb812e8e87" title="&#45;[ReactionDefinition\l result]" alt="" coords="508,143,644,190"/>
+<area shape="rect" id="node13" href="$interfaceReactionDefinition.html#a7701a8846f4738a9837699bb1c051426" title="simple helper function to get the requirements for the reaction to take place" alt="" coords="508,74,644,121"/>
+<area shape="rect" id="node16" href="$interfaceReactionDefinition.html#ab480e7140c29f45be1e04edb812e8e87" title="simple helper function to get the results of a reaction" alt="" coords="508,143,644,190"/>
 </map>

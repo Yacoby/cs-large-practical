@@ -9,7 +9,6 @@
     return self;
 }
 
-
 - (double)totalSeconds{
     return mTimeSpanSeconds;
 }

@@ -33,7 +33,7 @@ void dirty_WhenHasBasicReaction_SetsSelfAsDirty(){
 
     [underTest updateRates:state];
     PASS([underTest isDirty:reaction] == NO, "Nothing should be dirty at this point");
-    [underTest setDirty:reaction];
+    [underTest setDependentReactionsDirty:reaction];
     PASS([underTest isDirty:reaction], "The reaction alters A and requires A, so it should be dirty");
 }
 
@@ -87,14 +87,14 @@ void dirty_WhenHasTwoBasicReactions_SetsBothAsDirty(){
 
     PASS([underTest isDirty:reaction1] == NO && [underTest isDirty:reaction2] == NO, "Nothing should be dirty at this point");
 
-    [underTest setDirty:reaction1];
+    [underTest setDependentReactionsDirty:reaction1];
     PASS([underTest isDirty:reaction1], "The reaction alters A and B and requires A, so it should be dirty");
     PASS([underTest isDirty:reaction2], "The reaction alters A and B and reaction2 requires B, so it should be dirty");
 
     [underTest updateRates:state];
     PASS([underTest isDirty:reaction1] == NO && [underTest isDirty:reaction2] == NO, "Nothing should be dirty at this point");
 
-    [underTest setDirty:reaction2];
+    [underTest setDependentReactionsDirty:reaction2];
     PASS([underTest isDirty:reaction1] == NO, "reaction2 alters B only, but reaction1 only requires A");
     PASS([underTest isDirty:reaction2], "reaction2 alters B only and reaction2 requires B, so it should be dirty");
 }

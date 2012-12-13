@@ -119,7 +119,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li><code><a class="el" href="interfacePassthroughAggregator.html" title="All state changes are written to the output.">PassthroughAggregator</a></code> - All state changes are logged</li>
 <li><code><a class="el" href="interfaceHundredMsAggregator.html" title="This writes the state at maximum once every simulated 100ms.">HundredMsAggregator</a></code> - At least a hundred ms needs to have passed for a state change to be logged</li>
 <li><code><a class="el" href="interfaceExactHundredMsAggregator.html" title="This writes the state exactly once every simulated 100ms.">ExactHundredMsAggregator</a></code> - Writes the state exactly every hundred milliseconds. Possibly slightly slower than the other aggregator as it has to do more allocations</li>
-<li><code><a class="el" href="interfaceResultOnlyAggregator.html">ResultOnlyAggregator</a></code> Writes the last output only</li>
+<li><code><a class="el" href="interfaceResultOnlyAggregator.html" title="outputs only the result of the reaction and ignores intermediate stages">ResultOnlyAggregator</a></code> Writes the last output only</li>
 </ul>
 <p>The second option that can effect the output is the writer itself (<code>--writer</code>). Valid options are</p>
 <ul>
@@ -132,16 +132,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>Logging can be enabled using command line parameters see Command Line Arguments for more details.</p>
 <p>Note: Early startup errors such as incorrect command line parameters can only be logged to stderr as at this point no logs have been created.</p>
 <h1>Running Tests</h1>
-<p>From the project root directory run <code>gnustep-tests</code></p>
+<p>From the project root directory run <code>gnustep-tests</code>. There are tests for most parts of the system.</p>
+<p>The code quality of the tests isn't terribly high as there is quite a lot of <em>almost</em> duplicated code, this is in part due to the verboseness of Objective C in that it takes a huge number of lines to setup the state. The other issue was that I couldn't find a decent unit testing and object mocking framework that worked reliably with gnustep (despite having spent several hours trying to set some of them up). This meant that I didn't have features such as test auto discovery and methods that were automatically run before each tests.</p>
 <h1>Performance</h1>
-<p>The biggest performance improvement that can be done is to use the <a class="el" href="interfaceResultOnlyAggregator.html">ResultOnlyAggregator</a> aggregator as the slowest part of the system is writing the output (It isn't just the IO, string concatenation is also slow).</p>
-<p>There are several performance enhancements that work well with larger systems. They can be enabled via <code>--sdm</code>, <code>--ldm</code> and <code>--dependency-graph</code>. These adversely effect performance with smaller systems.</p>
+<p>The biggest performance improvement that can be done is to use the <a class="el" href="interfaceResultOnlyAggregator.html" title="outputs only the result of the reaction and ignores intermediate stages">ResultOnlyAggregator</a> aggregator as the slowest part of the system is writing the output (It isn't just the IO, string concatenation is also slow). Also if you want performance, avoid writing the results to stdout as it isn't buffered so much slower than writing to a file.</p>
+<p>There are several performance enhancements to the simulation that work well with larger systems. They can be enabled via <code>--sdm</code>, <code>--ldm</code> and <code>--dependency-graph</code>. These adversely effect performance with smaller systems.</p>
 <ul>
 <li>SDM (Simple Direct Method) slowly sorts the list of reactions by their rate of recent occurrence.</li>
 <li>LDM (Logarithmic Direct Method) preforms a binary search against the list of reactions rather than a linear search. This makes SDM useless but will probably only have a noticeable impact on performance for very large numbers of reactions</li>
 <li>Dependency Graph maintains a dependency graph of what applying a reaction will effect. It uses this to minimize the number of calculations needed.</li>
 </ul>
-<p>I did not build a big enough system to find where one where using logarithmic search made a significant performance gain and I would suspect</p>
+<p>I did not build a big enough system to find where one where using logarithmic search made a significant performance gain and I would suspect that with a larger number of reactions this would start to make a difference.</p>
 <p>Although (I would assume) outside the scope of this project would be to write the file as binary, which would avoid the string concatenation problems (but the data would be in a less useful format). It would also be possible (on a multicore machine) to write on one thread and do the simulation on another thread, although care would have to be taken with the cost of synchronization overhead.</p>
 <p>While it is (compared to the performance problem of the output) fairly minor, it would be advantageous to write the <a class="el" href="interfaceSimulator.html" title="the simulator that runs the simulation on the given input">Simulator</a> in C. This is because when using Objective C it is hard to avoid heap allocations in the simulator main loop as the Objective C container types (NSArray, NSSet etc) cannot store primitive types so have to be wrapped (for example having to create a NSValue to do a pointer lookup). Given that the assignment wanted the code to be Objective C, I didn't experiment with writing a version of the simulator in C.</p>
 <h1>Other code</h1>
@@ -170,7 +171,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Dec 12 2012 20:25:10 for Computer Science Large Practical by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Dec 13 2012 10:32:43 for Computer Science Large Practical by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

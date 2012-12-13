@@ -108,8 +108,11 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a3e7abe32bb8b10943d42ff9f03322304"><td class="memItemLeft" align="right" valign="top">(void)&#160;</td><td class="memItemRight" valign="bottom">- <a class="el" href="interfaceReactionDefinition.html#a3e7abe32bb8b10943d42ff9f03322304">dealloc</a></td></tr>
 <tr class="memitem:afc2225296c74c1912014bb3278361a2f"><td class="memItemLeft" align="right" valign="top">(<a class="el" href="interfaceKineticConstant.html">KineticConstant</a> *)&#160;</td><td class="memItemRight" valign="bottom">- <a class="el" href="interfaceReactionDefinition.html#afc2225296c74c1912014bb3278361a2f">kineticConstant</a></td></tr>
 <tr class="memitem:a7701a8846f4738a9837699bb1c051426"><td class="memItemLeft" align="right" valign="top">(NSCountedSet *)&#160;</td><td class="memItemRight" valign="bottom">- <a class="el" href="interfaceReactionDefinition.html#a7701a8846f4738a9837699bb1c051426">requirements</a></td></tr>
+<tr class="memdesc:a7701a8846f4738a9837699bb1c051426"><td class="mdescLeft">&#160;</td><td class="mdescRight">simple helper function to get the requirements for the reaction to take place  <a href="#a7701a8846f4738a9837699bb1c051426"></a><br/></td></tr>
 <tr class="memitem:ab480e7140c29f45be1e04edb812e8e87"><td class="memItemLeft" align="right" valign="top">(NSCountedSet *)&#160;</td><td class="memItemRight" valign="bottom">- <a class="el" href="interfaceReactionDefinition.html#ab480e7140c29f45be1e04edb812e8e87">result</a></td></tr>
+<tr class="memdesc:ab480e7140c29f45be1e04edb812e8e87"><td class="mdescLeft">&#160;</td><td class="mdescRight">simple helper function to get the results of a reaction  <a href="#ab480e7140c29f45be1e04edb812e8e87"></a><br/></td></tr>
 <tr class="memitem:a95b2cef70c515ac2f1b4ca274d90d4b2"><td class="memItemLeft" align="right" valign="top">(NSSet *)&#160;</td><td class="memItemRight" valign="bottom">- <a class="el" href="interfaceReactionDefinition.html#a95b2cef70c515ac2f1b4ca274d90d4b2">alteredMolecules</a></td></tr>
+<tr class="memdesc:a95b2cef70c515ac2f1b4ca274d90d4b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">returns the set of molecules effected by this reaction  <a href="#a95b2cef70c515ac2f1b4ca274d90d4b2"></a><br/></td></tr>
 <tr class="memitem:a7f8ff0749668694b76aaa14ca5ddd5d4"><td class="memItemLeft" align="right" valign="top">(double)&#160;</td><td class="memItemRight" valign="bottom">- <a class="el" href="interfaceReactionDefinition.html#a7f8ff0749668694b76aaa14ca5ddd5d4">reactionRate:</a></td></tr>
 <tr class="memdesc:a7f8ff0749668694b76aaa14ca5ddd5d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">given a state (containing molecule counts) this gets the reaction rate  <a href="#a7f8ff0749668694b76aaa14ca5ddd5d4"></a><br/></td></tr>
 <tr class="memitem:aa4745594030644d3d8254610c6404532"><td class="memItemLeft" align="right" valign="top">(void)&#160;</td><td class="memItemRight" valign="bottom">- <a class="el" href="interfaceReactionDefinition.html#aa4745594030644d3d8254610c6404532">applyReactionToCounts:</a></td></tr>
@@ -137,12 +140,15 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>returns the set of molecules effected by this reaction </p>
+<p>This is simply the union of the requirements and results </p>
+
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="interfaceReactionDefinition_a95b2cef70c515ac2f1b4ca274d90d4b2_cgraph.png" border="0" usemap="#interfaceReactionDefinition_a95b2cef70c515ac2f1b4ca274d90d4b2_cgraph" alt=""/></div>
 <map name="interfaceReactionDefinition_a95b2cef70c515ac2f1b4ca274d90d4b2_cgraph" id="interfaceReactionDefinition_a95b2cef70c515ac2f1b4ca274d90d4b2_cgraph">
-<area shape="rect" id="node3" href="interfaceReactionDefinition.html#ab480e7140c29f45be1e04edb812e8e87" title="&#45;[ReactionDefinition\l result]" alt="" coords="193,5,329,51"/><area shape="rect" id="node7" href="interfaceReactionDefinition.html#a7701a8846f4738a9837699bb1c051426" title="&#45;[ReactionDefinition\l requirements]" alt="" coords="193,74,329,121"/><area shape="rect" id="node5" href="interfaceReactionEquation.html#a4d89cdca2acc566c27386855d666eb54" title="&#45;[ReactionEquation\l result]" alt="" coords="379,5,512,51"/><area shape="rect" id="node9" href="interfaceReactionEquation.html#acbc23395ba28d2553bb0da44ceefe2d8" title="&#45;[ReactionEquation\l requirements]" alt="" coords="379,74,512,121"/></map>
+<area shape="rect" id="node3" href="interfaceReactionDefinition.html#ab480e7140c29f45be1e04edb812e8e87" title="simple helper function to get the results of a reaction" alt="" coords="193,5,329,51"/><area shape="rect" id="node7" href="interfaceReactionDefinition.html#a7701a8846f4738a9837699bb1c051426" title="simple helper function to get the requirements for the reaction to take place" alt="" coords="193,74,329,121"/><area shape="rect" id="node5" href="interfaceReactionEquation.html#a4d89cdca2acc566c27386855d666eb54" title="&#45;[ReactionEquation\l result]" alt="" coords="379,5,512,51"/><area shape="rect" id="node9" href="interfaceReactionEquation.html#acbc23395ba28d2553bb0da44ceefe2d8" title="&#45;[ReactionEquation\l requirements]" alt="" coords="379,74,512,121"/></map>
 </div>
 </p>
 
@@ -176,7 +182,7 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="interfaceReactionDefinition_aa4745594030644d3d8254610c6404532_cgraph.png" border="0" usemap="#interfaceReactionDefinition_aa4745594030644d3d8254610c6404532_cgraph" alt=""/></div>
 <map name="interfaceReactionDefinition_aa4745594030644d3d8254610c6404532_cgraph" id="interfaceReactionDefinition_aa4745594030644d3d8254610c6404532_cgraph">
-<area shape="rect" id="node3" href="interfaceReactionDefinition.html#a7701a8846f4738a9837699bb1c051426" title="&#45;[ReactionDefinition\l requirements]" alt="" coords="231,5,367,51"/><area shape="rect" id="node7" href="interfaceReactionDefinition.html#ab480e7140c29f45be1e04edb812e8e87" title="&#45;[ReactionDefinition\l result]" alt="" coords="231,74,367,121"/><area shape="rect" id="node5" href="interfaceReactionEquation.html#acbc23395ba28d2553bb0da44ceefe2d8" title="&#45;[ReactionEquation\l requirements]" alt="" coords="416,5,549,51"/><area shape="rect" id="node9" href="interfaceReactionEquation.html#a4d89cdca2acc566c27386855d666eb54" title="&#45;[ReactionEquation\l result]" alt="" coords="416,74,549,121"/></map>
+<area shape="rect" id="node3" href="interfaceReactionDefinition.html#a7701a8846f4738a9837699bb1c051426" title="simple helper function to get the requirements for the reaction to take place" alt="" coords="231,5,367,51"/><area shape="rect" id="node7" href="interfaceReactionDefinition.html#ab480e7140c29f45be1e04edb812e8e87" title="simple helper function to get the results of a reaction" alt="" coords="231,74,367,121"/><area shape="rect" id="node5" href="interfaceReactionEquation.html#acbc23395ba28d2553bb0da44ceefe2d8" title="&#45;[ReactionEquation\l requirements]" alt="" coords="416,5,549,51"/><area shape="rect" id="node9" href="interfaceReactionEquation.html#a4d89cdca2acc566c27386855d666eb54" title="&#45;[ReactionEquation\l result]" alt="" coords="416,74,549,121"/></map>
 </div>
 </p>
 
@@ -266,7 +272,7 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="interfaceReactionDefinition_a7f8ff0749668694b76aaa14ca5ddd5d4_cgraph.png" border="0" usemap="#interfaceReactionDefinition_a7f8ff0749668694b76aaa14ca5ddd5d4_cgraph" alt=""/></div>
 <map name="interfaceReactionDefinition_a7f8ff0749668694b76aaa14ca5ddd5d4_cgraph" id="interfaceReactionDefinition_a7f8ff0749668694b76aaa14ca5ddd5d4_cgraph">
-<area shape="rect" id="node3" href="interfaceReactionDefinition.html#a7701a8846f4738a9837699bb1c051426" title="&#45;[ReactionDefinition\l requirements]" alt="" coords="213,5,349,51"/><area shape="rect" id="node7" href="interfaceKineticConstant.html#a11000afb8a659995b9256652b8d72928" title="&#45;[KineticConstant double\lValue]" alt="" coords="199,74,364,121"/><area shape="rect" id="node9" href="interfaceSimulationState.html#ac5ded0c1af28f5b17d0db8fdae01b994" title="&#45;[SimulationState molecule\lCount:]" alt="" coords="192,143,371,190"/><area shape="rect" id="node5" href="interfaceReactionEquation.html#acbc23395ba28d2553bb0da44ceefe2d8" title="&#45;[ReactionEquation\l requirements]" alt="" coords="419,5,552,51"/></map>
+<area shape="rect" id="node3" href="interfaceReactionDefinition.html#a7701a8846f4738a9837699bb1c051426" title="simple helper function to get the requirements for the reaction to take place" alt="" coords="213,5,349,51"/><area shape="rect" id="node7" href="interfaceKineticConstant.html#a11000afb8a659995b9256652b8d72928" title="&#45;[KineticConstant double\lValue]" alt="" coords="199,74,364,121"/><area shape="rect" id="node9" href="interfaceSimulationState.html#ac5ded0c1af28f5b17d0db8fdae01b994" title="&#45;[SimulationState molecule\lCount:]" alt="" coords="192,143,371,190"/><area shape="rect" id="node5" href="interfaceReactionEquation.html#acbc23395ba28d2553bb0da44ceefe2d8" title="&#45;[ReactionEquation\l requirements]" alt="" coords="419,5,552,51"/></map>
 </div>
 </p>
 
@@ -284,6 +290,9 @@ Here is the call graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>simple helper function to get the requirements for the reaction to take place </p>
+<dl class="section return"><dt>Returns</dt><dd>A NSCountedSet of NSString, where each string is a molecule required for the reaction to take place </dd></dl>
 
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -308,6 +317,9 @@ Here is the call graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>simple helper function to get the results of a reaction </p>
+<dl class="section return"><dt>Returns</dt><dd>A NSCountedSet of NSString, where each string is a molecule result of the reaction </dd></dl>
 
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -368,7 +380,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Dec 12 2012 20:25:09 for Computer Science Large Practical by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Dec 13 2012 10:32:41 for Computer Science Large Practical by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

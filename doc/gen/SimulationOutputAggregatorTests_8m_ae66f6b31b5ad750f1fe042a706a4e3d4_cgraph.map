@@ -9,5 +9,5 @@
 <area shape="rect" id="node20" href="$interfaceWriterMock.html#a73544e47bdc78b1f19679da92d10f4bd" title="&#45;[WriterMock unexpected]" alt="" coords="417,321,588,351"/>
 <area shape="rect" id="node9" href="$interfaceSimulationState.html#a34112bf87bee2bd2f7ef2e4755274277" title="&#45;[SimulationState timeSince\lSimulationStart]" alt="" coords="653,151,837,198"/>
 <area shape="rect" id="node11" href="$interfaceSimulationState.html#a60bac921c80ab9989636212f96ca6eeb" title="&#45;[SimulationState setTime\lSinceSimulationStart:]" alt="" coords="659,221,832,267"/>
-<area shape="rect" id="node13" href="$interfaceTimeSpan.html#a0081332945ef00157b3a6a2e85f88e13" title="&#45;[TimeSpan addMilliseconds:]" alt="" coords="648,291,843,320"/>
+<area shape="rect" id="node13" href="$interfaceTimeSpan.html#a0081332945ef00157b3a6a2e85f88e13" title="adds a number of milliseconds to the TimeSpan" alt="" coords="648,291,843,320"/>
 </map>

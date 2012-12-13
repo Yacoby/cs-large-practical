@@ -105,7 +105,16 @@ Note: Early startup errors such as incorrect command line parameters can only be
 
 Running Tests
 -------------
-From the project root directory run `gnustep-tests`
+From the project root directory run `gnustep-tests`. There are tests for most parts
+of the system. 
+
+The code quality of the tests isn't terribly high as there is quite a lot of
+*almost* duplicated code, this is in part due to the verboseness of Objective C in
+that it takes a huge number of lines to setup the state. The other issue was 
+that I couldn't find a decent unit testing and object mocking framework that worked
+reliably with gnustep (despite having spent several hours trying to set some of them
+up). This meant that I didn't have features such as test auto discovery and methods
+that were automatically run before each tests.
 
 Performance
 -----------
@@ -122,7 +131,7 @@ These adversely effect performance with smaller systems.
 * LDM (Logarithmic Direct Method) preforms a binary search against the list of reactions rather than a linear search. This makes SDM useless but will probably only have a noticeable impact on performance for very large numbers of reactions
 * Dependency Graph maintains a dependency graph of what applying a reaction will effect. It uses this to minimize the number of calculations needed.
 
-I did not build a big enough system to find where one where using logarithmic search made a significant performance gain and I would suspect 
+I did not build a big enough system to find where one where using logarithmic search made a significant performance gain and I would suspect that with a larger number of reactions this would start to make a difference.
 
 Although (I would assume) outside the scope of this project would be
 to write the file as binary, which would avoid the string concatenation
@@ -135,8 +144,13 @@ it would be advantageous to write the Simulator in C. This is because when using
 Objective C it is hard to avoid heap allocations in the simulator main loop as
 the Objective C container types (NSArray, NSSet etc) cannot store primitive types so
 have to be wrapped (for example having to create a NSValue to do a pointer lookup).
-Given that the assignment wanted the code to be Objective C, I didn't experiment
-with writing a version of the simulator in C.
+I have tried to minimize this but it still occurs at various points.
+
+C would also allow all the data to be stored in a continuous block of memory,
+which would help reduce the number of cache misses. Given that the assignment 
+wanted the code to be Objective C, I didn't experiment with writing a version of the simulator in C
+although the application has designed so that it would be trivial to do (You would need to
+write a new version of SimulatorInternalState)
 
 Other code
 -----------
@@ -197,3 +211,12 @@ While I haven't gone to that extreme in this project, where I have thought that 
 be needed in the implementation I have instead re-factored the code to attempt to make it more
 readable. I also tried to avoid using primitive types where possible and instead used objects, for
 example TimeSpan.
+
+
+Papers
+-------
+The following papers cover the performance changes I made to the Gillespie Algorithm:
+
+ * The sorting direct method for stochastic simulation of biochemical systems with varying reaction execution behavior - McCollum, J.M, Peterson, G.D., Cox, C.D., Simpson, M.L. and Samatova, N.F.
+ * Efficient exact stochastic simulation of chemical systems with many species and many channels - Gibson, M.A. and Bruck, J.
+ * Logarithmic direct method for discrete stochastic simulation of chemically reacting systems - Li, H. and Petzold, L.

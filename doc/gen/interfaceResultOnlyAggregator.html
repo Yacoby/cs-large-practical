@@ -90,6 +90,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
+<p>outputs only the result of the reaction and ignores intermediate stages  
+ <a href="interfaceResultOnlyAggregator.html#details">More...</a></p>
+
 <p><code>#import &lt;<a class="el" href="SimulationOutputAggregator_8h_source.html">SimulationOutputAggregator.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for ResultOnlyAggregator:</div>
@@ -120,7 +123,11 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:aa26f4e879aa59529dde5109d70cd4873"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interfaceSimulationState.html">SimulationState</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfaceResultOnlyAggregator.html#aa26f4e879aa59529dde5109d70cd4873">mLastState</a></td></tr>
 <tr class="memitem:abc6601217c11d3a9a8e3f07d8ee69a9c"><td class="memItemLeft" align="right" valign="top">id&lt; <a class="el" href="protocolSimulationOutputWriter-p.html">SimulationOutputWriter</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfaceResultOnlyAggregator.html#abc6601217c11d3a9a8e3f07d8ee69a9c">mWriter</a></td></tr>
 </table>
-<h2>Member Function Documentation</h2>
+<a name="details" id="details"></a><h2>Detailed Description</h2>
+<div class="textblock"><p>outputs only the result of the reaction and ignores intermediate stages </p>
+<p>Output is expensive as it involves disk IO and string concatenation. This is especially true if you are writing to the terminal as it lacks buffering.</p>
+<p>This simply stores the last state and when the simulation ends, it writes that last state. </p>
+</div><h2>Member Function Documentation</h2>
 <a class="anchor" id="acdfce0d50bd2697217c114671769ae55"></a>
 <div class="memitem">
 <div class="memproto">
@@ -249,7 +256,7 @@ Protected Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Dec 12 2012 20:25:09 for Computer Science Large Practical by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Dec 13 2012 10:32:41 for Computer Science Large Practical by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

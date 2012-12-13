@@ -1,5 +1,5 @@
 <map id="&#45;[ExactHundredMsAggregator stateChangedTo:]" name="&#45;[ExactHundredMsAggregator stateChangedTo:]">
 <area shape="rect" id="node3" href="$interfaceSimulationState.html#a34112bf87bee2bd2f7ef2e4755274277" title="&#45;[SimulationState timeSince\lSimulationStart]" alt="" coords="253,5,437,51"/>
 <area shape="rect" id="node5" href="$interfaceSimulationState.html#a60bac921c80ab9989636212f96ca6eeb" title="&#45;[SimulationState setTime\lSinceSimulationStart:]" alt="" coords="259,74,432,121"/>
-<area shape="rect" id="node7" href="$interfaceTimeSpan.html#a0081332945ef00157b3a6a2e85f88e13" title="&#45;[TimeSpan addMilliseconds:]" alt="" coords="248,144,443,173"/>
+<area shape="rect" id="node7" href="$interfaceTimeSpan.html#a0081332945ef00157b3a6a2e85f88e13" title="adds a number of milliseconds to the TimeSpan" alt="" coords="248,144,443,173"/>
 </map>

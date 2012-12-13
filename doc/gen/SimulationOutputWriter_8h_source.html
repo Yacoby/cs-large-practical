@@ -94,25 +94,26 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
 <div class="line"><a name="l00017"></a><span class="lineno"><a class="code" href="interfaceRfcCsvWriter.html">   17</a></span>&#160;<span class="keyword">@interface </span><a class="code" href="interfaceRfcCsvWriter.html" title="Writer that follows RFC 4180 to provide a standard CSV file.">RfcCsvWriter</a> : NSObject &lt;<a class="code" href="protocolSimulationOutputWriter-p.html" title="This is a generic writer that allows writing of the simulation to a stream.">SimulationOutputWriter</a>&gt;{</div>
 <div class="line"><a name="l00018"></a><span class="lineno"><a class="code" href="interfaceRfcCsvWriter.html#a1369e5e8f1d2f3a273859e2d7c7710d5">   18</a></span>&#160;    id &lt;OutputStream&gt; <a class="code" href="interfaceRfcCsvWriter.html#a1369e5e8f1d2f3a273859e2d7c7710d5">mOutputStream</a>;</div>
-<div class="line"><a name="l00019"></a><span class="lineno"><a class="code" href="interfaceRfcCsvWriter.html#ae81396bc01e46829f86e8ee0b95e4fac">   19</a></span>&#160;    NSArray* <a class="code" href="interfaceRfcCsvWriter.html#ae81396bc01e46829f86e8ee0b95e4fac">mOrderedMolecules</a>;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;}</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;- (id)initWithStream:(<span class="keywordtype">id</span> &lt;<a class="code" href="protocolOutputStream-p.html" title="This represents some form of string output to some stream location.">OutputStream</a>&gt;)stream simulationConfiguration:(<a class="code" href="interfaceSimulationConfiguration.html" title="Holds a copy of the configuration, which may or may not be valid.">SimulationConfiguration</a>*)cfg;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;- (void)writeHeaders;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;- (void)dealloc;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;- (void)writeToStream:(<a class="code" href="interfaceSimulationState.html" title="Represents a state (molecule counts) at a spesific point in time from the start of the simulation...">SimulationState</a>*)state;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">@end</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
-<div class="line"><a name="l00043"></a><span class="lineno"><a class="code" href="interfaceAssignmentCsvWriter.html">   43</a></span>&#160;<span class="keyword">@interface </span><a class="code" href="interfaceAssignmentCsvWriter.html" title="Writer that outputs in the format set out in the handout (headers prefixed by #)">AssignmentCsvWriter</a>: <a class="code" href="interfaceRfcCsvWriter.html" title="Writer that follows RFC 4180 to provide a standard CSV file.">RfcCsvWriter</a> &lt;<a class="code" href="protocolSimulationOutputWriter-p.html" title="This is a generic writer that allows writing of the simulation to a stream.">SimulationOutputWriter</a>&gt;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;- (void)<a class="code" href="interfaceAssignmentCsvWriter.html#a37873184961b845994a8fdc3d8b241e8" title="writes the csv headers (column headings)">writeHeaders</a>;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;- (void)writeToStream:(<a class="code" href="interfaceSimulationState.html" title="Represents a state (molecule counts) at a spesific point in time from the start of the simulation...">SimulationState</a>*)state;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keyword">@end</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
+<div class="line"><a name="l00025"></a><span class="lineno"><a class="code" href="interfaceRfcCsvWriter.html#ae81396bc01e46829f86e8ee0b95e4fac">   25</a></span>&#160;    NSArray* <a class="code" href="interfaceRfcCsvWriter.html#ae81396bc01e46829f86e8ee0b95e4fac">mOrderedMolecules</a>;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;}</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;- (id)initWithStream:(<span class="keywordtype">id</span> &lt;<a class="code" href="protocolOutputStream-p.html" title="This represents some form of string output to some stream location.">OutputStream</a>&gt;)stream simulationConfiguration:(<a class="code" href="interfaceSimulationConfiguration.html" title="Holds a copy of the configuration, which may or may not be valid.">SimulationConfiguration</a>*)cfg;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;- (void)writeHeaders;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;- (void)dealloc;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;- (void)writeToStream:(<a class="code" href="interfaceSimulationState.html" title="Represents a state (molecule counts) at a spesific point in time from the start of the simulation...">SimulationState</a>*)state;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keyword">@end</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="code" href="interfaceAssignmentCsvWriter.html">   49</a></span>&#160;<span class="keyword">@interface </span><a class="code" href="interfaceAssignmentCsvWriter.html" title="Writer that outputs in the format set out in the handout (headers prefixed by #)">AssignmentCsvWriter</a>: <a class="code" href="interfaceRfcCsvWriter.html" title="Writer that follows RFC 4180 to provide a standard CSV file.">RfcCsvWriter</a> &lt;<a class="code" href="protocolSimulationOutputWriter-p.html" title="This is a generic writer that allows writing of the simulation to a stream.">SimulationOutputWriter</a>&gt;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;- (void)<a class="code" href="interfaceAssignmentCsvWriter.html#a37873184961b845994a8fdc3d8b241e8" title="writes the csv headers (column headings)">writeHeaders</a>;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;- (void)writeToStream:(<a class="code" href="interfaceSimulationState.html" title="Represents a state (molecule counts) at a spesific point in time from the start of the simulation...">SimulationState</a>*)state;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keyword">@end</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Dec 12 2012 20:25:04 for Computer Science Large Practical by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Dec 13 2012 10:32:31 for Computer Science Large Practical by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

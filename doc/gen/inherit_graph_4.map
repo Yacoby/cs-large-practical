@@ -3,5 +3,5 @@
 <area shape="rect" id="node3" href="$interfaceExactHundredMsAggregator.html" title="This writes the state exactly once every simulated 100ms." alt="" coords="256,5,443,35"/>
 <area shape="rect" id="node5" href="$interfaceHundredMsAggregator.html" title="This writes the state at maximum once every simulated 100ms." alt="" coords="273,59,425,88"/>
 <area shape="rect" id="node7" href="$interfacePassthroughAggregator.html" title="All state changes are written to the output." alt="" coords="271,112,428,141"/>
-<area shape="rect" id="node9" href="$interfaceResultOnlyAggregator.html" title="ResultOnlyAggregator" alt="" coords="275,165,424,195"/>
+<area shape="rect" id="node9" href="$interfaceResultOnlyAggregator.html" title="outputs only the result of the reaction and ignores intermediate stages" alt="" coords="275,165,424,195"/>
 </map>

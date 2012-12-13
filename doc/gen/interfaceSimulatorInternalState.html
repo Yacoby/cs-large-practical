@@ -123,7 +123,7 @@ Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:a9fc20a4edbeb63b0f194a90d4f8aa77a"><td class="memItemLeft" align="right" valign="top">NSMutableArray *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfaceSimulatorInternalState.html#a9fc20a4edbeb63b0f194a90d4f8aa77a">mReactions</a></td></tr>
-<tr class="memdesc:a9fc20a4edbeb63b0f194a90d4f8aa77a"><td class="mdescLeft">&#160;</td><td class="mdescRight">An array of all reactions and rates, held in <a class="el" href="interfaceReactionWithRate.html" title="hold a reaction and its assoicated rate">ReactionWithRate</a>.  <a href="#a9fc20a4edbeb63b0f194a90d4f8aa77a"></a><br/></td></tr>
+<tr class="memdesc:a9fc20a4edbeb63b0f194a90d4f8aa77a"><td class="mdescLeft">&#160;</td><td class="mdescRight">An array of all reactions and rates, held in <a class="el" href="interfaceReactionWithRate.html" title="hold a reaction and its assoicated rates for use in an NSArray">ReactionWithRate</a>.  <a href="#a9fc20a4edbeb63b0f194a90d4f8aa77a"></a><br/></td></tr>
 <tr class="memitem:a03049d63e7e980c0462434ddf636d066"><td class="memItemLeft" align="right" valign="top">NSMutableSet *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfaceSimulatorInternalState.html#a03049d63e7e980c0462434ddf636d066">mDirtyReactions</a></td></tr>
 <tr class="memdesc:a03049d63e7e980c0462434ddf636d066"><td class="mdescLeft">&#160;</td><td class="mdescRight">a set of reactions that do not have a valid rate  <a href="#a03049d63e7e980c0462434ddf636d066"></a><br/></td></tr>
 <tr class="memitem:aa02360773cb83364d47fa2f9941ca265"><td class="memItemLeft" align="right" valign="top">NSMutableDictionary *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfaceSimulatorInternalState.html#aa02360773cb83364d47fa2f9941ca265">mReactionRateDepencies</a></td></tr>
@@ -293,7 +293,7 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="interfaceSimulatorInternalState_a8d27fad5f4d3c13741deade0e4e20435_cgraph.png" border="0" usemap="#interfaceSimulatorInternalState_a8d27fad5f4d3c13741deade0e4e20435_cgraph" alt=""/></div>
 <map name="interfaceSimulatorInternalState_a8d27fad5f4d3c13741deade0e4e20435_cgraph" id="interfaceSimulatorInternalState_a8d27fad5f4d3c13741deade0e4e20435_cgraph">
-<area shape="rect" id="node3" href="interfaceSimulatorInternalState.html#a41acbd9d2611cf8ef084a778fe520939" title="&#45;[SimulatorInternalState\l initWithSDM:ldm:dependencyGraph:]" alt="" coords="213,5,456,51"/></map>
+<area shape="rect" id="node3" href="interfaceSimulatorInternalState.html#a41acbd9d2611cf8ef084a778fe520939" title="&#45;[SimulatorInternalState\l initWithSDM:ldm:dependencyGraph:]" alt="" coords="213,77,456,123"/><area shape="rect" id="node5" href="interfaceLogger.html#aaa71c486be702d856d398a33b0090941" title="+[Logger info:]" alt="" coords="504,85,611,115"/><area shape="rect" id="node7" href="interfaceLogger.html#a9f9acae64a5f26267526d16196ea23c8" title="gets the sole instance of this class if it exists" alt="" coords="680,5,811,35"/><area shape="rect" id="node9" href="interfaceLogger.html#a60e1706d05c9d0ff5f0e31febe20d26a" title="gets the global log level" alt="" coords="664,59,827,88"/><area shape="rect" id="node11" href="interfaceLogger.html#a8d9661d0a2d2a0839a747a7d9620606e" title="&#45;[Logger logs]" alt="" coords="695,112,796,141"/><area shape="rect" id="node13" href="interfaceLog.html#aa64cf31c232ad2981202de662d01165e" title="Write to a log file. This calls logLevelImpl if the message should be written." alt="" coords="660,165,831,211"/><area shape="rect" id="node15" href="interfaceLog.html#a2a9ff96048338da2d688a4d7784ad34a" title="&#45;[Log logLevel]" alt="" coords="909,143,1016,172"/><area shape="rect" id="node17" href="interfaceLog.html#a81540f30468c3944baa3ee34cfe23e99" title="function that does the work of logging. Should be overwritten by subclasses" alt="" coords="881,195,1044,242"/></map>
 </div>
 </p>
 
@@ -336,6 +336,15 @@ Here is the call graph for this function:</div>
   </table>
   </dd>
 </dl>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="interfaceSimulatorInternalState_a41acbd9d2611cf8ef084a778fe520939_cgraph.png" border="0" usemap="#interfaceSimulatorInternalState_a41acbd9d2611cf8ef084a778fe520939_cgraph" alt=""/></div>
+<map name="interfaceSimulatorInternalState_a41acbd9d2611cf8ef084a778fe520939_cgraph" id="interfaceSimulatorInternalState_a41acbd9d2611cf8ef084a778fe520939_cgraph">
+<area shape="rect" id="node3" href="interfaceLogger.html#aaa71c486be702d856d398a33b0090941" title="+[Logger info:]" alt="" coords="296,85,403,115"/><area shape="rect" id="node5" href="interfaceLogger.html#a9f9acae64a5f26267526d16196ea23c8" title="gets the sole instance of this class if it exists" alt="" coords="472,5,603,35"/><area shape="rect" id="node7" href="interfaceLogger.html#a60e1706d05c9d0ff5f0e31febe20d26a" title="gets the global log level" alt="" coords="456,59,619,88"/><area shape="rect" id="node9" href="interfaceLogger.html#a8d9661d0a2d2a0839a747a7d9620606e" title="&#45;[Logger logs]" alt="" coords="487,112,588,141"/><area shape="rect" id="node11" href="interfaceLog.html#aa64cf31c232ad2981202de662d01165e" title="Write to a log file. This calls logLevelImpl if the message should be written." alt="" coords="452,165,623,211"/><area shape="rect" id="node13" href="interfaceLog.html#a2a9ff96048338da2d688a4d7784ad34a" title="&#45;[Log logLevel]" alt="" coords="701,143,808,172"/><area shape="rect" id="node15" href="interfaceLog.html#a81540f30468c3944baa3ee34cfe23e99" title="function that does the work of logging. Should be overwritten by subclasses" alt="" coords="673,195,836,242"/></map>
+</div>
+</p>
 
 </div>
 </div>
@@ -535,7 +544,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>An array of all reactions and rates, held in <a class="el" href="interfaceReactionWithRate.html" title="hold a reaction and its assoicated rate">ReactionWithRate</a>. </p>
+<p>An array of all reactions and rates, held in <a class="el" href="interfaceReactionWithRate.html" title="hold a reaction and its assoicated rates for use in an NSArray">ReactionWithRate</a>. </p>
 
 </div>
 </div>
@@ -606,7 +615,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Dec 12 2012 20:25:09 for Computer Science Large Practical by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Dec 13 2012 10:32:42 for Computer Science Large Practical by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

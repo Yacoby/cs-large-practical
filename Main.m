@@ -176,7 +176,7 @@ id<Random> getRandomNumberGenerator(CommandLineOptions* options){
     if ( [options getOptionWithName:@"seed"] != nil ){
         seed = [[options getOptionWithName:@"seed"] intValue];
     }
-    [Logger info:"Using random seed:<%u>", seed];
+    [Logger info:@"Using random seed:<%u>", seed];
     return [[[UniformRandom alloc] initWithSeed:seed] autorelease];
 }
 

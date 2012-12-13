@@ -52,8 +52,8 @@ const int NO_REACTION = -1;
         mUseLogrithmicDirectMethod = ldm;
         mUseDependencyGraph        = graph;
 
-        [Logger info:"Using standard internal state"];
-        [Logger info:"SDM:<%c> LDM:<%c> Graph:<%c>", sdm, ldm, graph];
+        [Logger info:@"Using standard internal state"];
+        [Logger info:@"SDM:<%c> LDM:<%c> Graph:<%c>", sdm, ldm, graph];
 
         mReactions      = [[NSMutableArray alloc] init];
         mDirtyReactions = [[NSMutableSet alloc] init];

@@ -98,10 +98,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <tr class="heading"><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a8d27fad5f4d3c13741deade0e4e20435"><td class="memItemLeft" align="right" valign="top">(id)&#160;</td><td class="memItemRight" valign="bottom">- <a class="el" href="interfaceSimulatorInternalState.html#a8d27fad5f4d3c13741deade0e4e20435">init</a></td></tr>
+<tr class="memdesc:a8d27fad5f4d3c13741deade0e4e20435"><td class="mdescLeft">&#160;</td><td class="mdescRight">creates the object will all optional extras disabled  <a href="#a8d27fad5f4d3c13741deade0e4e20435"></a><br/></td></tr>
 <tr class="memitem:a41acbd9d2611cf8ef084a778fe520939"><td class="memItemLeft" align="right" valign="top">(id)&#160;</td><td class="memItemRight" valign="bottom">- <a class="el" href="interfaceSimulatorInternalState.html#a41acbd9d2611cf8ef084a778fe520939">initWithSDM:ldm:dependencyGraph:</a></td></tr>
 <tr class="memitem:aceaeb7c2426eaa638d954c34386ce9fe"><td class="memItemLeft" align="right" valign="top">(void)&#160;</td><td class="memItemRight" valign="bottom">- <a class="el" href="interfaceSimulatorInternalState.html#aceaeb7c2426eaa638d954c34386ce9fe">dealloc</a></td></tr>
-<tr class="memitem:aef79550604af1477e214ed4f0b25f0a7"><td class="memItemLeft" align="right" valign="top">(void)&#160;</td><td class="memItemRight" valign="bottom">- <a class="el" href="interfaceSimulatorInternalState.html#aef79550604af1477e214ed4f0b25f0a7">setDirty:</a></td></tr>
-<tr class="memdesc:aef79550604af1477e214ed4f0b25f0a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">sets all Reaction that use this reaction as being "dirty" and needing updating  <a href="#aef79550604af1477e214ed4f0b25f0a7"></a><br/></td></tr>
+<tr class="memitem:a36a9b25b25befb1143b6ca102aed7601"><td class="memItemLeft" align="right" valign="top">(void)&#160;</td><td class="memItemRight" valign="bottom">- <a class="el" href="interfaceSimulatorInternalState.html#a36a9b25b25befb1143b6ca102aed7601">setDependentReactionsDirty:</a></td></tr>
+<tr class="memdesc:a36a9b25b25befb1143b6ca102aed7601"><td class="mdescLeft">&#160;</td><td class="mdescRight">sets all Reaction that use this reaction as being "dirty" and having invalid rates  <a href="#a36a9b25b25befb1143b6ca102aed7601"></a><br/></td></tr>
 <tr class="memitem:a689de27565c243fab8b0d3235dce60dd"><td class="memItemLeft" align="right" valign="top">(BOOL)&#160;</td><td class="memItemRight" valign="bottom">- <a class="el" href="interfaceSimulatorInternalState.html#a689de27565c243fab8b0d3235dce60dd">isDirty:</a></td></tr>
 <tr class="memitem:a09e93cdf6fbdaa55d480f620b8d7e71c"><td class="memItemLeft" align="right" valign="top">(void)&#160;</td><td class="memItemRight" valign="bottom">- <a class="el" href="interfaceSimulatorInternalState.html#a09e93cdf6fbdaa55d480f620b8d7e71c">updateRates:</a></td></tr>
 <tr class="memdesc:a09e93cdf6fbdaa55d480f620b8d7e71c"><td class="mdescLeft">&#160;</td><td class="mdescRight">ensures all rates are up to date, using state to update them if required  <a href="#a09e93cdf6fbdaa55d480f620b8d7e71c"></a><br/></td></tr>
@@ -135,7 +136,10 @@ Protected Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>this holds the internal state of the simulator and is responsible for ensuring consistency </p>
 <p>As the algorithm got more complex, we needed to be able to provide a simpler interface that guaranteed state consistency.</p>
-<p>Internally this impelements SDM, LDM and DependencyGraph as methods of increasing performance with larger systems. </p>
+<p>Internally this implements SDM, LDM and DependencyGraph as methods of increasing performance with larger systems.</p>
+<p>SDM alters the order in which reactions are considered. When a reaction is selected it moves up in the order which reactions are examined. This means that reactions that occur a lot will end up being considered first (so avoiding doing a lot of calculations) but it will adapt to changes so that if the reaction currently being considered first no longer occurs then it will be bubbled to the bottom</p>
+<p>LDM is an alternative to SDM. Rather than doing a linear search on the rates, it preforms a binary search. This reduces the runtime of that part of the algorithm from O(n) to O(lg n) which is advantageous for large n. It preforms this binary search by maintain a list of partial rate sums and preforming a binary search on them. This of course makes SDM irrelevant.</p>
+<p>DependencyGraph builds a dependency graph of what reaction rates will be invalidated (or made "dirty") when a reaction is applied. There are edges between reactions when a reaction alters a molecule that another reaction has in its requirement. Knowing this avoids recalculating all the reaction rates, but only the ones that will have changed. </p>
 </div><h2>Member Function Documentation</h2>
 <a class="anchor" id="ab1560989febc5f5f79def98f38c5d5fd"></a>
 <div class="memitem">
@@ -158,7 +162,7 @@ Protected Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>This should be done intitially as adding reactions when the state is anything but the start state is undefined </p>
+<p>This should be done initially as adding reactions when the state is anything but the start state is undefined </p>
 
 </div>
 </div>
@@ -252,7 +256,7 @@ Here is the call graph for this function:</div>
 </div><div class="memdoc">
 
 <p>implementation of findReactionIndex, needs mUseLogrithmicDirectMethod to be enabled </p>
-<p>mUseLogrithmicDirectMethod ensures we have set the partial sums which allows us to use a binary search. (The parital sums are guarentted to be increasing as the rate is always positive) </p>
+<p>mUseLogrithmicDirectMethod ensures we have set the partial sums which allows us to use a binary search. (The partial sums are guaranteed to be increasing as the rate is always positive) </p>
 
 </div>
 </div>
@@ -271,7 +275,7 @@ Here is the call graph for this function:</div>
 </div><div class="memdoc">
 
 <p>implementation of findReactionIndex </p>
-<p>Preforms a linear search on the rates </p>
+<p>Preforms a linear search on the rates to find the reaction index. </p>
 
 </div>
 </div>
@@ -287,6 +291,8 @@ Here is the call graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>creates the object will all optional extras disabled </p>
 
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -432,12 +438,12 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
-<a class="anchor" id="aef79550604af1477e214ed4f0b25f0a7"></a>
+<a class="anchor" id="a36a9b25b25befb1143b6ca102aed7601"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">- (void) setDirty: </td>
+          <td class="memname">- (void) setDependentReactionsDirty: </td>
           <td></td>
           <td class="paramtype">(<a class="el" href="interfaceReactionDefinition.html">ReactionDefinition</a>*)&#160;</td>
           <td class="paramname"><em>reaction</em></td>
@@ -446,7 +452,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>sets all Reaction that use this reaction as being "dirty" and needing updating </p>
+<p>sets all Reaction that use this reaction as being "dirty" and having invalid rates </p>
 
 </div>
 </div>
@@ -615,7 +621,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Dec 13 2012 10:32:42 for Computer Science Large Practical by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Dec 13 2012 11:45:21 for Computer Science Large Practical by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

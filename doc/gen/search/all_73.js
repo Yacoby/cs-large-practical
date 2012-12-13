@@ -2,7 +2,7 @@ var searchData=
 [
   ['setdefaultvalueforargumentkey_3avalue_3a',['setDefaultValueForArgumentKey:value:',['../interfaceCommandLineOptionParser.html#a0ebc26aeeb71a36a0ae45d3c3f3b0f41',1,'CommandLineOptionParser']]],
   ['setdefaultvalues_3a',['setDefaultValues:',['../interfaceCommandLineOptionParser.html#ae9289ddc05cfe8ab526f341d0dff15ec',1,'CommandLineOptionParser']]],
-  ['setdirty_3a',['setDirty:',['../interfaceSimulatorInternalState.html#aef79550604af1477e214ed4f0b25f0a7',1,'SimulatorInternalState']]],
+  ['setdependentreactionsdirty_3a',['setDependentReactionsDirty:',['../interfaceSimulatorInternalState.html#a36a9b25b25befb1143b6ca102aed7601',1,'SimulatorInternalState']]],
   ['setgloballoglevel_3a',['setGlobalLogLevel:',['../interfaceLogger.html#abe9816aaea27d6dc7cee3cd0e0ee80f7',1,'Logger']]],
   ['sethelpstringforargumentkey_3ahelp_3a',['setHelpStringForArgumentKey:help:',['../interfaceCommandLineOptionParser.html#ad9a8195ad20b01321b9c875b831051a5',1,'CommandLineOptionParser']]],
   ['sethelpstringforargumentkey_5fwhensetshelptextfornotexistkey_5fthrows',['setHelpStringForArgumentKey_WhenSetsHelpTextForNotExistKey_Throws',['../CommandLineOptionParserTests_8m.html#a7b78c615584e3abe97777e58eced6cc3',1,'CommandLineOptionParserTests.m']]],

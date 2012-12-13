@@ -1,15 +1,15 @@
 <map id="main" name="main">
 <area shape="rect" id="node3" href="$SimulatorTests_8m.html#aa960652f523732e004a5833db39a1a42" title="dirty_WhenHasBasicReaction\l_SetsSelfAsDirty" alt="" coords="120,143,317,190"/>
 <area shape="rect" id="node28" href="$SimulatorTests_8m.html#a44dcaca31c104c8fc105f3cfd77ab5ad" title="dirty_WhenHasTwoBasicReactions\l_SetsBothAsDirty" alt="" coords="104,213,333,259"/>
-<area shape="rect" id="node5" href="$interfaceReactionEquation.html#a614d6fec321b7c754bb2deadd7818b9c" title="&#45;[ReactionEquation\l setRequirements:]" alt="" coords="401,5,535,51"/>
-<area shape="rect" id="node9" href="$interfaceReactionEquation.html#aa46180d0b95d15f7a8935a46f048f1ff" title="&#45;[ReactionEquation\l setResult:]" alt="" coords="401,74,535,121"/>
-<area shape="rect" id="node13" href="$interfaceSimulatorInternalState.html#ab1560989febc5f5f79def98f38c5d5fd" title="adds a reaction to the internal state" alt="" coords="389,143,547,190"/>
-<area shape="rect" id="node15" href="$interfaceSimulatorInternalState.html#ac2a4f3f610f6e10d69a416381b34d175" title="builds the graph of all the dependencies of the current reactions." alt="" coords="381,213,555,259"/>
-<area shape="rect" id="node19" href="$interfaceSimulatorInternalState.html#a09e93cdf6fbdaa55d480f620b8d7e71c" title="ensures all rates are up to date, using state to update them if required" alt="" coords="389,282,547,329"/>
-<area shape="rect" id="node26" href="$interfaceSimulatorInternalState.html#aef79550604af1477e214ed4f0b25f0a7" title="sets all Reaction that use this reaction as being &quot;dirty&quot; and needing updating" alt="" coords="389,351,547,398"/>
-<area shape="rect" id="node7" href="$interfaceReactionEquation.html#acbc23395ba28d2553bb0da44ceefe2d8" title="&#45;[ReactionEquation\l requirements]" alt="" coords="605,5,739,51"/>
-<area shape="rect" id="node11" href="$interfaceReactionEquation.html#a4d89cdca2acc566c27386855d666eb54" title="&#45;[ReactionEquation\l result]" alt="" coords="605,74,739,121"/>
-<area shape="rect" id="node17" href="$interfaceReactionWithRate.html#ae17e3583df68d7b3f91ac71830ab0e15" title="&#45;[ReactionWithRate\l reaction]" alt="" coords="604,213,740,259"/>
-<area shape="rect" id="node21" href="$interfaceReactionWithRate.html#a8da829f37d00ece86f481e8a45902c0f" title="&#45;[ReactionWithRate\l rate]" alt="" coords="791,309,927,355"/>
-<area shape="rect" id="node23" href="$interfaceReactionWithRate.html#a7a70d5afcf0bcd54d697e184b576ac74" title="&#45;[ReactionWithRate\l setPartialSum:]" alt="" coords="604,338,740,385"/>
+<area shape="rect" id="node5" href="$interfaceReactionEquation.html#a614d6fec321b7c754bb2deadd7818b9c" title="&#45;[ReactionEquation\l setRequirements:]" alt="" coords="416,5,549,51"/>
+<area shape="rect" id="node9" href="$interfaceReactionEquation.html#aa46180d0b95d15f7a8935a46f048f1ff" title="&#45;[ReactionEquation\l setResult:]" alt="" coords="416,74,549,121"/>
+<area shape="rect" id="node13" href="$interfaceSimulatorInternalState.html#ab1560989febc5f5f79def98f38c5d5fd" title="adds a reaction to the internal state" alt="" coords="404,143,561,190"/>
+<area shape="rect" id="node15" href="$interfaceSimulatorInternalState.html#ac2a4f3f610f6e10d69a416381b34d175" title="builds the graph of all the dependencies of the current reactions." alt="" coords="396,213,569,259"/>
+<area shape="rect" id="node19" href="$interfaceSimulatorInternalState.html#a09e93cdf6fbdaa55d480f620b8d7e71c" title="ensures all rates are up to date, using state to update them if required" alt="" coords="404,282,561,329"/>
+<area shape="rect" id="node26" href="$interfaceSimulatorInternalState.html#a36a9b25b25befb1143b6ca102aed7601" title="sets all Reaction that use this reaction as being &quot;dirty&quot; and having invalid rates" alt="" coords="381,351,584,398"/>
+<area shape="rect" id="node7" href="$interfaceReactionEquation.html#acbc23395ba28d2553bb0da44ceefe2d8" title="&#45;[ReactionEquation\l requirements]" alt="" coords="635,5,768,51"/>
+<area shape="rect" id="node11" href="$interfaceReactionEquation.html#a4d89cdca2acc566c27386855d666eb54" title="&#45;[ReactionEquation\l result]" alt="" coords="635,74,768,121"/>
+<area shape="rect" id="node17" href="$interfaceReactionWithRate.html#ae17e3583df68d7b3f91ac71830ab0e15" title="&#45;[ReactionWithRate\l reaction]" alt="" coords="633,213,769,259"/>
+<area shape="rect" id="node21" href="$interfaceReactionWithRate.html#a8da829f37d00ece86f481e8a45902c0f" title="&#45;[ReactionWithRate\l rate]" alt="" coords="820,309,956,355"/>
+<area shape="rect" id="node23" href="$interfaceReactionWithRate.html#a7a70d5afcf0bcd54d697e184b576ac74" title="&#45;[ReactionWithRate\l setPartialSum:]" alt="" coords="633,338,769,385"/>
 </map>

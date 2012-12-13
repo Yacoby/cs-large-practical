@@ -144,7 +144,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </ul>
 <p>I did not build a big enough system to find where one where using logarithmic search made a significant performance gain and I would suspect that with a larger number of reactions this would start to make a difference.</p>
 <p>Although (I would assume) outside the scope of this project would be to write the file as binary, which would avoid the string concatenation problems (but the data would be in a less useful format). It would also be possible (on a multicore machine) to write on one thread and do the simulation on another thread, although care would have to be taken with the cost of synchronization overhead.</p>
-<p>While it is (compared to the performance problem of the output) fairly minor, it would be advantageous to write the <a class="el" href="interfaceSimulator.html" title="the simulator that runs the simulation on the given input">Simulator</a> in C. This is because when using Objective C it is hard to avoid heap allocations in the simulator main loop as the Objective C container types (NSArray, NSSet etc) cannot store primitive types so have to be wrapped (for example having to create a NSValue to do a pointer lookup). Given that the assignment wanted the code to be Objective C, I didn't experiment with writing a version of the simulator in C.</p>
+<p>While it is (compared to the performance problem of the output) fairly minor, it would be advantageous to write the <a class="el" href="interfaceSimulator.html" title="the simulator that runs the simulation on the given input">Simulator</a> in C. This is because when using Objective C it is hard to avoid heap allocations in the simulator main loop as the Objective C container types (NSArray, NSSet etc) cannot store primitive types so have to be wrapped (for example having to create a NSValue to do a pointer lookup). I have tried to minimize this but it still occurs at various points.</p>
+<p>C would also allow all the data to be stored in a continuous block of memory, which would help reduce the number of cache misses. Given that the assignment wanted the code to be Objective C, I didn't experiment with writing a version of the simulator in C although the application has designed so that it would be trivial to do (You would need to write a new version of <a class="el" href="interfaceSimulatorInternalState.html" title="this holds the internal state of the simulator and is responsible for ensuring consistency">SimulatorInternalState</a>)</p>
 <h1>Other code</h1>
 <p><a class="el" href="Testing_8h.html">tests/Testing.h</a> is not my code and comes from gnustep. It is a set of macros that provide helpers to test functionality (such as exceptions being raised). It is included as it doesn't seem to live in a GNUStep include directory.</p>
 <h1>Coding Style</h1>
@@ -167,11 +168,18 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </pre><p>As it isn't clear what it returns and you know that it takes a time, but is it hours? decades? So you would would write: </p>
 <pre class="fragment">TimeSpan* doFoo(TimeSpan* time)
 </pre><p>Which adds type safety and removes ambiguity from the arguments without having to resort to comments</p>
-<p>While I haven't gone to that extreme in this project, where I have thought that comments may be needed in the implementation I have instead re-factored the code to attempt to make it more readable. I also tried to avoid using primitive types where possible and instead used objects, for example <a class="el" href="interfaceTimeSpan.html" title="Represents a time interval.">TimeSpan</a>. </p>
+<p>While I haven't gone to that extreme in this project, where I have thought that comments may be needed in the implementation I have instead re-factored the code to attempt to make it more readable. I also tried to avoid using primitive types where possible and instead used objects, for example <a class="el" href="interfaceTimeSpan.html" title="Represents a time interval.">TimeSpan</a>.</p>
+<h1>Papers</h1>
+<p>The following papers cover the performance changes I made to the Gillespie Algorithm:</p>
+<ul>
+<li>The sorting direct method for stochastic simulation of biochemical systems with varying reaction execution behavior - McCollum, J.M, Peterson, G.D., Cox, C.D., Simpson, M.L. and Samatova, N.F.</li>
+<li>Efficient exact stochastic simulation of chemical systems with many species and many channels - Gibson, M.A. and Bruck, J.</li>
+<li>Logarithmic direct method for discrete stochastic simulation of chemically reacting systems - Li, H. and Petzold, L. </li>
+</ul>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Dec 13 2012 10:32:43 for Computer Science Large Practical by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Dec 13 2012 11:45:23 for Computer Science Large Practical by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

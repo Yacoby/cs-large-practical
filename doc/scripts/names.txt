@@ -1,0 +1,15 @@
+#Same as enzyme substrate but uses the full names for things
+time = 200
+
+forward = 1.0
+backward = 0.5
+produce = 0.01
+
+Enzyme = 5
+Substrate = 5
+Compound = 0
+Product = 0
+
+forward : Enzyme + Substrate -> Compound
+backward : Compound -> Enzyme + Substrate
+produce : Compound -> Enzyme + Product

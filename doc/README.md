@@ -106,7 +106,7 @@ Note: Early startup errors such as incorrect command line parameters can only be
 Running Tests
 -------------
 From the project root directory run `gnustep-tests`. There are tests for most parts
-of the system. 
+of the system.
 
 The code quality of the tests isn't terribly high as there is quite a lot of
 *almost* duplicated code, this is in part due to the verboseness of Objective C in
@@ -178,6 +178,11 @@ should live with the type information such as:
     MyClass* myVariable;
 
 I simply avoid declaring the multiple variables of the same type on the same line.
+
+
+Test function names are written as `whatIsBeingTested_Conditions_ExpectedResult`
+which while it doesn't follow the main applications naming scheme it is worth doing
+for the clarity that it brings.
 
 Commenting
 -----------

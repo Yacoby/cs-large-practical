@@ -2,10 +2,16 @@
 #import "TestingExtension.h"
 #import "Factory.h"
 
+/**
+ * @brief Protocol for testing the factory class
+ */
 @protocol FactoryProtocol <NSObject>
 - (int)num;
 @end
 
+/**
+ * @brief used for testing the factory class
+ */
 @interface FactoryClass1 : NSObject<FactoryProtocol>
 - (int)num;
 @end
@@ -16,6 +22,9 @@
 }
 @end
 
+/**
+ * @brief used for testing the factory class
+ */
 @interface FactoryClass2 : NSObject<FactoryProtocol>
 - (int)num;
 @end

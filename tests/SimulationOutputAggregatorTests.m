@@ -59,6 +59,9 @@
 @end
 
 
+/**
+ * @brief class for testing ExactHundredMsAggregator
+ */
 @interface ExactHundredMsTests : NSObject{
     NSMutableDictionary* counts1;
     TimeSpan* startTime1;

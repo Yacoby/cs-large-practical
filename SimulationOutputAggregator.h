@@ -94,6 +94,15 @@
 - (void)simulationEnded;
 @end
 
+/**
+ * @brief outputs only the result of the reaction and ignores intermediate stages
+ *
+ * Output is expensive as it involves disk IO and string concatenation. This is 
+ * especially true if you are writing to the terminal as it lacks buffering.
+ *
+ * This simply stores the last state and when the simulation ends, it writes
+ * that last state.
+ */
 @interface ResultOnlyAggregator : NSObject<SimulationOutputAggregator>{
     SimulationState* mLastState;
     id<SimulationOutputWriter> mWriter;

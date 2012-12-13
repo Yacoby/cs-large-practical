@@ -48,9 +48,12 @@ const int NO_REACTION = -1;
 - (id)initWithSDM:(BOOL)sdm ldm:(BOOL)ldm dependencyGraph:(BOOL)graph{
     self = [super init];
     if ( self ){
-        mUseSortedDirectMethod = sdm;
-        mUseDependencyGraph = graph;
+        mUseSortedDirectMethod     = sdm;
         mUseLogrithmicDirectMethod = ldm;
+        mUseDependencyGraph        = graph;
+
+        [Logger info:"Using standard internal state"];
+        [Logger info:"SDM:<%c> LDM:<%c> Graph:<%c>", sdm, ldm, graph];
 
         mReactions      = [[NSMutableArray alloc] init];
         mDirtyReactions = [[NSMutableSet alloc] init];
@@ -122,7 +125,7 @@ const int NO_REACTION = -1;
     if ( mUseLogrithmicDirectMethod ){
         double sum = 0;
         for (int reactionIdx = 0; reactionIdx < [mReactions count]; ++reactionIdx) {
-            ReactionWithRate* reactionAndRate = [mReactions objectAtIndex:reactionIdx];
+            ReactionWithRate* const reactionAndRate = [mReactions objectAtIndex:reactionIdx];
             sum += [reactionAndRate rate];
             [reactionAndRate setPartialSum:sum];
         }
@@ -191,7 +194,7 @@ const int NO_REACTION = -1;
         //sorted direct method
         if ( mUseSortedDirectMethod && reactionIdx > 0 ){
             const int newCurrentReactionIdx = reactionIdx - 1;
-            const ReactionWithRate* const higherPriorityReaction = [mReactions objectAtIndex:newCurrentReactionIdx];
+            ReactionWithRate* const higherPriorityReaction = [mReactions objectAtIndex:newCurrentReactionIdx];
 
             [mReactions replaceObjectAtIndex:newCurrentReactionIdx withObject:reactionToReturn];
             [mReactions replaceObjectAtIndex:reactionIdx withObject:higherPriorityReaction];
@@ -203,7 +206,7 @@ const int NO_REACTION = -1;
 
 - (void)setDirty:(ReactionDefinition*)reaction{
     if ( mUseDependencyGraph ){
-        NSValue* pointerToReaction = [NSValue valueWithPointer:reaction];
+        NSValue* const pointerToReaction = [NSValue valueWithPointer:reaction];
         [mDirtyReactions unionSet:[mReactionRateDepencies objectForKey:pointerToReaction]];
     }
 }
@@ -293,6 +296,7 @@ const int NO_REACTION = -1;
     TimeSpan* time = [state timeSinceSimulationStart];
 
     if ( [time totalSeconds] + tau > [stopTime totalSeconds] ){
+        [Logger info:@"Simulation greater time is greater than stop time"];
         return NO;
     }
 
@@ -302,6 +306,7 @@ const int NO_REACTION = -1;
     const double r2 = [mRandom next];
     ReactionDefinition* reaction = [mInternalState reactionForBound:r2*reactionRateSum];
     if ( reaction == nil){
+        [Logger info:@"No reaction for simulation to do"];
         return NO;
     }
 

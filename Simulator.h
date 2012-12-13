@@ -5,10 +5,10 @@
 #import "Random.h"
 
 /**
- * @brief hold a reaction and its assoicated rate
+ * @brief hold a reaction and its assoicated rates for use in an NSArray
  *
- * This is used to avoid having to maintian two NSMutable arrays for the reaction
- * and the rate which vaslty increasses the possibility for bugs
+ * This is used to avoid having to maintian more than one NSMutable arrays for the reaction
+ * and the rate which vaslty increasses the possibility for bugs.
  *
  * The partial sum is used for holding the sum of rates up to the point where
  * this reaction has been considered. As such it is only really useful when
@@ -23,9 +23,13 @@
 - (void)dealloc;
 
 - (ReactionDefinition*)reaction;
+
 - (double)rate;
 - (void)setRate:(double)rate;
 
+/**
+ * @brief sets the rate that has been calculated up to the point where this reaction is considered
+ */
 - (double)partialSum;
 - (void)setPartialSum:(double)rate;
 @end

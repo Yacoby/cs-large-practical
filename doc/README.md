@@ -107,15 +107,16 @@ Running Tests
 -------------
 From the project root directory run `gnustep-tests`
 
-
 Performance
 -----------
 The biggest performance improvement that can be done is to use the ResultOnlyAggregator aggregator
 as the slowest part of the system is writing the output (It isn't just the IO, string
-concatenation is also slow).
+concatenation is also slow). Also if you want performance, avoid writing the results to stdout
+as it isn't buffered so much slower than writing to a file.
 
-There are several performance enhancements that work well with larger systems. They can be enabled
-via `--sdm`, `--ldm` and `--dependency-graph`. These adversely effect performance with smaller systems.
+There are several performance enhancements to the simulation that work well 
+with larger systems. They can be enabled via `--sdm`, `--ldm` and `--dependency-graph`.
+These adversely effect performance with smaller systems.
 
 * SDM (Simple Direct Method) slowly sorts the list of reactions by their rate of recent occurrence.
 * LDM (Logarithmic Direct Method) preforms a binary search against the list of reactions rather than a linear search. This makes SDM useless but will probably only have a noticeable impact on performance for very large numbers of reactions

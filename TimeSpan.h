@@ -41,6 +41,11 @@
  * @param seconds the number of seconds added to the current time span
  */
 - (void)addSeconds:(double)seconds;
+
+/**
+ * @brief adds a number of milliseconds to the TimeSpan
+ * @param ms the number of milliseconds added to the current time span
+ */
 - (void)addMilliseconds:(double)ms;
 
 - (id)mutableCopyWithZone:(NSZone*)zone;

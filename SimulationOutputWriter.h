@@ -16,6 +16,12 @@
  */
 @interface RfcCsvWriter : NSObject <SimulationOutputWriter>{
     id <OutputStream> mOutputStream;
+
+    /**
+     * We need to maintain a list of the ordered molecules as defined in the 
+     * config so we maintain an ordering. The ordering is the same as comes
+     * from the configuration file
+     */
     NSArray* mOrderedMolecules;
 }
 - (id)initWithStream:(id <OutputStream>)stream simulationConfiguration:(SimulationConfiguration*)cfg;

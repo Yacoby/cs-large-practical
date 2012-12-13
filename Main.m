@@ -176,6 +176,7 @@ id<Random> getRandomNumberGenerator(CommandLineOptions* options){
     if ( [options getOptionWithName:@"seed"] != nil ){
         seed = [[options getOptionWithName:@"seed"] intValue];
     }
+    [Logger info:"Using random seed:<%u>", seed];
     return [[[UniformRandom alloc] initWithSeed:seed] autorelease];
 }
 
@@ -193,7 +194,8 @@ id<Random> getRandomNumberGenerator(CommandLineOptions* options){
 void makeLogger(CommandLineOptions* options){
     Logger* logger = [[[Logger alloc] init] autorelease];
     {
-        FileHandleOutputStream* os = [[FileHandleOutputStream alloc] initWithFileHandle:[NSFileHandle fileHandleWithStandardError]];
+        FileHandleOutputStream* os = [[FileHandleOutputStream alloc]
+                                                              initWithFileHandle:[NSFileHandle fileHandleWithStandardError]];
         Log* log = [[StreamLog alloc] initWithStream:os];
         [logger addLog:log];
         LogLevel level = [Logger logLevelFromString:[options getOptionWithName:@"logstderrlevel"]];

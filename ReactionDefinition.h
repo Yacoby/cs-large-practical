@@ -5,7 +5,7 @@
 /**
  * @brief Represents the components that make up the reaction
  *
- * This class holds which components (and their count) make up both the input (requirements) and
+ * This class holds which molecules (and their count) make up both the input (requirements) and
  * output (result) of a reaction.
  */
 @interface ReactionEquation : NSObject{
@@ -16,7 +16,13 @@
 - (void)setRequirements:(NSCountedSet*)requirements;
 - (void)setResult:(NSCountedSet*)result;
 
+/**
+ * @return A NSCountedSet of NSString, where each string is a molecule required for the reaction to take place
+ */
 - (NSCountedSet*)requirements;
+/**
+ * @return A NSCountedSet of NSString, where each string is a molecule result of the reaction
+ */
 - (NSCountedSet*)result;
 @end
 
@@ -34,8 +40,24 @@
 - (void)dealloc;
 
 - (KineticConstant*)kineticConstant;
+
+/**
+ * @brief simple helper function to get the requirements for the reaction to take place 
+ * @return A NSCountedSet of NSString, where each string is a molecule required for the reaction to take place
+ */
 - (NSCountedSet*)requirements;
+
+/**
+ * @brief simple helper function to get the results of a reaction
+ * @return A NSCountedSet of NSString, where each string is a molecule result of the reaction
+ */
 - (NSCountedSet*)result;
+
+/**
+ * @brief returns the set of molecules effected by this reaction
+ *
+ * This is simply the union of the requirements and results
+ */
 - (NSSet*)alteredMolecules;
 
 /**

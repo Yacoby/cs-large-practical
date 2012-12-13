@@ -41,6 +41,24 @@ format) the man page is viewable via `man -l doc/CSLP.1`
 
 Documentation for the code (generated using doxygen) can be accessed from the [codedocs.html](codedocs.html) file found in the `doc` directory.
 
+Example Scripts and Output
+--------------------------
+Example scripts can be found in `doc/scripts`. The output from these scripts can be
+found in `doc/scripts/output`. There are *.stdout.csv* files that contain the csv stdout 
+from the script and *stderr* files with the output from stderr. As the program was run
+with `--wall`, there are some scripts that could have produced output but didn't due to treating
+script warnings as errors
+
+As `submit` won't let me submit 0 length files, if a file is missing there was no output
+from on or both of stdout and stderr
+
+These files were generated with the following bash script:
+
+    for file in *.txt; do
+      ../../Cslp.app/Cslp --wall $file >> output/$file.stdout.csv 2>> output/$file.stderr;
+    done
+    find output -size 0c -delete
+
 Running the Application
 -----------------------
 The Unix way of running the program is to pass the program the input script
